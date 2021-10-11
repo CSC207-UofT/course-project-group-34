@@ -1,13 +1,13 @@
 public class Pawn extends ChessPiece { 
   
-  private bool hasMovedOnce;
+  private boolean hasMovedOnce;
 
   public Pawn(int xPosition, int yPosition, String color){
     super(xPosition, yPosition, color );
     this.hasMovedOnce = false;
   };
   
-  public bool getHasMovedOnce(){
+  public boolean getHasMovedOnce(){
     return this.hasMovedOnce;
   }
   
