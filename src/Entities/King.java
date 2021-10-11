@@ -1,6 +1,6 @@
 public class King extends ChessPiece {
 
-  public Pawn(int xPosition, int yPosition, String color){
+  public King(int xPosition, int yPosition, String color){
     super(xPosition, yPosition, color );
   };
   
