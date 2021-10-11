@@ -25,7 +25,7 @@ public abstract class ChessPiece {
   }
   
   public void setYPosition(int num) {
-    this.YPosition = num;
+    this.yPosition = num;
   }
   
   public String getColor() {
