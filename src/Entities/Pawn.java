@@ -11,7 +11,7 @@ public class Pawn extends ChessPiece {
     return this.hasMovedOnce;
   }
   
-  public void setHasMovedOnce(bool cond){
+  public void setHasMovedOnce(boolean cond){
     this.hasMovedOnce = cond;
   }
   
