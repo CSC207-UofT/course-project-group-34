@@ -33,7 +33,5 @@ public abstract class ChessPiece {
   public void setColor(String color) {
     this.color = color;
   }
-  
-  abstract void move();
 
 }
