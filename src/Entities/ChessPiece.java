@@ -1,4 +1,6 @@
-public abstract class ChessPiece { 
+package Entities;
+
+public abstract class ChessPiece {
 
   private int xPosition;
   private int yPosition;
@@ -27,7 +29,7 @@ public abstract class ChessPiece {
   }
   
   public String getColor() {
-    return color
+    return color;
   }
   
   public void setColor(String color) {
