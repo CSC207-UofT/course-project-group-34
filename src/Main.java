@@ -1,6 +1,6 @@
 import java.util.Scanner;
 /**
- * This class is responsible for running out skeleton Chess Game implementation
+ * This class is responsible for running our skeleton Chess Game implementation
  */
 public class Main {
 
@@ -13,11 +13,19 @@ public class Main {
         
         // Printing out the UI
         System.out.println(x.printBoard(state));
-        
-        // Asking for user input
+
+        boolean cond = false;
         int[] arr = getPlayerMove();
-        state.makeMove(arr);
+        cond = state.makeMove(arr);
         
+        // While loop asking for user input, and will
+        // continue to do so until the input in valid.
+        while(!cond) {
+            System.out.println("\nThat is not a valid move, please try again.");
+            System.out.println(state);
+            arr = getPlayerMove();
+            cond = state.makeMove(arr);
+        }
         // Printing out our chess board after the new move
         System.out.println(x.printBoard(state));
 
