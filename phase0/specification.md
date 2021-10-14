@@ -15,6 +15,8 @@ Chess is a two-player strategy game that takes place over an 8 x 8 board with on
 - **Rook:** can move any number of blocks vertically and horizontally, attacking the block on which they land on.
 - **Knights**: can travel two blocks horizontally and one block vertically (or vice versa), attacking the block on which they land.
 
+White pieces are represented by lowercase names while black pieces are represented by uppercase names. Kings are represented using unit code.
+
 If a player’s king is in a position to be attacked, then they are in check. If there are no possible moves the player in check can make to break the check, then they lose and therefore, the other player wins.
 
-1
+
