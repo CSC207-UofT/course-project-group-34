@@ -1,3 +1,7 @@
+/**
+* This abstract class represents the shared atributes and methods
+* all other instances of ChessPiece will share. 
+*/
 public abstract class ChessPiece {
 
     private int xPosition;
@@ -5,6 +9,8 @@ public abstract class ChessPiece {
     private String color;
     private char letter;
 
+    // The constructor takes in it's (x, y) co-ordinates and the color
+    // of the player representing this object.
     public ChessPiece(int xPosition, int yPosition, String color) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
