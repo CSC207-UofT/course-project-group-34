@@ -35,4 +35,3 @@ Summary of Group Member Roles and Next Steps
 *Petar* - Worked on the CRC model, the skeleton code, and the specification. Will work on implementing classes and methods--namely, those pertaining to the checkers--in the future.
 
 *Azka* - Worked on Skeleton code implementations for all entities, CLIBoard and LoadGame as well as the CRC models. Will continue to work on implementing the program.
-PAGE2
