@@ -1,6 +1,8 @@
+/**
+* This class is responsible for initializing a new chess game, and returning
+* the gameState that represents that game to the user. 
+*/
 public class LoadGame {
-
-    public LoadGame(){}
 
     /**
      * This method initializes a new chess game by creating a GameState
