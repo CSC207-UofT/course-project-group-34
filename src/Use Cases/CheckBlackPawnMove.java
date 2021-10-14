@@ -1,4 +1,4 @@
-public class CheckPawnMove extends CheckPlayerMove {
+public class CheckBlackPawnMove extends CheckPlayerMove {
     
     public int[][] validMoves(Pawn pawn, GameState gameState) {
         int[][] result = new int[4][2];
