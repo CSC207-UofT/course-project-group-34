@@ -7,61 +7,35 @@ public class CLIboard {
     public CLIboard(){}
 
     /**
-     * This class is responsible for taking in an instance of a GameState, creating
-     * a properly formatted chess board based off of the currennt state of the instance,
-     * and then returning that value
+     * This method is responsible for taking in an instance of a GameState, creating
+     * a properly formatted chess board based off of the current state of the instance,
+     * and then returning that value.
      *
      * @param state - an instance of a GameState object
      * @return board
      */
     public String printBoard(GameState state){
-        // Getting the 2D array that represents our chess board and initilzing variables
+        // Getting the 2D array that represents our chess board and initializing variables
         ChessPiece[][] gameBoard = state.getBoard();
         int[] nums = {1, 2, 3, 4, 5, 6, 7, 8};
         StringBuilder board = new StringBuilder();
         board.append("   1 2 3 4 5 6 7 8\n");
 
-        for(int i = 0; i < 8; i++){
-            board.append(nums[i]).append(" ");
+        // Loop through each "cell" within the chess board 2D array, if there is a
+        // Chess piece at that location, print out that piece's letter. Print an empty
+        // cell otherwise.
+        for(int x = 0; x < 8; x++){
+            board.append(nums[x]).append(" ");
             board.append("|");
-            for(int x = 0; x < 8; x++){
+            for(int y = 0; y < 8; y++){
 
-                if(gameBoard[i][i] != null){
-                    //print piece
+                if(gameBoard[x][y] != null){
+                    board.append(state.getChessPieceLetter(x, y)).append("|");
                 }
-                else
-                {
-                    board.append(" |");
-                }
+                else { board.append(" |"); }
             }
             board.append("\n");
-
         }
         return board.toString();
-    }
-
-    /**
-     * This method takes in a GameState and ChessPiece object, checks which subclass the
-     * piece corresponds to, and then returns a string based on the piece and which
-     * player's turn it is in the GameState.
-     *
-     * @param
-     * @return
-     */
-    public String getType(GameState gameState, ChessPiece piece){
-        String type  = "";
-
-        //A billiion if statements to see what piece it is
-
-
-
-        // If the turn == 1, we know that is Black's turn, and we must
-        // uppercase the letter as all of Black's letter are uppercase
-        // on the board.
-        if(gameState.getTurn() == 1){
-            return type.toUpperCase();
-        }
-
-        return type;
     }
 }
