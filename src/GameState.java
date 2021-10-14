@@ -4,15 +4,17 @@ public class GameState {
     private int turn;
 
     public GameState(){
+
         this.board = new ChessPiece[8][8];
+        this.turn = 0;
     }
 
     public ChessPiece[][] getBoard(){
         return this.board;
     }
 
-    public void setTurn(int turn){
-        this.turn = turn;
+    public void changeTurn(){
+        this.turn ^= 1;
     }
 
     public int getTurn(){
@@ -33,5 +35,26 @@ public class GameState {
      */
     public char getChessPieceLetter(int x, int y){
         return board[x][y].getLetter();
+    }
+
+    /**
+     * This method takes an input and changes the gamestate according if the move is value
+     * */
+    public boolean makeMove(int[] positions) {
+        ChessPiece currPiece = board[positions[0]][positions[1]];
+        if (this.turn.equals(0)) {
+            CheckWhitePawnMove checker = new CheckWhitePawnMove();
+        } else {
+            CheckBlackPawnMove checker = new CheckBlackPawnMove();
+        }
+        boolean valid = checker.checkMove(positions[2], positions[3], currPiece, board);
+        if (valid) {
+            board[positions[0]][positions[1]] = null;
+            board[positions[2]][positions[3]] = currPiece;
+            currPiece.setHasMovedOnce();
+            changeTurn();
+            return true;
+        }
+        return false;
     }
 }
