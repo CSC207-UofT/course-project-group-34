@@ -1,3 +1,6 @@
+/**
+* Thiss class represents a Rook chess piece for our chess game. 
+*/
 public class Rook extends ChessPiece {
 
   public Rook(int xPosition, int yPosition, String color){
