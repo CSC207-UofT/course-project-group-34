@@ -11,7 +11,7 @@ public class CheckBlackPawnMove extends CheckPlayerMove {
             result[0] = {xPosition, yPosition + 1}; 
         }
         
-        if (pawn.getMadeMove() == false && yPosition + 2 < 8 && board[xPosition][yPosition + 1] == null && board[xPosition][yPosition + 2] == null) {
+        if (pawn.getHasMovedOnce() == false && yPosition + 2 < 8 && board[xPosition][yPosition + 1] == null && board[xPosition][yPosition + 2] == null) {
             result[1] = {xPosition, yPosition + 2};
         }
         
