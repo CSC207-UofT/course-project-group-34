@@ -6,4 +6,4 @@ This scenario outlines the beginning of the game with the first move included. T
 
 To summarize, the scenario outlined above details the very start of a chess game, in which the board is initialized, the player inputs a valid move for the white pawn, the GameState records the move and updates the piece’s position after checking with CheckWhitePawnMove, and then the CLIBoard outputs the current state of the board.
 
-1
+
