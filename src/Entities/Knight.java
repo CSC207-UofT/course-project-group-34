@@ -1,4 +1,6 @@
-
+/*
+* This class represents a Knight chess piece for our chess game. 
+*/
 public class Knight extends ChessPiece {
 
   public Knight(int xPosition, int yPosition, String color){
