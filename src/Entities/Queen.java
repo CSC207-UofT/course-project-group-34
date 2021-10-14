@@ -1,3 +1,6 @@
+/*
+* This class represents a Queen chess piece for our chess game.
+*/
 public class Queen extends ChessPiece {
   
   public Queen(int xPosition, int yPosition, String color){

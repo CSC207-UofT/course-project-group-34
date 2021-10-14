@@ -1,3 +1,6 @@
+/*
+* This class represents a Pawn chess piece for our chess game.
+*/
 public class Pawn extends ChessPiece {
   
   private boolean hasMovedOnce;

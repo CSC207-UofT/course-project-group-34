@@ -1,3 +1,6 @@
+/**
+* This class represents a King chess piece for our chess game. 
+*/
 public class King extends ChessPiece {
 
   public King(int xPosition, int yPosition, String color){
