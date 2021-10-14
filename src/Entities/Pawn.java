@@ -1,4 +1,4 @@
-public class Pawn extends ChessPiece { 
+public class Pawn extends ChessPiece {
   
   private boolean hasMovedOnce;
   private boolean madeMove;
@@ -7,6 +7,12 @@ public class Pawn extends ChessPiece {
     super(xPosition, yPosition, color );
     this.hasMovedOnce = false;
     this.madeMove = false;
+    if(color.equals("black")){
+      super.setLetter('P');
+    }
+    else{
+      super.setLetter('p');
+    }
   }
   
   public boolean getHasMovedOnce(){
@@ -24,5 +30,4 @@ public class Pawn extends ChessPiece {
   public void setMadeMoveTrue() {
     madeMove = true;
   }
-  
 }
