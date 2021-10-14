@@ -1,3 +1,7 @@
+/**
+* This class is responsible for controlling everything about our 2D array that represents the chess board. 
+* This predominantly includes keeping track of which player turn it is as well as moving chess pieces. 
+*/
 public class GameState {
 
     private ChessPiece[][] board;
@@ -39,7 +43,7 @@ public class GameState {
 
     /**
      * This method takes an input and changes the gamestate according if the move is value
-     * */
+     */
     public boolean makeMove(int[] positions) {
         ChessPiece currPiece = board[positions[0]][positions[1]];
         if (this.turn.equals(0)) {
