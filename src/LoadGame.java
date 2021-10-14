@@ -34,10 +34,10 @@ public class LoadGame {
         ChessPiece[] pieces = new ChessPiece[16];
         pieces[0] = new King(3, row1, color);
         pieces[1] = new Queen(4, row1, color);
-        pieces[2] = new Rook(2, row1, color);
-        pieces[3] = new Rook(5, row1, color);
-        pieces[4] = new Bishop(0, row1, color);
-        pieces[5] = new Bishop(7,row1,color);
+        pieces[2] = new Rook(0, row1, color);
+        pieces[3] = new Rook(7, row1, color);
+        pieces[4] = new Bishop(2, row1, color);
+        pieces[5] = new Bishop(5,row1,color);
         pieces[6] = new Knight(1, row1, color);
         pieces[7] = new Knight(6, row1, color);
 
