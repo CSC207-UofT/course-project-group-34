@@ -2,11 +2,6 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.List;
 
-//Create a board
-
-    @@ -7,3 +9,21 @@
-//test to check if the postion we moved the pawn into is the correct one
-
 public class testValidPawnMove {
 
     GameState state;
