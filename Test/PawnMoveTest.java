@@ -19,7 +19,7 @@ public class testValidPawnMove {
 
     @Test(timeout = 100)
     public void testMove() {
-        int[] arr = [3, 6, 3, 4];
+        int[] arr = {3, 6, 3, 4};
         state.makeMove(arr);
         assertTrue(state.getBoard()[3][6] == null);
     }
