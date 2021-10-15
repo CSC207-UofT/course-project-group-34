@@ -3,7 +3,7 @@ import org.junit.Test;
 import java.util.List;
 import static org.junit.Assert.*;
 
-public class testValidPawnMove {
+public class PawnMoveTest {
 
     GameState state;
 

@@ -8,7 +8,7 @@ import Entities.ChessPiece;
  */
 class CLIboard {
 
-    public CLIboard(){}
+    public CLIBoard(){}
 
     /**
      * This method is responsible for taking in an instance of a GameState, creating
