@@ -5,11 +5,11 @@ package Entities;
 */
 public class Bishop extends ChessPiece {
   
-  // The constructor takes in it's (x, y) co-ordinates and the color 
+  // The constructor takes in its row and column and the color 
   // of the player representing this object.
-  public Bishop(int xPosition, int yPosition, String color){
+  public Bishop(int row, int column, String color){
 
-    super(xPosition, yPosition, color );
+    super(row, column, color );
     if(color.equals("black")){
       super.setLetter('B');
     }
