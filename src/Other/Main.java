@@ -1,6 +1,8 @@
 package Other;
 
 import java.util.Scanner;
+import java.lang.Math;
+
 /**
  * This class is responsible for running our skeleton Chess Game implementation
  */
@@ -43,7 +45,10 @@ public class Main {
 
         System.out.println("\nPlayer White, where will you move the pawn: ");
         int moveTo = sc.nextInt();
+        
+        int rcFrom = moveFrom - 11;
+        int rcTo = moveTo - 11;
 
-        return new int[]{moveFrom - 11, moveTo - 11};
+        return new int[]{Math.floorDiv(rcFrom, 10), rcFrom % 10, Math.floorDiv(rcTo, 10), rcTo % 10};
     }
 }
