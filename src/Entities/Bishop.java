@@ -1,3 +1,5 @@
+package Entities;
+
 /**
 * This class represents a Bishop chess piece object in our chess game. 
 */
@@ -14,5 +16,5 @@ public class Bishop extends ChessPiece {
     else{
       super.setLetter('b');
     }
-  };
+  }
 }

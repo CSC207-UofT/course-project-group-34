@@ -1,3 +1,5 @@
+package Entities;
+
 /**
 * This class represents a King chess piece for our chess game. 
 */
