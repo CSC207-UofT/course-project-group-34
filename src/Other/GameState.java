@@ -37,7 +37,7 @@ public class GameState {
      * 2D array that represents the chess board.
      */
     public void addChessPiece(ChessPiece chessPiece){
-        board[chessPiece.getYPosition()][chessPiece.getXPosition()] = chessPiece;
+        board[chessPiece.getRow()][chessPiece.getColumn()] = chessPiece;
     }
 
     /**
