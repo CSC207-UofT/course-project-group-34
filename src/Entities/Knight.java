@@ -5,9 +5,9 @@ package Entities;
 */
 public class Knight extends ChessPiece {
 
-  public Knight(int xPosition, int yPosition, String color){
+  public Knight(int row, int column, String color){
 
-    super(xPosition, yPosition, color);
+    super(row, column, color);
     if(color.equals("black")){
       super.setLetter('K');
     }
