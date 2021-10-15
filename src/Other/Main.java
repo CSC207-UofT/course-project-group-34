@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         
         //Creates our IU object and the object that loads a fresh game board
-        CLIboard x = new CLIboard();
+        CLIBoard x = new CLIBoard();
         LoadGame game = new LoadGame();
         GameState state = game.loadGame();
         

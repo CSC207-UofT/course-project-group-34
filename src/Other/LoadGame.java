@@ -24,7 +24,7 @@ public class LoadGame {
      *
      * @return state
      */
-    public GameState loadGame(){
+    public GameState loadGame() {
 
         GameState state = new GameState();
         loadChessPieces(state, "black", 0, 1);

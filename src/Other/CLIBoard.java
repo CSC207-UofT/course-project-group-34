@@ -6,7 +6,7 @@ import Entities.ChessPiece;
  *  This class is responsible for creating the String value that will represent the chess board in the command line.
  *  It interacts with an instance of GameState and creates a board based off of that instance.
  */
-class CLIboard {
+public class CLIBoard {
 
     public CLIBoard(){}
 

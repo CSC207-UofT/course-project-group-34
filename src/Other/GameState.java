@@ -3,7 +3,6 @@ package Other;
 import Entities.ChessPiece;
 import Entities.Pawn;
 import UseCases.CheckPawnMove;
-import java.lang.Math;
 
 /**
 * This class is responsible for controlling everything about our 2D array that represents the chess board. 
@@ -52,7 +51,7 @@ public class GameState {
      * This method takes an input and changes the gamestate according if the move is value
      */
     public boolean makeMove(int[] positions) {
-        ChessPiece currPiece = board[positions[0][positions[1]];
+        ChessPiece currPiece = board[positions[0]][positions[1]];
         CheckPawnMove checker = new CheckPawnMove();
         boolean valid = checker.checkMove(positions[2], positions[3], currPiece, this);
         if (valid) {
