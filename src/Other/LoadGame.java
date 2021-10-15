@@ -44,17 +44,17 @@ public class LoadGame {
      */
     public void loadChessPieces(GameState state, String color, int row1, int row2){
         ChessPiece[] pieces = new ChessPiece[16];
-        pieces[0] = new King(3, row1, color);
-        pieces[1] = new Queen(4, row1, color);
-        pieces[2] = new Rook(0, row1, color);
-        pieces[3] = new Rook(7, row1, color);
-        pieces[4] = new Bishop(2, row1, color);
-        pieces[5] = new Bishop(5,row1,color);
-        pieces[6] = new Knight(1, row1, color);
-        pieces[7] = new Knight(6, row1, color);
+        pieces[0] = new King(row1, 3, color);
+        pieces[1] = new Queen(row1, 4, color);
+        pieces[2] = new Rook(row1, 0, color);
+        pieces[3] = new Rook(row1, 7, color);
+        pieces[4] = new Bishop(row1, 2, color);
+        pieces[5] = new Bishop(row1, 5,color);
+        pieces[6] = new Knight(row1, 1, color);
+        pieces[7] = new Knight(row1, 6, color);
 
         for(int i = 0; i < 8; i++){
-            pieces[i + 8] = new Pawn(i, row2, color);
+            pieces[i + 8] = new Pawn(row2, i, color);
         }
 
         for (ChessPiece piece : pieces) {
