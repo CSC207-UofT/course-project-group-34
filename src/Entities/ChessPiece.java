@@ -6,33 +6,33 @@ package Entities;
 */
 public abstract class ChessPiece {
 
-    private int xPosition;
-    private int yPosition;
+    private int row;
+    private int column;
     private String color;
     private char letter;
 
-    // The constructor takes in it's (x, y) co-ordinates and the color
+    // The constructor takes in its row and column and the color
     // of the player representing this object.
-    public ChessPiece(int xPosition, int yPosition, String color) {
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+    public ChessPiece(int row, int column, String color) {
+        this.row = row;
+        this.column = column;
         this.color = color;
     }
 
-    public int getXPosition() {
-        return this.xPosition;
+    public int getRow() {
+        return this.row;
     }
 
-    public void setXPosition(int num) {
-        this.xPosition = num;
+    public void setRow(int num) {
+        this.row = num;
     }
 
-    public int getYPosition() {
-        return this.yPosition;
+    public int getColumn() {
+        return this.column;
     }
 
-    public void setYPosition(int num) {
-        this.yPosition = num;
+    public void setColumn(int num) {
+        this.column = num;
     }
 
     public String getColor() {
