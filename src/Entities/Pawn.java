@@ -7,8 +7,8 @@ public class Pawn extends ChessPiece {
   
   private boolean hasMovedOnce;
 
-  public Pawn(int xPosition, int yPosition, String color) {
-    super(xPosition, yPosition, color);
+  public Pawn(int row, int column, String color) {
+    super(row, column, color);
     this.hasMovedOnce = false;
     if(color.equals("black")){
       super.setLetter('P');
