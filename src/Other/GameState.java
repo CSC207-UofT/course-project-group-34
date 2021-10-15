@@ -52,12 +52,12 @@ public class GameState {
      * This method takes an input and changes the gamestate according if the move is value
      */
     public boolean makeMove(int[] positions) {
-        ChessPiece currPiece = board[Math.floorDiv(positions[0], 10)][positions[0] % 10];
+        ChessPiece currPiece = board[positions[0][positions[1]];
         CheckPawnMove checker = new CheckPawnMove();
-        boolean valid = checker.checkMove(positions[1] % 10, Math.floorDiv(positions[1], 10), currPiece, this);
+        boolean valid = checker.checkMove(positions[2], positions[3], currPiece, this);
         if (valid) {
-            board[Math.floorDiv(positions[0], 10)][positions[0] % 10] = null;
-            board[Math.floorDiv(positions[1], 10)][positions[1] % 10] = currPiece;
+            board[positions[0]][positions[1]] = null;
+            board[positions[2]][positions[3]] = currPiece;
             ((Pawn) currPiece).setHasMovedOnce();
             changeTurn();
             return true;
