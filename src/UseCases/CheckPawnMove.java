@@ -6,6 +6,8 @@ import Other.GameState;
 
 public class CheckPawnMove extends CheckPlayerMove {
 
+    public CheckPawnMove() { }
+
     public int[][] validMoves(Pawn pawn, GameState gameState) {
         int[][] result = new int[4][2];
         int row = pawn.getRow();
@@ -56,8 +58,9 @@ public class CheckPawnMove extends CheckPlayerMove {
             if (row + 1 < 8 && column + 1 < 8 && board[row + 1][column + 1] != null) {
                 result[3][0] = row + 1;
                 result[3][1] = column + 1;
+            }
         }
-            
+
         return result;
     }
 
