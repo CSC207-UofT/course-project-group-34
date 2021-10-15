@@ -5,9 +5,9 @@ package Entities;
 */
 public class King extends ChessPiece {
 
-  public King(int xPosition, int yPosition, String color){
+  public King(int row, int column, String color){
 
-    super(xPosition, yPosition, color );
+    super(row, column, color );
 
     // Using the Characters package in order to use unicode to set
     // Latin characters for K, in order to avoid confusion with
