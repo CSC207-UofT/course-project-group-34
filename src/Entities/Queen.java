@@ -6,7 +6,7 @@ package Entities;
 public class Queen extends ChessPiece {
   
   public Queen(int row, int column, String color){
-      super(xPosition, yPosition, color );
+      super(row, column, color );
       if(color.equals("black")){
           super.setLetter('Q');
       }
