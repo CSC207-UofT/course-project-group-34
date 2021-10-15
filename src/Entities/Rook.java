@@ -5,9 +5,9 @@ package Entities;
 */
 public class Rook extends ChessPiece {
 
-  public Rook(int xPosition, int yPosition, String color){
-
-    super(xPosition, yPosition, color );
+  public Rook(int row, int column, String color) {
+    super(row, column, color);
+    
     if(color.equals("black")){
       super.setLetter('R');
     }
