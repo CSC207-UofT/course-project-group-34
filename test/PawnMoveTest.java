@@ -18,7 +18,7 @@ public class PawnMoveTest {
 
     @Test(timeout = 100)
     public void testMove() {
-        int[] arr = {3, 6, 3, 4};
+        int[] arr = {6, 3, 4, 3};
         state.makeMove(arr);
         assertTrue(state.getBoard()[3][6] == null);
     }
