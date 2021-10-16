@@ -26,7 +26,7 @@ public class Main {
         // continue to do so until the input in valid.
         while(!cond) {
             System.out.println("\nThat is not a valid move, please try again.");
-            System.out.println(state);
+            System.out.println(x.printBoard(state));
             arr = getPlayerMove();
             cond = state.makeMove(arr);
         }

@@ -4,6 +4,8 @@ import Entities.Pawn;
 import Entities.ChessPiece;
 import Other.GameState;
 
+import java.util.Arrays;
+
 public class CheckPawnMove extends CheckPlayerMove {
 
     public CheckPawnMove() { }
@@ -68,7 +70,7 @@ public class CheckPawnMove extends CheckPlayerMove {
         int[] desiredMove = {newRow, newColumn};
         int[][] possibleMoves = validMoves((Pawn) pawn, gameState);
         for (int[] move : possibleMoves) {
-            if (desiredMove.equals(move)) {
+            if (Arrays.equals(desiredMove, move)) {
                 return true;
             }
         }
