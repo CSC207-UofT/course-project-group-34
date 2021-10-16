@@ -40,10 +40,10 @@ public class Main {
     public static int[] getPlayerMove(){
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("\nPlayer White, what pawn will you move ): ");
+        System.out.println("\nPlayer White, what pawn will you move(ex. row = 7 col = 1 = 71): ");
         int moveFrom = sc.nextInt();
 
-        System.out.println("\nPlayer White, where will you move the pawn: ");
+        System.out.println("\nPlayer White, where will you move the pawn(ex. row = 8 col = 1 = 81):");
         int moveTo = sc.nextInt();
         
         int rcFrom = moveFrom - 11;
