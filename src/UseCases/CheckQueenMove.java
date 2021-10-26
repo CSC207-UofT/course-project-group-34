@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class CheckQueenMove extends CheckPlayerMove {
 
-    public checkQueenMove() { } 
+    public CheckQueenMove() { } 
     
     public int[][] validMoves(Queen queen, GameState gameState) { 
         ArrayList result = new ArrayList(); 
