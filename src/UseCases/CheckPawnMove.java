@@ -65,10 +65,11 @@ public class CheckPawnMove extends CheckPlayerMove {
 
         return result;
     }
-
+     
     public boolean checkMove(int newRow, int newColumn, ChessPiece pawn, GameState gameState) {
         int[] desiredMove = {newRow, newColumn};
         int[][] possibleMoves = validMoves((Pawn) pawn, gameState);
+        
         for (int[] move : possibleMoves) {
             if (Arrays.equals(desiredMove, move)) {
                 return true;
@@ -76,6 +77,5 @@ public class CheckPawnMove extends CheckPlayerMove {
         }
 
         return false;
-
     }
 }
