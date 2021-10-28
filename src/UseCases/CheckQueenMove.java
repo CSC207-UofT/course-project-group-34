@@ -5,6 +5,7 @@ import Entities.ChessPiece;
 import Other.GameState; 
 
 import java.util.ArrayList; 
+import java.util.Arrays;
 
 public class CheckQueenMove extends CheckPlayerMove {
 
@@ -112,7 +113,8 @@ public class CheckQueenMove extends CheckPlayerMove {
             result.add({currentRow, currentColumn}); 
         }
 
-        return result;
+        int[][] final = result.toArray();
+        return final;
     }
 
     public boolean checkMove(int newRow, int newColumn, ChessPiece queen, GameState gameState) {

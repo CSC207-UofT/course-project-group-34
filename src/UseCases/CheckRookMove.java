@@ -5,6 +5,7 @@ import Entities.ChessPiece;
 import Other.GameState; 
 
 import java.util.ArrayList; 
+import java.util.Arrays;
 
 public class CheckRookMove extends CheckPlayerMove {
 
@@ -59,6 +60,10 @@ public class CheckRookMove extends CheckPlayerMove {
         if (currentColumn > -1) {
             result.add({row, currentColumn});
         }
+
+        int[][] final = result.toArray(); 
+        return final; 
+
     }
 
     public boolean checkMove(int newRow, int newColumn, ChessPiece rook, GameState gameState) {
