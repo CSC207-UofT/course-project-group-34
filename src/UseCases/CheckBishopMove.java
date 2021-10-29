@@ -21,56 +21,56 @@ public class CheckBishopMove extends CheckPlayerMove {
         int currentRow = row - 1;
         int currentColumn = column + 1;
         while (currentRow > -1 && currentColumn < 8 && board[currentRow][currentColumn] == null) { 
-            result.add({currentRow, currentColumn});
+            result.add(new int[] {currentRow, currentColumn});
             currentRow--;
             currentColumn++;
         } 
 
         if (currentRow > -1 && currentColumn < 8) { 
-            result.add({currentRow, currentColumn}); 
+            result.add(new int[] {currentRow, currentColumn}); 
         }
 
         // Moving down & right
         int currentRow = row + 1;
         int currentColumn = column + 1;
         while (currentRow < 8 && currentColumn < 8 && board[currentRow][currentColumn] == null) { 
-            result.add({currentRow, currentColumn});
+            result.add(new int[] {currentRow, currentColumn});
             currentRow++;
             currentColumn++;
         } 
 
         if (currentRow < 8 && currentColumn < 8) { 
-            result.add({currentRow, currentColumn}); 
+            result.add(new int[] {currentRow, currentColumn}); 
         }
 
         // Moving down & left 
         int currentRow = row + 1;
         int currentColumn = column - 1;
         while (currentRow < 8 && currentColumn > -1 && board[currentRow][currentColumn] == null) { 
-            result.add({currentRow, currentColumn});
+            result.add(new int[] {currentRow, currentColumn});
             currentRow++;
             currentColumn--;
         } 
 
         if (currentRow < 8 && currentColumn > -1) { 
-            result.add({currentRow, currentColumn}); 
+            result.add(new int[] {currentRow, currentColumn}); 
         }
 
         // Moving up & left 
         int currentRow = row - 1;
         int currentColumn = column - 1;
         while (currentRow > -1 && currentColumn > -1 && board[currentRow][currentColumn] == null) { 
-            result.add({currentRow, currentColumn});
+            result.add(new int[] {currentRow, currentColumn});
             currentRow--;
             currentColumn--;
         } 
 
         if (currentRow > -1 && currentColumn > -1) { 
-            result.add({currentRow, currentColumn}); 
+            result.add(new int[] {currentRow, currentColumn}); 
         }
 
-        int[][] final = result.toArray(); 
-        return final;
+        int[][] array = result.toArray(); 
+        return array;
     }
 
     public boolean checkMove(int newRow, int newColumn, ChessPiece bishop, GameState gameState) {

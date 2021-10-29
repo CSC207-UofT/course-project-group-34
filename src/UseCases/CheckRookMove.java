@@ -20,49 +20,49 @@ public class CheckRookMove extends CheckPlayerMove {
         // Moving up
         int currentRow = row - 1; 
         while (currentRow > -1 && board[currentRow][column] == null) {
-            result.add({currentRow, column}); 
+            result.add(new int[] {currentRow, column}); 
             currentRow--;
         }
 
         if (currentRow > -1) { 
-            result.add({currentRow, column}); 
+            result.add(new int[] {currentRow, column}); 
         }
 
         // Moving right
         int currentColumn = column + 1;
         while (currentColumn < 8 && board[row][currentColumn] == null) {
-            result.add({row, currentColumn});
+            result.add(new int[] {row, currentColumn});
             currentColumn++;
         }
 
         if (currentColumn < 8) { 
-            result.add({row, currentColumn});
+            result.add(new int[] {row, currentColumn});
         }
 
         // Moving down
         int currentRow = row + 1; 
         while (currentRow < 8 && board[currentRow][column] == null) {
-            result.add({currentRow, column}); 
+            result.add(new int[] {currentRow, column}); 
             currentRow++;
         }
 
         if (currentRow < 8) { 
-            result.add({currentRow, column}); 
+            result.add(new int[] {currentRow, column}); 
         }
 
         // Moving left
         int currentColumn = column - 1;
         while (currentColumn > -1 && board[row][currentColumn] == null) {
-            result.add({row, currentColumn});
+            result.add(new int[] {row, currentColumn});
             currentColumn--; 
         }
 
         if (currentColumn > -1) {
-            result.add({row, currentColumn});
+            result.add(new int[] {row, currentColumn});
         }
 
-        int[][] final = result.toArray(); 
-        return final; 
+        int[][] array = result.toArray(); 
+        return array; 
 
     }
 

@@ -18,39 +18,39 @@ public class CheckKnightMove extends CheckPlayerMove {
         ChessPiece[][] board = gameState.getBoard(); 
 
         if (row - 2 > -1 && column -1 > -1) {
-            result.add({row - 2, column + 1});
+            result.add(new int[] {row - 2, column + 1});
         }
 
         if (row - 2 > -1 && column + 1 < 8) {
-            result.add({row - 2, column - 1});
+            result.add(new int[] {row - 2, column - 1});
         }
 
         if (row - 1 > -1 && column + 2 < 8) {
-            result.add({row - 1, column + 2});
+            result.add(new int[] {row - 1, column + 2});
         }
 
         if (row + 1 < 8 && column + 2 < 8) {
-            result.add({row + 1, column + 2});
+            result.add(new int[] {row + 1, column + 2});
         }
 
         if (row + 2 < 8 && column + 1 < 8) {
-            result.add({row + 2, column + 1}); 
+            result.add(new int[] {row + 2, column + 1}); 
         }
 
         if (row + 2 < 8 && column - 1 > -1) {
-            result.add({row + 2, column - 1}); 
+            result.add(new int[] {row + 2, column - 1}); 
         }
 
         if (row + 1 < 8 && column - 2 > -1) {
-            result.add({row + 1, column - 2});
+            result.add(new int[] {row + 1, column - 2});
         }
 
         if (row - 1 > -1 && column - 2 > -1) {
-            result.add({row - 1, column - 2});
+            result.add(new int[] {row - 1, column - 2});
         }
 
-        int[][] final = result.toArray();
-        return final;
+        int[][] array = result.toArray();
+        return array;
 
     }
 
