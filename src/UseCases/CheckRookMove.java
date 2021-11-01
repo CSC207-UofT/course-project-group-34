@@ -11,7 +11,7 @@ public class CheckRookMove extends CheckPlayerMove {
 
     public CheckRookMove() { } 
     
-    public int[][] validMoves(Rook rook, GameState gameState) { 
+    public int[][] validMoves(ChessPiece rook, GameState gameState) {
         ArrayList result = new ArrayList(); 
         int row = rook.getRow(); 
         int column = rook.getColumn(); 
@@ -40,7 +40,7 @@ public class CheckRookMove extends CheckPlayerMove {
         }
 
         // Moving down
-        int currentRow = row + 1; 
+        currentRow = row + 1;
         while (currentRow < 8 && board[currentRow][column] == null) {
             result.add(new int[] {currentRow, column}); 
             currentRow++;
@@ -51,7 +51,7 @@ public class CheckRookMove extends CheckPlayerMove {
         }
 
         // Moving left
-        int currentColumn = column - 1;
+        currentColumn = column - 1;
         while (currentColumn > -1 && board[row][currentColumn] == null) {
             result.add(new int[] {row, currentColumn});
             currentColumn--; 

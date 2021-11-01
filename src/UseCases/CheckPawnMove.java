@@ -10,7 +10,7 @@ public class CheckPawnMove extends CheckPlayerMove {
 
     public CheckPawnMove() { }
 
-    public int[][] validMoves(Pawn pawn, GameState gameState) {
+    public int[][] validMoves(ChessPiece pawn, GameState gameState) {
         int[][] result = new int[4][2];
         int row = pawn.getRow();
         int column = pawn.getColumn();

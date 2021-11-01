@@ -2,17 +2,17 @@ package UseCases;
 
 import Entities.Queen;
 import Entities.ChessPiece; 
-import Other.GameState; 
+import Other.GameState;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CheckQueenMove extends CheckPlayerMove {
 
     public CheckQueenMove() { } 
     
-    public int[][] validMoves(Queen queen, GameState gameState) { 
-        ArrayList result = new ArrayList(); 
+    public int[][] validMoves(ChessPiece queen, GameState gameState) {
+        ArrayList result = new ArrayList();
         int row = queen.getRow(); 
         int column = queen.getColumn(); 
         ChessPiece[][] board = gameState.getBoard(); 
@@ -29,7 +29,7 @@ public class CheckQueenMove extends CheckPlayerMove {
         }
 
         // Moving up & right 
-        int currentRow = row - 1;
+        currentRow = row - 1;
         int currentColumn = column + 1;
         while (currentRow > -1 && currentColumn < 8 && board[currentRow][currentColumn] == null) { 
             result.add(new int[] {currentRow, currentColumn});
@@ -42,7 +42,7 @@ public class CheckQueenMove extends CheckPlayerMove {
         }
 
         // Moving right
-        int currentColumn = column + 1;
+        currentColumn = column + 1;
         while (currentColumn < 8 && board[row][currentColumn] == null) {
             result.add(new int[] {row, currentColumn});
             currentColumn++;
@@ -53,8 +53,8 @@ public class CheckQueenMove extends CheckPlayerMove {
         }
 
         // Moving down & right
-        int currentRow = row + 1;
-        int currentColumn = column + 1;
+        currentRow = row + 1;
+        currentColumn = column + 1;
         while (currentRow < 8 && currentColumn < 8 && board[currentRow][currentColumn] == null) { 
             result.add(new int[] {currentRow, currentColumn});
             currentRow++;
@@ -66,7 +66,7 @@ public class CheckQueenMove extends CheckPlayerMove {
         }
 
         // Moving down
-        int currentRow = row + 1; 
+        currentRow = row + 1;
         while (currentRow < 8 && board[currentRow][column] == null) {
             result.add(new int[] {currentRow, column}); 
             currentRow++;
@@ -77,8 +77,8 @@ public class CheckQueenMove extends CheckPlayerMove {
         }
 
         // Moving down & left 
-        int currentRow = row + 1;
-        int currentColumn = column - 1;
+        currentRow = row + 1;
+        currentColumn = column - 1;
         while (currentRow < 8 && currentColumn > -1 && board[currentRow][currentColumn] == null) { 
             result.add(new int[] {currentRow, currentColumn});
             currentRow++;
@@ -90,7 +90,7 @@ public class CheckQueenMove extends CheckPlayerMove {
         }
 
         // Moving left
-        int currentColumn = column - 1;
+        currentColumn = column - 1;
         while (currentColumn > -1 && board[row][currentColumn] == null) {
             result.add(new int[] {row, currentColumn});
             currentColumn--; 
@@ -101,8 +101,8 @@ public class CheckQueenMove extends CheckPlayerMove {
         }
 
         // Moving up & left 
-        int currentRow = row - 1;
-        int currentColumn = column - 1;
+        currentRow = row - 1;
+        currentColumn = column - 1;
         while (currentRow > -1 && currentColumn > -1 && board[currentRow][currentColumn] == null) { 
             result.add(new int[] {currentRow, currentColumn});
             currentRow--;

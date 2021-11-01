@@ -20,19 +20,19 @@ public class CheckerGenerator {
             CheckPlayerMove checker = new CheckPawnMove(); 
         }
 
-        elif (letter == 'k' || letter == 'K') {
+        else if (letter == 'k' || letter == 'K') {
             CheckPlayerMove checker = new CheckKnightMove(); 
         }
 
-        elif (letter == 'q' || letter = 'Q') {
+        else if (letter == 'q' || letter = 'Q') {
             CheckPlayerMove checker = new CheckQueenMove();
         }
 
-        elif (letter == 'b' || letter == 'B') {
+        else if (letter == 'b' || letter == 'B') {
             CheckPlayerMove checker = new CheckBishopMove(); 
         }
 
-        elif (letter == 'r' || letter == 'R') {
+        else if (letter == 'r' || letter == 'R') {
             CheckPlayerMove checker = new CheckRookMove();
         }
 

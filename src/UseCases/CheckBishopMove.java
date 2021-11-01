@@ -11,7 +11,7 @@ public class CheckBishopMove extends CheckPlayerMove {
 
     public CheckBishopMove() { } 
     
-    public int[][] validMoves(Bishop bishop, GameState gameState) { 
+    public int[][] validMoves(ChessPiece bishop, GameState gameState) {
         ArrayList result = new ArrayList(); 
         int row = bishop.getRow(); 
         int column = bishop.getColumn(); 
@@ -31,8 +31,8 @@ public class CheckBishopMove extends CheckPlayerMove {
         }
 
         // Moving down & right
-        int currentRow = row + 1;
-        int currentColumn = column + 1;
+        currentRow = row + 1;
+        currentColumn = column + 1;
         while (currentRow < 8 && currentColumn < 8 && board[currentRow][currentColumn] == null) { 
             result.add(new int[] {currentRow, currentColumn});
             currentRow++;
@@ -44,8 +44,8 @@ public class CheckBishopMove extends CheckPlayerMove {
         }
 
         // Moving down & left 
-        int currentRow = row + 1;
-        int currentColumn = column - 1;
+        currentRow = row + 1;
+        currentColumn = column - 1;
         while (currentRow < 8 && currentColumn > -1 && board[currentRow][currentColumn] == null) { 
             result.add(new int[] {currentRow, currentColumn});
             currentRow++;
@@ -57,8 +57,8 @@ public class CheckBishopMove extends CheckPlayerMove {
         }
 
         // Moving up & left 
-        int currentRow = row - 1;
-        int currentColumn = column - 1;
+        currentRow = row - 1;
+        currentColumn = column - 1;
         while (currentRow > -1 && currentColumn > -1 && board[currentRow][currentColumn] == null) { 
             result.add(new int[] {currentRow, currentColumn});
             currentRow--;
@@ -69,7 +69,7 @@ public class CheckBishopMove extends CheckPlayerMove {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
-        int[][] array = result.toArray(); 
+        int[][] array = result.toArray();
         return array;
     }
 
