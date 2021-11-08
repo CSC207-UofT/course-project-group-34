@@ -51,4 +51,12 @@ public abstract class ChessPiece {
         return this.letter;
     }
 
+    public boolean getHasMovedOnce(){
+    return this.hasMovedOnce;
+    }
+  
+    public void setHasMovedOnce(){
+        this.hasMovedOnce = true;
+    }
+
 }
