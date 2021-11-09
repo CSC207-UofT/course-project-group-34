@@ -3,12 +3,14 @@ package Other;
 import Entities.ChessPiece;
 import Entities.Pawn;
 import UseCases.CheckPawnMove;
+import UseCases.CheckPlayerMove;
+import UseCases.CheckerGenerator;
 
 /**
 * This class is responsible for controlling everything about our 2D array that represents the chess board. 
 * This predominantly includes keeping track of which player turn it is as well as moving chess pieces. 
 */
-public class GameState {
+public class GameState implements java.io.Serializable {
 
     private ChessPiece[][] board;
     private int turn;
@@ -52,8 +54,9 @@ public class GameState {
      */
     public boolean makeMove(int[] positions) {
         ChessPiece currPiece = board[positions[0]][positions[1]];
-        CheckPawnMove checker = new CheckPawnMove();
-        boolean valid = checker.checkMove(positions[2], positions[3], currPiece, this);
+        CheckerGenerator checker = new CheckerGenerator();
+        CheckPlayerMove currCheck = checker.generateChecker(currPiece);
+        boolean valid = currCheck.checkMove(positions[2], positions[3], currPiece, this);
         if (valid) {
             board[positions[0]][positions[1]] = null;
             board[positions[2]][positions[3]] = currPiece;
@@ -62,5 +65,22 @@ public class GameState {
             return true;
         }
         return false;
+    }
+
+    public String toString() {
+        StringBuffer state = new StringBuffer("");
+        for (int r = 0; r < 8; r++) {
+            state.append("[");
+            for (int c = 0; c < 8; c++) {
+                if (this.board[r][c] == null) {
+                    state.append("null");
+                }
+                else {
+                    state.append(this.board[r][c].toString());
+                }
+            }
+            state.append("], ");
+        }
+        return state.toString();
     }
 }

@@ -51,4 +51,8 @@ public abstract class ChessPiece {
         return this.letter;
     }
 
+    public String toString() {
+        return String.valueOf(this.row) + ',' + String.valueOf(this.column) + ',' + this.color + ',' + this.letter;
+    }
+
 }

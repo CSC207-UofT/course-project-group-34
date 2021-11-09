@@ -7,5 +7,5 @@ public abstract class CheckPlayerMove {
     
     abstract int[][] validMoves(ChessPiece piece, GameState gameState); 
     
-    abstract boolean checkMove(int newRow, int newColumn, ChessPiece piece, GameState gameState);
+    public abstract boolean checkMove(int newRow, int newColumn, ChessPiece piece, GameState gameState);
 }

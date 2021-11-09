@@ -24,7 +24,7 @@ public class CheckerGenerator {
             CheckPlayerMove checker = new CheckKnightMove(); 
         }
 
-        else if (letter == 'q' || letter = 'Q') {
+        else if (letter == 'q' || letter == 'Q') {
             CheckPlayerMove checker = new CheckQueenMove();
         }
 
