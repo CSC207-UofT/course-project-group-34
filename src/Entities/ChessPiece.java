@@ -51,8 +51,12 @@ public abstract class ChessPiece {
         return this.letter;
     }
 
-    public String toString() {
-        return String.valueOf(this.row) + ',' + String.valueOf(this.column) + ',' + this.color + ',' + this.letter;
+    public boolean getHasMovedOnce(){
+    return this.hasMovedOnce;
+    }
+  
+    public void setHasMovedOnce(){
+        this.hasMovedOnce = true;
     }
 
 }
