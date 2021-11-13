@@ -54,17 +54,20 @@ public class GameState implements java.io.Serializable {
      */
     public boolean makeMove(int[] positions) {
         ChessPiece currPiece = board[positions[0]][positions[1]];
-        CheckerGenerator checker = new CheckerGenerator();
-        CheckPlayerMove currCheck = checker.generateChecker(currPiece);
-        boolean valid = currCheck.checkMove(positions[2], positions[3], currPiece, this);
-        if (valid) {
-            board[positions[0]][positions[1]] = null;
-            board[positions[2]][positions[3]] = currPiece;
-            ((Pawn) currPiece).setHasMovedOnce();
-            changeTurn();
-            return true;
+        if ((!(this.turn == 0 & currPiece.getColor().equals("black"))) && (!(this.turn == 1 & currPiece.getColor().equals("white")))) {
+            CheckerGenerator checker = new CheckerGenerator();
+            CheckPlayerMove currCheck = checker.generateChecker(currPiece);
+            boolean valid = currCheck.checkMove(positions[2], positions[3], currPiece, this);
+            if (valid) {
+                board[positions[0]][positions[1]] = null;
+                board[positions[2]][positions[3]] = currPiece;
+                ((Pawn) currPiece).setHasMovedOnce();
+                changeTurn();
+                return true;
+            }
         }
         return false;
+
     }
 
     public String toString() {
