@@ -60,7 +60,7 @@ public class CheckRookMove extends CheckPlayerMove {
             result.add(new int[] {row, currentColumn});
         }
 
-        int[][] array = result.toArray(); 
+        int[][] array = super.toArrayMoves(result);  
         return array; 
 
     }

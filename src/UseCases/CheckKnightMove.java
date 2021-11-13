@@ -48,7 +48,7 @@ public class CheckKnightMove extends CheckPlayerMove {
             result.add(new int[] {row - 1, column - 2});
         }
 
-        int[][] array = result.toArray();
+        int[][] array = super.toArrayMoves(result); 
         return array;
 
     }
