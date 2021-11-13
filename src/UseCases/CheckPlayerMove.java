@@ -19,4 +19,12 @@ public abstract class CheckPlayerMove {
 
         return false;
     }
+
+    /**
+     *
+     * @return
+     */
+    public int[][] toArrayMoves(){
+        // to be implemented
+    }
 }
