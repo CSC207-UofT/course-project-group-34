@@ -27,11 +27,11 @@ public abstract class CheckPlayerMove {
      * This is a helper method that takes in an array list if integer arrays and
      * transforms its items into a 2d array of the same size.
      */
-    protected int[][] toArrayMoves(ArrayList<int[]> arr){
+    protected int[][] toArrayMoves(ArrayList arr){
         int[][] newArr = new int[arr.size()][];
 
         for(int i = 0; i < arr.size(); i ++){
-            newArr[i] = arr.get(i);
+            newArr[i] = (int[]) arr.get(i);
         }
         return newArr;
     }
