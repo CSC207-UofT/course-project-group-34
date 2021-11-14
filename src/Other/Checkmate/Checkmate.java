@@ -44,7 +44,7 @@ public class Checkmate {
             King tempKing = new King(move[0], move[1], king.getColor());
             state.addChessPiece(tempKing);
 
-            // Loops through each valid move, and determines whether the king is still in check or not.
+            // Loops through each valid move, and determines whether the tempKing is still in check or not.
             if(!(check.isKingInCheck(tempKing, state))){
                 state.removeChessPiece(move[0], move[1]);
                 state.addChessPiece(king);
@@ -75,17 +75,39 @@ public class Checkmate {
         for(int i = 0; i < 8; i++){
             for(int x = 0; x < 8; x++){
                 if(board[i][x] != null && board[i][x].getColor().equals(king.getColor())){
+
                     CheckPlayerMove moves = currChecker.generateChecker(board[i][x]);
                     int[][] validMoves = getValidMoves(moves, board[i][x], state);
-                    if(hasSharedPosition(positions, validMoves)){
+
+                    // Used to see if the King can be put in check once we move the piece.
+                    Object[][] sharedPos = hasSharedPosition(positions, validMoves);
+                    if((boolean) sharedPos[0][0] && !(moveCausesCheck(king, board[i][x], state))){
                         return true;
                     }
-
                 }
             }
         }
         return false;
     }
+
+    /**
+     * This method is used to determine if the king is in check once we remove a chess piece from the board.
+     * Returns true if the king is still in check, and false otherwise.
+     */
+    private boolean moveCausesCheck(King king, ChessPiece currPiece, GameState state){
+        Check check = new Check();
+        int currRow = currPiece.getRow();
+        int currCol = currPiece.getColumn();
+
+        state.removeChessPiece(currRow, currCol);
+        if(check.isKingInCheck(king, state)){
+            state.addChessPiece(currPiece);
+            return true;
+        }
+        state.addChessPiece(currPiece);
+        return false;
+    }
+
 
     /**
      * Helper method used to generate the 2D list of valid moves for each chess piece.
@@ -110,19 +132,19 @@ public class Checkmate {
      * Helper method used in checkPosition. Used to iterate over two separate 2d arrays. Returns
      * true if they share at least one array element, false otherwise.
      */
-    private boolean hasSharedPosition(int[][] arr1, int[][] arr2){
+    private Object[][] hasSharedPosition(int[][] arr1, int[][] arr2){
         if(arr1.length == 0 || arr2.length == 0){
-            return false;
+            return new Object[][]{{false}};
         }
 
         for(int[] pos1 : arr1){
             for(int[] pos2 : arr2){
                 if(Arrays.equals(pos1, pos2)){
-                    return true;
+                    return new Object[][]{{true},{pos2}};
                 }
             }
         }
-        return false;
+        return new Object[][]{{false}};
     }
 
 }

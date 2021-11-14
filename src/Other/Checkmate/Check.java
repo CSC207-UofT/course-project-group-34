@@ -83,6 +83,7 @@ public class Check {
         //Checking for any Rooks or Queens to the Left of the King
         while(col - 1 != -1){
             col--;
+            pos.add(new int[]{row, col});
             int x = hasOpposingQueenRook(board, row, col, king.getColor());
             if (x == 1) {
                 this.positions = toArrayMoves(pos);
@@ -110,6 +111,7 @@ public class Check {
         // Checking for any Queens or Rooks directly down the board
         while(row + 1 != 8){
             row++;
+            pos.add(new int[]{row, col});
             int x = hasOpposingQueenRook(board, row, col, king.getColor());
             if (x == 1) {
                 this.positions = toArrayMoves(pos);
@@ -125,6 +127,7 @@ public class Check {
         // Checking for any Queens or Rooks directly up the board
         while(row - 1 != -1) {
             row--;
+            pos.add(new int[]{row, col});
             int x = hasOpposingQueenRook(board, row, col, king.getColor());
             if (x == 1) {
                 this.positions = toArrayMoves(pos);
@@ -174,6 +177,7 @@ public class Check {
         while (col + 1 != 8 && row - 1 != -1) {
             col++;
             row--;
+            pos.add(new int[]{row, col});
             int x = hasOpposingQueenBishop(board, row, col, king.getColor());
             if (x == 1) {
                 this.positions = toArrayMoves(pos);
@@ -191,6 +195,7 @@ public class Check {
         while (col - 1 != -1 && row - 1 != -1) {
             col--;
             row--;
+            pos.add(new int[]{row, col});
             int x = hasOpposingQueenBishop(board, row, col, king.getColor());
             if (x == 1) {
                 this.positions = toArrayMoves(pos);
@@ -208,6 +213,7 @@ public class Check {
         while (col + 1 != 8 && row + 1 != 8) {
             col++;
             row++;
+            pos.add(new int[]{row, col});
             int x = hasOpposingQueenBishop(board, row, col, king.getColor());
             if (x == 1) {
                 this.positions = toArrayMoves(pos);
@@ -225,6 +231,7 @@ public class Check {
         while (col - 1 != -1 && row + 1 != 8) {
             col--;
             row++;
+            pos.add(new int[]{row, col});
             int x = hasOpposingQueenBishop(board, row, col, king.getColor());
             if (x == 1) {
                 this.positions = toArrayMoves(pos);
