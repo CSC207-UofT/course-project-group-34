@@ -68,7 +68,7 @@ public class CheckBishopMove extends CheckPlayerMove {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
-        int[][] array = result.toArray();
+        int[][] array = super.toArrayMoves(result);
         return array;
     }
   

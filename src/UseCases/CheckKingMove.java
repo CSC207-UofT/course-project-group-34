@@ -54,7 +54,7 @@ public class CheckKingMove extends CheckPlayerMove {
             }
         }
 
-        int[][] array = result.toArray();
+        int[][] array = super.toArrayMoves(result);
         return array;
 
     }
