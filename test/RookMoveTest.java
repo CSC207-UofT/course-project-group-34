@@ -5,6 +5,11 @@ import static org.junit.Assert.*;
 import Other.GameState;
 import Other.LoadGame;
 
+
+/**
+ * This Class is responsible for testing the movements of our Rook chess
+ * piece.
+ */
 public class RookMoveTest {
 
     GameState state;
