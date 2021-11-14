@@ -47,7 +47,7 @@ public class CheckmateTest {
 
     // Loading a game where the gamestate is in check, but not checkmate
     @Before
-    public void setupKingCheckMate() {
+    public void setupKingCheckMate2() {
         LoadGame init = new LoadGame();
         state = init.loadGame();
         king = (King) state.getBoard()[7][3];
@@ -67,7 +67,7 @@ public class CheckmateTest {
 
     // Testing to see if checkmate can recognize that the game is not in checkmate
     @Test(timeout = 100)
-    public void testKingCheckmate() {
+    public void testKingCheckmate2() {
         assertFalse(checkmate.isCheckmate(king, state));
     }
 
