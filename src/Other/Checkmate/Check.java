@@ -3,12 +3,18 @@ package Other.Checkmate;
 import Entities.*;
 import Other.GameState;
 
+import java.util.ArrayList;
+
 /**
  * This class is responsible for determining whether a given King chess piece is in Check or not.
  * Recall that a King is in check when it is in a viable position to be "captured" by an opposing
  * player's piece.
  */
 public class Check {
+
+    // Instance attribute that specifies the positions on the chess board that lead up to the
+    // opposing chess piece that is putting the King in Check.
+    private int[][] positions;
 
     /**
      * This method takes in a king chess piece as well as the GameState it belongs to and determines whether
@@ -20,8 +26,29 @@ public class Check {
      */
     public boolean isKingInCheck(King king, GameState state){
 
-        return checkLeftRight(king, state) && checkForwadsBackwards(king, state) &&
+        return checkLeftRight(king, state) && checkForwardsBackwards(king, state) &&
                 checkDiagonals(king, state) && checkKnight(king, state) && checkPawn(king, state);
+    }
+
+    /**
+     * This is a helper method that takes in an array list of integer arrays and
+     * transforms its items into a 2d array of the same size, and then returns that array.
+     */
+    private int[][] toArrayMoves(ArrayList arr){
+        int[][] newArr = new int[arr.size()][];
+
+        for(int i = 0; i < arr.size(); i ++){
+            newArr[i] = (int[]) arr.get(i);
+        }
+        return newArr;
+    }
+
+    /**
+     * Getter method that returns the positions leading to an opposing chess piece that has the King in
+     * check.
+     */
+    public int[][] getPositions(){
+        return this.positions;
     }
 
     /**
@@ -35,18 +62,22 @@ public class Check {
         int col = king.getColumn();
         int row = king.getRow();
         ChessPiece[][] board = state.getBoard();
+        ArrayList<int[]> pos = new ArrayList<>();
 
         // Checking for any Rooks or Queens to the Right of the king
         while(col + 1 != 8){
             col++;
+            pos.add(new int[]{row, col});
             int x = hasOpposingQueenRook(board, row, col, king.getColor());
             if (x == 1) {
+                this.positions = toArrayMoves(pos);
                 return true;
             } else if (x == -1) {
                 break;
             }
         }
 
+        pos = new ArrayList<>();
         col = king.getColumn();
 
         //Checking for any Rooks or Queens to the Left of the King
@@ -54,6 +85,7 @@ public class Check {
             col--;
             int x = hasOpposingQueenRook(board, row, col, king.getColor());
             if (x == 1) {
+                this.positions = toArrayMoves(pos);
                 return true;
             } else if (x == -1) {
                 break;
@@ -69,22 +101,25 @@ public class Check {
      * @return - true, if there is an opposing Queen or Rook that can capture the King
      *         - false, otherwise
      */
-    private boolean checkForwadsBackwards(King king, GameState state){
+    private boolean checkForwardsBackwards(King king, GameState state){
         int col = king.getColumn();
         int row = king.getRow();
         ChessPiece[][] board = state.getBoard();
+        ArrayList<int[]> pos = new ArrayList<>();
 
         // Checking for any Queens or Rooks directly down the board
         while(row + 1 != 8){
             row++;
             int x = hasOpposingQueenRook(board, row, col, king.getColor());
             if (x == 1) {
+                this.positions = toArrayMoves(pos);
                 return true;
             } else if (x == -1) {
                 break;
             }
         }
 
+        pos = new ArrayList<>();
         row = king.getRow();
 
         // Checking for any Queens or Rooks directly up the board
@@ -92,6 +127,7 @@ public class Check {
             row--;
             int x = hasOpposingQueenRook(board, row, col, king.getColor());
             if (x == 1) {
+                this.positions = toArrayMoves(pos);
                 return true;
             } else if (x == -1) {
                 break;
@@ -132,6 +168,7 @@ public class Check {
         int col = king.getColumn();
         int row = king.getRow();
         ChessPiece[][] board = state.getBoard();
+        ArrayList<int[]> pos = new ArrayList<>();
 
         // Check for Queens or Bishops within up-right diagonal
         while (col + 1 != 8 && row - 1 != -1) {
@@ -139,12 +176,14 @@ public class Check {
             row--;
             int x = hasOpposingQueenBishop(board, row, col, king.getColor());
             if (x == 1) {
+                this.positions = toArrayMoves(pos);
                 return true;
             } else if (x == -1) {
                 break;
             }
         }
 
+        pos = new ArrayList<>();
         col = king.getColumn();
         row = king.getRow();
 
@@ -154,12 +193,14 @@ public class Check {
             row--;
             int x = hasOpposingQueenBishop(board, row, col, king.getColor());
             if (x == 1) {
+                this.positions = toArrayMoves(pos);
                 return true;
             } else if (x == -1) {
                 break;
             }
         }
 
+        pos = new ArrayList<>();
         col = king.getColumn();
         row = king.getRow();
 
@@ -169,12 +210,14 @@ public class Check {
             row++;
             int x = hasOpposingQueenBishop(board, row, col, king.getColor());
             if (x == 1) {
+                this.positions = toArrayMoves(pos);
                 return true;
             } else if (x == -1) {
                 break;
             }
         }
 
+        pos = new ArrayList<>();
         col = king.getColumn();
         row = king.getRow();
 
@@ -184,6 +227,7 @@ public class Check {
             row++;
             int x = hasOpposingQueenBishop(board, row, col, king.getColor());
             if (x == 1) {
+                this.positions = toArrayMoves(pos);
                 return true;
             } else if (x == -1) {
                 break;
@@ -227,6 +271,7 @@ public class Check {
         // Opposing Knight two spaces UP and one space LEFT
         if (row - 2 > -1 && col - 1 > -1){
             if(hasOpposingKnight(board, row - 2, col - 1, king.getColor())){
+                this.positions = new int[][]{{row - 2, col - 1}};
                 return true;
             }
         }
@@ -234,6 +279,7 @@ public class Check {
         // Opposing Knight two spaces UP and one space RIGHT
         if (row - 2 > -1 && col + 1 < 8 ){
             if(hasOpposingKnight(board, row - 2, col + 1, king.getColor())){
+                this.positions = new int[][]{{row - 2, col + 1}};
                 return true;
             }
         }
@@ -241,6 +287,7 @@ public class Check {
         // Opposing Knight two spaces DOWN and one space LEFT
         if (row + 2 < 8 && col - 1 > -1){
             if(hasOpposingKnight(board, row + 2, col - 1, king.getColor())){
+                this.positions = new int[][]{{row + 2, col - 1}};
                 return true;
             }
         }
@@ -248,6 +295,7 @@ public class Check {
         // Opposing Knight two spaces DOWN and one space RIGHT
         if (row + 2 < 8 && col + 1 < 8){
             if(hasOpposingKnight(board, row + 2, col + 1, king.getColor())){
+                this.positions = new int[][]{{row + 2, col + 1}};
                 return true;
             }
         }
@@ -255,6 +303,7 @@ public class Check {
         // Opposing Knight two spaces LEFT and one space UP
         if (row - 1 > - 1 && col - 2 > -1){
             if(hasOpposingKnight(board, row - 1, col - 2, king.getColor())){
+                this.positions = new int[][]{{row - 1, col - 2}};
                 return true;
             }
         }
@@ -262,20 +311,23 @@ public class Check {
         // Opposing Knight two spaces LEFT and one space DOWN
         if (row + 1 < 8 && col - 2 > -1){
             if(hasOpposingKnight(board, row + 1, col - 2, king.getColor())){
+                this.positions = new int[][]{{row + 1, col - 2}};
                 return true;
             }
         }
 
         // Opposing knight two spaces RIGHT and one space UP
         if (row - 1 > -1 && col + 2 < 8){
-            if(hasOpposingKnight(board, row -1, col + 2, king.getColor())){
+            if(hasOpposingKnight(board, row - 1, col + 2, king.getColor())){
+                this.positions = new int[][]{{row - 1, col + 2}};
                 return true;
             }
         }
 
         // Opposing knight two spaces RIGHT and one space DOWN
         if (row + 1 < 8 && col + 2 < 8){
-            if(hasOpposingKnight(board, row + 1, col +2, king.getColor())){
+            if(hasOpposingKnight(board, row + 1, col + 2, king.getColor())){
+                this.positions = new int[][]{{row + 1, col + 2}};
                 return true;
             }
         }
@@ -302,7 +354,7 @@ public class Check {
      * This method is used to determine whether there are any opposing pawn pieces that are in
      * position to capture the King.
      *
-     * @return - true, if there is an opposing Pawn piece that can capature the King,
+     * @return - true, if there is an opposing Pawn piece that can capture the King,
      *         - false, otherwise
      */
     private boolean checkPawn(King king, GameState state){
@@ -315,12 +367,14 @@ public class Check {
             // If the pawn is to the bottom Left
             if(row + 1 < 8 && col - 1 > - 1){
                 if(hasOpposingPawn(board, row + 1, col - 1, king.getColor())){
+                    this.positions = new int[][]{{row + 1, col - 1}};
                     return true;
                 }
             }
             // If the pawn is to the bottom Right
             if(row + 1 < 8 && col + 1 < 8){
                 if(hasOpposingPawn(board, row + 1, col + 1, king.getColor())){
+                    this.positions = new int[][]{{row + 1, col + 1}};
                     return true;
                 }
             }
@@ -329,12 +383,14 @@ public class Check {
             // If the pawn is to the upper Left
             if(row - 1 > -1 && col - 1 > - 1){
                 if(hasOpposingPawn(board, row - 1, col - 1, king.getColor())){
+                    this.positions = new int[][]{{row - 1, col - 1}};
                     return true;
                 }
             }
             // If the pawn is to the upper Right
             if(row - 1 > -1 && col + 1 < 8){
                 if(hasOpposingPawn(board, row - 1, col + 1, king.getColor())){
+                    this.positions = new int[][]{{row - 1, col + 1}};
                     return true;
                 }
             }

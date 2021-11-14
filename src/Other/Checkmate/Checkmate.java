@@ -1,8 +1,11 @@
 package Other.Checkmate;
 
+import Entities.ChessPiece;
 import Entities.King;
 import Other.GameState;
-import UseCases.CheckKingMove;
+import UseCases.*;
+
+import java.util.Arrays;
 
 /**
  * This class is responsible for determining if the GameState, and it's chess game are in checkmate.
@@ -33,18 +36,93 @@ public class Checkmate {
         // Generate list of valid moves for the King piece and keeping track of its original position
         CheckKingMove checkMoves = new CheckKingMove();
         int[][] validMoves = checkMoves.validMoves(king, state);
-        int row = king.getRow();
-        int col = king.getColumn();
+        int[][] positions = check.getPositions();
 
+        state.removeChessPiece(king.getRow(), king.getColumn());
         for(int[] move : validMoves) {
-            // Loops through each valid move, and determining whether the king is still in check or not.
-            state.makeMove(new int[]{row, col, move[0], move[1]});
-            if(!(check.isKingInCheck(king, state))){
-                state.makeMove(new int[]{move[0], move[1], row, col});
+            // Creates a temporary King object to test checkmate on
+            King tempKing = new King(move[0], move[1], king.getColor());
+            state.addChessPiece(tempKing);
+
+            // Loops through each valid move, and determines whether the king is still in check or not.
+            if(!(check.isKingInCheck(tempKing, state))){
+                state.removeChessPiece(move[0], move[1]);
+                state.addChessPiece(king);
                 return false;
             }
-            state.makeMove(new int[]{move[0], move[1], row, col});
+            state.removeChessPiece(move[0], move[1]);
         }
-        return true;
+
+        // If there are no valid moves where the King can take itself out of check, we then
+        // see if the opposing piece can be captured or blocked, and determine whether our
+        // game is in checkmate based on that.
+        state.addChessPiece(king);
+        return checkPositions(positions, state, king);
     }
+
+    /**
+     * This is a helper method used to determine whether we can block or capture the opposing
+     * chess piece putting the king in check. Returns true if the opposing piece can be blocked
+     * or captured, and false otherwise.
+     */
+    private boolean checkPositions(int[][] positions, GameState state, King king){
+        ChessPiece[][] board = state.getBoard();
+        CheckerGenerator currChecker = new CheckerGenerator();
+
+        // For each position in the chess board, IF there is piece that belongs to the same team,
+        // AND that piece has a valid move that corresponds with any position in positions, THEN
+        // that piece can block or capture the piece that has our King in Check.
+        for(int i = 0; i < 8; i++){
+            for(int x = 0; x < 8; x++){
+                if(board[i][x] != null && board[i][x].getColor().equals(king.getColor())){
+                    CheckPlayerMove moves = currChecker.generateChecker(board[i][x]);
+                    int[][] validMoves = getValidMoves(moves, board[i][x], state);
+                    if(hasSharedPosition(positions, validMoves)){
+                        return true;
+                    }
+
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Helper method used to generate the 2D list of valid moves for each chess piece.
+     */
+    private int[][] getValidMoves(CheckPlayerMove moves, ChessPiece piece, GameState state){
+        if(moves instanceof CheckPawnMove){
+            return ((CheckPawnMove) moves).validMoves(piece, state);
+        }
+        if(moves instanceof CheckKnightMove){
+            return ((CheckKnightMove) moves).validMoves(piece, state);
+        }
+        if(moves instanceof CheckQueenMove){
+            return ((CheckQueenMove) moves).validMoves(piece, state);
+        }
+        if(moves instanceof CheckBishopMove){
+            return ((CheckBishopMove) moves).validMoves(piece, state);
+        }
+        return ((CheckRookMove) moves).validMoves(piece, state);
+    }
+
+    /**
+     * Helper method used in checkPosition. Used to iterate over two separate 2d arrays. Returns
+     * true if they share at least one array element, false otherwise.
+     */
+    private boolean hasSharedPosition(int[][] arr1, int[][] arr2){
+        if(arr1.length == 0 || arr2.length == 0){
+            return false;
+        }
+
+        for(int[] pos1 : arr1){
+            for(int[] pos2 : arr2){
+                if(Arrays.equals(pos1, pos2)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }
