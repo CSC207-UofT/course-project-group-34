@@ -17,13 +17,5 @@ public class Pawn extends ChessPiece {
       super.setLetter('p');
     }
   }
-  
-  public boolean getHasMovedOnce(){
-    return this.hasMovedOnce;
-  }
-  
-  public void setHasMovedOnce(){
-    this.hasMovedOnce = true;
-  }
 
 }

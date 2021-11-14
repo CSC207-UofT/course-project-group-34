@@ -1,6 +1,5 @@
 package UseCases; 
 
-import Entities.Bishop;
 import Entities.ChessPiece; 
 import Other.GameState; 
 
@@ -69,21 +68,8 @@ public class CheckBishopMove extends CheckPlayerMove {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
-        int[][] array = result.toArray();
+        int[][] array = super.toArrayMoves(result);
         return array;
-    }
-
-    public boolean checkMove(int newRow, int newColumn, ChessPiece bishop, GameState gameState) {
-        int[] desiredMove = {newRow, newColumn};
-        int[][] possibleMoves = validMoves((Bishop) bishop, gameState);
-        
-        for (int[] move : possibleMoves) {
-            if (Arrays.equals(desiredMove, move)) {
-                return true;
-            }
-        }
-
-        return false;
     }
   
 }

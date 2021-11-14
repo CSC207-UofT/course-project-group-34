@@ -1,6 +1,5 @@
 package UseCases; 
 
-import Entities.Rook;
 import Entities.ChessPiece; 
 import Other.GameState; 
 
@@ -61,22 +60,9 @@ public class CheckRookMove extends CheckPlayerMove {
             result.add(new int[] {row, currentColumn});
         }
 
-        int[][] array = result.toArray(); 
+        int[][] array = super.toArrayMoves(result);  
         return array; 
 
-    }
-
-    public boolean checkMove(int newRow, int newColumn, ChessPiece rook, GameState gameState) {
-        int[] desiredMove = {newRow, newColumn};
-        int[][] possibleMoves = validMoves((Rook) rook, gameState);
-        
-        for (int[] move : possibleMoves) {
-            if (Arrays.equals(desiredMove, move)) {
-                return true;
-            }
-        }
-
-        return false;
     }
   
 }
