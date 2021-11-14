@@ -48,6 +48,13 @@ public class GameState implements java.io.Serializable {
     public char getChessPieceLetter(int x, int y){
         return board[x][y].getLetter();
     }
+    
+     /**
+     * This method takes in a given position and removes that chess piece from that position.
+     */
+    public void removeChessPiece(int row, int col){
+        board[row][col] = null;
+    }
 
     /**
      * This method takes an input and changes the gamestate according if the move is value
