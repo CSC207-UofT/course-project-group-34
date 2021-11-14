@@ -12,6 +12,7 @@ import Other.LoadGame;
 
 public class KingMoveTest {
     GameState state;
+    char letter = Character.toChars(0x0199)[0];
 
     // Ensuring the King piece cannot move during the start of the game
     @Before
@@ -44,7 +45,7 @@ public class KingMoveTest {
     public void testMoveUp() {
         int[] arr = {7, 4, 6, 4};
         state.makeMove(arr);
-        assertEquals('k', state.getChessPieceLetter(6, 4));
+        assertEquals(letter, state.getChessPieceLetter(6, 4));
     }
 
 
@@ -69,7 +70,7 @@ public class KingMoveTest {
     public void testMoveDown() {
         int[] arr = {6, 4, 7, 4};
         state.makeMove(arr);
-        assertEquals('k', state.getChessPieceLetter(7, 4));
+        assertEquals(letter, state.getChessPieceLetter(7, 4));
     }
 
 
@@ -97,7 +98,7 @@ public class KingMoveTest {
     public void testMoveRight() {
         int[] arr = {5, 4, 5, 5};
         state.makeMove(arr);
-        assertEquals('k', state.getChessPieceLetter(5, 5));
+        assertEquals(letter, state.getChessPieceLetter(5, 5));
     }
 
 
@@ -125,7 +126,7 @@ public class KingMoveTest {
     public void testMoveLeft() {
         int[] arr = {5, 4, 5, 3};
         state.makeMove(arr);
-        assertEquals('k', state.getChessPieceLetter(5, 3));
+        assertEquals(letter, state.getChessPieceLetter(5, 3));
     }
 
 
@@ -153,7 +154,7 @@ public class KingMoveTest {
     public void testMoveDiagonalRight() {
         int[] arr = {5, 4, 4, 5};
         state.makeMove(arr);
-        assertEquals('k', state.getChessPieceLetter(4, 5));
+        assertEquals(letter, state.getChessPieceLetter(4, 5));
     }
 
 
@@ -181,6 +182,6 @@ public class KingMoveTest {
     public void testMoveDiagonalLeft() {
         int[] arr = {5, 4, 4, 3};
         state.makeMove(arr);
-        assertEquals('k', state.getChessPieceLetter(4, 3));
+        assertEquals(letter, state.getChessPieceLetter(4, 3));
     }
 }
