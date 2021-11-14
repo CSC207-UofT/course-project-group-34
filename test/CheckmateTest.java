@@ -39,11 +39,13 @@ public class CheckmateTest {
         state.makeMove(arr4);
     }
 
+    // Test to determine if Checkmate can identify when the gamestate is in checkmate
     @Test(timeout = 100)
     public void testKingCheckmate() {
         assertTrue(checkmate.isCheckmate(king, state));
     }
 
+    // Loading a game where the gamestate is in check, but not checkmate
     @Before
     public void setupKingCheckMate() {
         LoadGame init = new LoadGame();
@@ -63,6 +65,7 @@ public class CheckmateTest {
         state.makeMove(arr4);
     }
 
+    // Testing to see if checkmate can recognize that the game is not in checkmate
     @Test(timeout = 100)
     public void testKingCheckmate() {
         assertFalse(checkmate.isCheckmate(king, state));
