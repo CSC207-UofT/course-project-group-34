@@ -6,20 +6,27 @@ import Other.GameState;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This is an abstract class responsible for verifying the validity of a given
+ * chess move.
+ */
 public abstract class CheckPlayerMove {
     
-    abstract int[][] validMoves(ChessPiece piece, GameState gameState); 
-    
+    abstract int[][] validMoves(ChessPiece piece, GameState gameState);
+
+    /**
+     * This method verifies whether a given move is valid with respect to a given piece
+     * and the current state of the board.
+     */
     public boolean checkMove(int newRow, int newColumn, ChessPiece piece, GameState gameState) {
         int[] desiredMove = {newRow, newColumn};
-        int[][] possibleMoves = validMoves(piece, gameState);
+        int[][] possibleMoves = this.validMoves(piece, gameState);
         
         for (int[] move : possibleMoves) {
             if (Arrays.equals(desiredMove, move)) {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -34,5 +41,14 @@ public abstract class CheckPlayerMove {
             newArr[i] = (int[]) arr.get(i);
         }
         return newArr;
+    }
+
+    /**
+     * This is a helper method that verifies whether two chess pieces are enemies.
+     */
+    protected boolean isEnemy(ChessPiece piece1, ChessPiece piece2) {
+        String color1 = piece1.getColor();
+        String color2 = piece2.getColor();
+        return !color1.equals(color2);
     }
 }

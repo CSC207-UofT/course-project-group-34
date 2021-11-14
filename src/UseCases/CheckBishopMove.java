@@ -3,13 +3,20 @@ package UseCases;
 import Entities.ChessPiece; 
 import Other.GameState; 
 
-import java.util.ArrayList; 
-import java.util.Arrays;
+import java.util.ArrayList;
 
+/**
+ * This class is a subclass of CheckPlayerMove responsible for verifying the validity of moves
+ * for Bishops.
+ */
 public class CheckBishopMove extends CheckPlayerMove {
 
-    public CheckBishopMove() { } 
-    
+    public CheckBishopMove() { }
+
+    /**
+     * This method generates a 2-dimensional array of integers that represents a list of valid moves
+     * that the Bishop can make with respect to the current state of the game.
+     */
     public int[][] validMoves(ChessPiece bishop, GameState gameState) {
         ArrayList result = new ArrayList(); 
         int row = bishop.getRow(); 
@@ -25,7 +32,7 @@ public class CheckBishopMove extends CheckPlayerMove {
             currentColumn++;
         } 
 
-        if (currentRow > -1 && currentColumn < 8) { 
+        if (currentRow > -1 && currentColumn < 8 && super.isEnemy(bishop, board[currentRow][currentColumn])) {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
@@ -38,7 +45,7 @@ public class CheckBishopMove extends CheckPlayerMove {
             currentColumn++;
         } 
 
-        if (currentRow < 8 && currentColumn < 8) { 
+        if (currentRow < 8 && currentColumn < 8 && super.isEnemy(bishop, board[currentRow][currentColumn])) {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
@@ -51,7 +58,7 @@ public class CheckBishopMove extends CheckPlayerMove {
             currentColumn--;
         } 
 
-        if (currentRow < 8 && currentColumn > -1) { 
+        if (currentRow < 8 && currentColumn > -1 && super.isEnemy(bishop, board[currentRow][currentColumn])) {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
@@ -64,7 +71,7 @@ public class CheckBishopMove extends CheckPlayerMove {
             currentColumn--;
         } 
 
-        if (currentRow > -1 && currentColumn > -1) { 
+        if (currentRow > -1 && currentColumn > -1 && super.isEnemy(bishop, board[currentRow][currentColumn])) {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
