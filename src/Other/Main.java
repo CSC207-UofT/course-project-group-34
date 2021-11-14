@@ -54,6 +54,16 @@ public class Main {
         }
     }
 
+    public static void loadGame() throws FileNotFoundException {
+        try{
+            ObjectInputStream is = new ObjectInputStream(new FileInputStream("object.txt"));
+            GameState s = (GameState) is.readObject();
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     // This method retrieves user input, it asks the player what pawn
     // they would like to move and where.
     public static int[] getPlayerMove(){
