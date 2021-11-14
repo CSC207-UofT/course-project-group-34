@@ -26,8 +26,8 @@ public class Check {
      */
     public boolean isKingInCheck(King king, GameState state){
 
-        return checkLeftRight(king, state) && checkForwardsBackwards(king, state) &&
-                checkDiagonals(king, state) && checkKnight(king, state) && checkPawn(king, state);
+        return checkLeftRight(king, state) || checkForwardsBackwards(king, state) ||
+                checkDiagonals(king, state) || checkKnight(king, state) || checkPawn(king, state);
     }
 
     /**
