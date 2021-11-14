@@ -23,32 +23,28 @@ public class Checkmate {
      *         - false, otherwise
      */
     public boolean isCheckmate(King king, GameState state){
+
+        // If the King is not in check initially, return false early on
         Check check = new Check();
         if(!(check.isKingInCheck(king, state))){
             return false;
         }
+
+        // Generate list of valid moves for the King piece and keeping track of its original position
         CheckKingMove checkMoves = new CheckKingMove();
         int[][] validMoves = checkMoves.validMoves(king, state);
         int row = king.getRow();
         int col = king.getColumn();
 
-        // Go through each move within valid moves, move the King piece to that spot,
-        // Determine whether the King is still in check after it moves to that spot,
-        // if the King is still in Check, move on to the next move and repeat.
-        // if the king is no longer in check for a certain valid move, move the king back
-        // to its original position and return false,
-        // otherwise, if there are no valid moves where the king can escape check, return True.
-
         for(int[] move : validMoves) {
-            // Gamestate function that moves the king to the valid move
+            // Loops through each valid move, and determining whether the king is still in check or not.
+            state.makeMove(new int[]{row, col, move[0], move[1]});
             if(!(check.isKingInCheck(king, state))){
+                state.makeMove(new int[]{move[0], move[1], row, col});
                 return false;
             }
-            
+            state.makeMove(new int[]{move[0], move[1], row, col});
         }
-        
-        // Gamestate function that returns the King checker to it's original position
-        
         return true;
     }
 }
