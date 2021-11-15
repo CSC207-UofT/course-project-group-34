@@ -4,7 +4,7 @@ package Entities;
 * This abstract class represents the shared attributes and methods
 * all other instances of ChessPiece will share. 
 */
-public abstract class ChessPiece implements java.io.Serializable {
+public abstract class ChessPiece {
 
     private int row;
     private int column;
@@ -51,8 +51,12 @@ public abstract class ChessPiece implements java.io.Serializable {
         return this.letter;
     }
 
-    public String toString() {
-        return String.valueOf(this.row) + ',' + String.valueOf(this.column) + ',' + this.color + ',' + this.letter;
+    public boolean getHasMovedOnce(){
+    return this.hasMovedOnce;
+    }
+  
+    public void setHasMovedOnce(){
+        this.hasMovedOnce = true;
     }
 
 }

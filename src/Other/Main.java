@@ -28,11 +28,13 @@ public class Main {
         
         // While loop asking for user input, and will
         // continue to do so until the input in valid.
-        while(!cond) {
-            System.out.println("\nThat is not a valid move, please try again.");
+        while(true) {
             System.out.println(x.printBoard(state));
             arr = getPlayerMove();
             cond = state.makeMove(arr);
+            if (!cond) {
+                System.out.println("\nThat is not a valid move, please try again.");
+            }
         }
         // Printing out our chess board after the new move
         System.out.println(x.printBoard(state));

@@ -15,29 +15,30 @@ public class CheckerGenerator {
 
     public CheckPlayerMove generateChecker(ChessPiece piece) {
         char letter = piece.getLetter(); 
+        CheckPlayerMove checker;
 
         if (letter == 'p' || letter == 'P') { 
-            CheckPlayerMove checker = new CheckPawnMove(); 
+            checker = new CheckPawnMove(); 
         }
 
         else if (letter == 'k' || letter == 'K') {
-            CheckPlayerMove checker = new CheckKnightMove(); 
+            checker = new CheckKnightMove(); 
         }
 
         else if (letter == 'q' || letter == 'Q') {
-            CheckPlayerMove checker = new CheckQueenMove();
+            checker = new CheckQueenMove();
         }
 
         else if (letter == 'b' || letter == 'B') {
-            CheckPlayerMove checker = new CheckBishopMove(); 
+            checker = new CheckBishopMove(); 
         }
 
         else if (letter == 'r' || letter == 'R') {
-            CheckPlayerMove checker = new CheckRookMove();
+            checker = new CheckRookMove();
         }
 
         else {
-            CheckPlayerMove checker = new CheckKingMove();
+            checker = new CheckKingMove();
         }
 
         return checker; 

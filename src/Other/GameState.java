@@ -14,11 +14,15 @@ public class GameState implements java.io.Serializable {
 
     private ChessPiece[][] board;
     private int turn;
+    private boolean isOver;
+    private boolean isCheck;
 
     public GameState(){
 
         this.board = new ChessPiece[8][8];
         this.turn = 0;
+        this.isOver = false;
+        this.isCheck = false
     }
 
     public ChessPiece[][] getBoard(){
@@ -31,6 +35,22 @@ public class GameState implements java.io.Serializable {
 
     public int getTurn(){
         return this.turn;
+    }
+
+    public boolean getOutcome() {
+        return this.isOver;
+    }
+
+    public void setOutcome() {
+        this.isOver = true;
+    }
+
+    public boolean getCheck() {
+        return this.isCheck;
+    }
+
+    public void setCheck() {
+        this.isCheck = true;
     }
 
     /**
