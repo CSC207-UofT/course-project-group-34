@@ -116,12 +116,30 @@ public class GameState implements java.io.Serializable {
 
     }
 
+    public boolean isCurrCheck() {
+        Check check = new Check();
+        boolean cond = false;
+        if (this.turn == 0) {
+            cond = check.isKingInCheck(((King) board[this.kingPos[1][0]][this.kingPos[1][1]]), this);
+        } else {
+            cond = check.isKingInCheck(((King) board[this.kingPos[0][0]][this.kingPos[0][1]]), this);
+        }
+
+        return cond;
+    }
+
     /**
      * This method takes an input and changes the gamestate according if the move is value
      */
     public boolean makeMove(int[] positions) {
         ChessPiece currPiece = board[positions[0]][positions[1]];
         ChessPiece toPiece = board[positions[2]][positions[3]];
+        int[] kingPos = getKingPos();
+
+        if (isCurrCheck() & (positions[0] != kingPos[0] || positions[1] != kingPos[1])) {
+            return false;
+        }
+
         if ((!(this.turn == 0 & currPiece.getColor().equals("black"))) && (!(this.turn == 1 & currPiece.getColor().equals("white")))) {
             CheckerGenerator checker = new CheckerGenerator();
             CheckPlayerMove currCheck = checker.generateChecker(currPiece);
