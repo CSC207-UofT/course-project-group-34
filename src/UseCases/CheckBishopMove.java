@@ -1,23 +1,22 @@
 package UseCases; 
 
-import Entities.Bishop;
 import Entities.ChessPiece; 
 import Other.GameState; 
 
-import java.util.ArrayList; 
-import java.util.Arrays;
+import java.util.ArrayList;
 
+/**
+ * This class is a subclass of CheckPlayerMove responsible for verifying the validity of moves
+ * for Bishops.
+ */
 public class CheckBishopMove extends CheckPlayerMove {
 
-    public CheckBishopMove() { } 
-    
+    public CheckBishopMove() { }
+
     /**
-    *
-    * Considers valid moves made by the bishop
-    * returns an array of the updated gamestate after the bishop has moved
-    *
-    */
-    
+     * This method generates a 2-dimensional array of integers that represents a list of valid moves
+     * that the Bishop can make with respect to the current state of the game.
+     */
     public int[][] validMoves(ChessPiece bishop, GameState gameState) {
         ArrayList result = new ArrayList(); 
         int row = bishop.getRow(); 
@@ -33,7 +32,7 @@ public class CheckBishopMove extends CheckPlayerMove {
             currentColumn++;
         } 
 
-        if (currentRow > -1 && currentColumn < 8) { 
+        if (currentRow > -1 && currentColumn < 8 && super.isEnemy(bishop, board[currentRow][currentColumn])) {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
@@ -46,7 +45,7 @@ public class CheckBishopMove extends CheckPlayerMove {
             currentColumn++;
         } 
 
-        if (currentRow < 8 && currentColumn < 8) { 
+        if (currentRow < 8 && currentColumn < 8 && super.isEnemy(bishop, board[currentRow][currentColumn])) {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
@@ -59,7 +58,7 @@ public class CheckBishopMove extends CheckPlayerMove {
             currentColumn--;
         } 
 
-        if (currentRow < 8 && currentColumn > -1) { 
+        if (currentRow < 8 && currentColumn > -1 && super.isEnemy(bishop, board[currentRow][currentColumn])) {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
@@ -72,32 +71,12 @@ public class CheckBishopMove extends CheckPlayerMove {
             currentColumn--;
         } 
 
-        if (currentRow > -1 && currentColumn > -1) { 
+        if (currentRow > -1 && currentColumn > -1 && super.isEnemy(bishop, board[currentRow][currentColumn])) {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
-        int[][] array = result.toArray();
+        int[][] array = super.toArrayMoves(result);
         return array;
-    }
-
-    
-     /**
-    *
-    * Checker to see if a bishop move is valid
-    * returns true/false depending on the validity of the move
-    *
-    */
-    public boolean checkMove(int newRow, int newColumn, ChessPiece bishop, GameState gameState) {
-        int[] desiredMove = {newRow, newColumn};
-        int[][] possibleMoves = validMoves((Bishop) bishop, gameState);
-        
-        for (int[] move : possibleMoves) {
-            if (Arrays.equals(desiredMove, move)) {
-                return true;
-            }
-        }
-
-        return false;
     }
   
 }
