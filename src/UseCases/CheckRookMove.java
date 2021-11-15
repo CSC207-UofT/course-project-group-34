@@ -3,13 +3,20 @@ package UseCases;
 import Entities.ChessPiece; 
 import Other.GameState; 
 
-import java.util.ArrayList; 
-import java.util.Arrays;
+import java.util.ArrayList;
 
+/**
+ * This class is a subclass of CheckPlayerMove responsible for verifying the validity of moves
+ * for Rooks.
+ */
 public class CheckRookMove extends CheckPlayerMove {
 
-    public CheckRookMove() { } 
-    
+    public CheckRookMove() { }
+
+    /**
+     * This method generates a 2-dimensional array of integers that represents a list of valid moves
+     * that the Rook can make with respect to the current state of the game.
+     */
     public int[][] validMoves(ChessPiece rook, GameState gameState) {
         ArrayList result = new ArrayList(); 
         int row = rook.getRow(); 
@@ -23,7 +30,7 @@ public class CheckRookMove extends CheckPlayerMove {
             currentRow--;
         }
 
-        if (currentRow > -1) { 
+        if (currentRow > -1 && super.isEnemy(rook, board[currentRow][column])) {
             result.add(new int[] {currentRow, column}); 
         }
 
@@ -34,7 +41,7 @@ public class CheckRookMove extends CheckPlayerMove {
             currentColumn++;
         }
 
-        if (currentColumn < 8) { 
+        if (currentColumn < 8 && super.isEnemy(rook, board[row][currentColumn])) {
             result.add(new int[] {row, currentColumn});
         }
 
@@ -45,7 +52,7 @@ public class CheckRookMove extends CheckPlayerMove {
             currentRow++;
         }
 
-        if (currentRow < 8) { 
+        if (currentRow < 8 && super.isEnemy(rook, board[currentRow][column])) {
             result.add(new int[] {currentRow, column}); 
         }
 
@@ -56,7 +63,7 @@ public class CheckRookMove extends CheckPlayerMove {
             currentColumn--; 
         }
 
-        if (currentColumn > -1) {
+        if (currentColumn > -1 && super.isEnemy(rook, board[row][currentColumn])) {
             result.add(new int[] {row, currentColumn});
         }
 
