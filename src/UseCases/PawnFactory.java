@@ -9,7 +9,8 @@ import Entities.Rook;
 
 /**
  * This class uses the Simple Factory design pattern in order to return an instance
- * of chess piece. It is responsible for transforming a pawn into another chess piece.
+ * of chess piece. It is responsible for transforming a pawn into another chess piece
+ * of the player's choosing.
  */
 public class PawnFactory {
 
