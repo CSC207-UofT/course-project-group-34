@@ -48,7 +48,7 @@ public class Main {
 
     public static void saveGame(GameState state) throws FileNotFoundException {
         try {
-            FileOutputStream f = new FileOutputStream(new File("object.txt"));
+            FileOutputStream f = new FileOutputStream("object.txt");
             ObjectOutputStream o = new ObjectOutputStream(f);
 
             o.writeObject(state);
