@@ -6,8 +6,6 @@ import static org.junit.Assert.*;
 
 import Other.GameState;
 import Other.LoadGame;
-import Other.Checkmate.Check;
-
 
 /**
  * This Class is responsible for testing that the program is able to correctly identify when the King piece
@@ -18,7 +16,7 @@ public class CheckmateTest {
     Checkmate checkmate;
     King king;
 
-    // Testing that the Check class can identify that the King is in check after the moves written below
+    // Testing that the Check class can identify that the King is in checkmate after the moves written below
     @Before
     public void setupKingCheckMate() {
         LoadGame init = new LoadGame();
