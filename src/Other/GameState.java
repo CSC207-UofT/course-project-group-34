@@ -68,6 +68,8 @@ public class GameState implements java.io.Serializable {
             if (valid) {
                 board[positions[0]][positions[1]] = null;
                 board[positions[2]][positions[3]] = currPiece;
+                currPiece.setRow(positions[2]); 
+                currPiece.setColumn(positions[3]);
                 currPiece.setHasMovedOnce();
                 changeTurn();
                 return true;
