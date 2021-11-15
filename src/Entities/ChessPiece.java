@@ -10,6 +10,7 @@ public abstract class ChessPiece {
     private int column;
     private String color;
     private char letter;
+    private boolean hasMovedOnce;
 
     // The constructor takes in its row and column and the color
     // of the player representing this object.
@@ -49,6 +50,14 @@ public abstract class ChessPiece {
 
     public char getLetter(){
         return this.letter;
+    }
+
+    public boolean getHasMovedOnce() {
+        return this.hasMovedOnce;
+    }
+  
+    public void setHasMovedOnce(){
+        this.hasMovedOnce = true;
     }
 
 }

@@ -1,16 +1,22 @@
 package UseCases; 
 
-import Entities.Queen;
 import Entities.ChessPiece; 
 import Other.GameState;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
+/**
+ * This class is a subclass of CheckPlayerMove responsible for verifying the validity of moves
+ * for Queens.
+ */
 public class CheckQueenMove extends CheckPlayerMove {
 
-    public CheckQueenMove() { } 
-    
+    public CheckQueenMove() { }
+
+    /**
+     * This method generates a 2-dimensional array of integers that represents a list of valid moves
+     * that the Queen can make with respect to the current state of the game.
+     */
     public int[][] validMoves(ChessPiece queen, GameState gameState) {
         ArrayList result = new ArrayList();
         int row = queen.getRow(); 
@@ -24,7 +30,7 @@ public class CheckQueenMove extends CheckPlayerMove {
             currentRow--;
         }
 
-        if (currentRow > -1) { 
+        if (currentRow > -1 && super.isEnemy(queen, board[currentRow][column])) {
             result.add(new int[] {currentRow, column}); 
         }
 
@@ -37,7 +43,7 @@ public class CheckQueenMove extends CheckPlayerMove {
             currentColumn++;
         } 
 
-        if (currentRow > -1 && currentColumn < 8) { 
+        if (currentRow > -1 && currentColumn < 8 && super.isEnemy(queen, board[currentRow][currentColumn])) {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
@@ -48,7 +54,7 @@ public class CheckQueenMove extends CheckPlayerMove {
             currentColumn++;
         }
 
-        if (currentColumn < 8) { 
+        if (currentColumn < 8 && super.isEnemy(queen, board[row][currentColumn])) {
             result.add(new int[] {row, currentColumn});
         }
 
@@ -61,7 +67,7 @@ public class CheckQueenMove extends CheckPlayerMove {
             currentColumn++;
         } 
 
-        if (currentRow < 8 && currentColumn < 8) { 
+        if (currentRow < 8 && currentColumn < 8 && super.isEnemy(queen, board[currentRow][currentColumn])) {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
@@ -72,7 +78,7 @@ public class CheckQueenMove extends CheckPlayerMove {
             currentRow++;
         }
 
-        if (currentRow < 8) { 
+        if (currentRow < 8 && super.isEnemy(queen, board[currentRow][column])) {
             result.add(new int[] {currentRow, column}); 
         }
 
@@ -85,7 +91,7 @@ public class CheckQueenMove extends CheckPlayerMove {
             currentColumn--;
         } 
 
-        if (currentRow < 8 && currentColumn > -1) { 
+        if (currentRow < 8 && currentColumn > -1 && super.isEnemy(queen, board[currentRow][currentColumn])) {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
@@ -96,7 +102,7 @@ public class CheckQueenMove extends CheckPlayerMove {
             currentColumn--; 
         }
 
-        if (currentColumn > -1) {
+        if (currentColumn > -1 && super.isEnemy(queen, board[row][currentColumn])) {
             result.add(new int[] {row, currentColumn});
         }
 
@@ -109,25 +115,12 @@ public class CheckQueenMove extends CheckPlayerMove {
             currentColumn--;
         } 
 
-        if (currentRow > -1 && currentColumn > -1) { 
+        if (currentRow > -1 && currentColumn > -1 && super.isEnemy(queen, board[currentRow][currentColumn])) {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
-        int[][] array = result.toArray();
+        int[][] array = super.toArrayMoves(result); 
         return array;
-    }
-
-    public boolean checkMove(int newRow, int newColumn, ChessPiece queen, GameState gameState) {
-        int[] desiredMove = {newRow, newColumn};
-        int[][] possibleMoves = validMoves((Queen) queen, gameState);
-        
-        for (int[] move : possibleMoves) {
-            if (Arrays.equals(desiredMove, move)) {
-                return true;
-            }
-        }
-
-        return false;
     }
   
 }

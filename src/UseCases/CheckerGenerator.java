@@ -1,46 +1,52 @@
-package UseCases; 
+package UseCases;
 
-import Entities.ChessPiece; 
+import Entities.ChessPiece;
 import UseCases.CheckPlayerMove;
-import UseCases.CheckPawnMove; 
-import UseCases.CheckKnightMove; 
-import UseCases.CheckQueenMove; 
-import UseCases.CheckBishopMove; 
-import UseCases.CheckRookMove; 
-import UseCases.CheckKingMove; 
+import UseCases.CheckPawnMove;
+import UseCases.CheckKnightMove;
+import UseCases.CheckQueenMove;
+import UseCases.CheckBishopMove;
+import UseCases.CheckRookMove;
+import UseCases.CheckKingMove;
 
+/**
+ * This class uses a simple factory method to determine what Move checker will
+ * be returned for the given chess piece.
+ */
 public class CheckerGenerator {
 
     public CheckerGenerator() { }
 
+    /**
+     * Given a chess piece, this  method returns the corresponding CheckPlayerMove class.
+     */
     public CheckPlayerMove generateChecker(ChessPiece piece) {
-        char letter = piece.getLetter(); 
+        char letter = piece.getLetter();
+        CheckPlayerMove checker;
 
-        if (letter == 'p' || letter == 'P') { 
-            CheckPlayerMove checker = new CheckPawnMove(); 
+        if (letter == 'p' || letter == 'P') {
+            checker = new CheckPawnMove();
         }
 
         else if (letter == 'k' || letter == 'K') {
-            CheckPlayerMove checker = new CheckKnightMove(); 
+            checker = new CheckKnightMove();
         }
 
-        else if (letter == 'q' || letter = 'Q') {
-            CheckPlayerMove checker = new CheckQueenMove();
+        else if (letter == 'q' || letter == 'Q') {
+            checker = new CheckQueenMove();
         }
 
         else if (letter == 'b' || letter == 'B') {
-            CheckPlayerMove checker = new CheckBishopMove(); 
+            checker = new CheckBishopMove();
         }
 
         else if (letter == 'r' || letter == 'R') {
-            CheckPlayerMove checker = new CheckRookMove();
+            checker = new CheckRookMove();
         }
 
         else {
-            CheckPlayerMove checker = new CheckKingMove();
+            checker = new CheckKingMove();
         }
-
-        return checker; 
-
+        return checker;
     }
 }
