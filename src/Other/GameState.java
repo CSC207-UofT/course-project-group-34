@@ -2,6 +2,7 @@ package Other;
 
 import Entities.ChessPiece;
 import Entities.Pawn;
+import Other.Checkmate.Check;
 import UseCases.CheckPawnMove;
 import UseCases.CheckPlayerMove;
 import UseCases.CheckerGenerator;
@@ -22,7 +23,7 @@ public class GameState implements java.io.Serializable {
         this.board = new ChessPiece[8][8];
         this.turn = 0;
         this.isOver = false;
-        this.isCheck = false
+        this.isCheck = false;
     }
 
     public ChessPiece[][] getBoard(){
@@ -85,10 +86,13 @@ public class GameState implements java.io.Serializable {
             CheckerGenerator checker = new CheckerGenerator();
             CheckPlayerMove currCheck = checker.generateChecker(currPiece);
             boolean valid = currCheck.checkMove(positions[2], positions[3], currPiece, this);
+            Check check = new Check();
             if (valid) {
                 board[positions[0]][positions[1]] = null;
                 board[positions[2]][positions[3]] = currPiece;
-                ((Pawn) currPiece).setHasMovedOnce();
+                currPiece.setRow(positions[2]);
+                currPiece.setColumn(positions[3]);
+                currPiece.setHasMovedOnce();
                 changeTurn();
                 return true;
             }
