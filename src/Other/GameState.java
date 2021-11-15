@@ -1,22 +1,23 @@
 package Other;
 
 import Entities.ChessPiece;
+import Entities.King;
 import Entities.Pawn;
 import Other.Checkmate.Check;
-import UseCases.CheckPawnMove;
-import UseCases.CheckPlayerMove;
-import UseCases.CheckerGenerator;
+import Other.Checkmate.Checkmate;
+import UseCases.*;
 
 /**
- * This class is responsible for controlling everything about our 2D array that represents the chess board.
- * This predominantly includes keeping track of which player turn it is as well as moving chess pieces.
- */
+* This class is responsible for controlling everything about our 2D array that represents the chess board. 
+* This predominantly includes keeping track of which player turn it is as well as moving chess pieces. 
+*/
 public class GameState implements java.io.Serializable {
 
     private ChessPiece[][] board;
     private int turn;
     private boolean isOver;
     private boolean isCheck;
+    private int[][] kingPos;
 
     public GameState(){
 
@@ -24,6 +25,7 @@ public class GameState implements java.io.Serializable {
         this.turn = 0;
         this.isOver = false;
         this.isCheck = false;
+        this.kingPos = getInitKing();
     }
 
     public ChessPiece[][] getBoard(){
@@ -36,6 +38,11 @@ public class GameState implements java.io.Serializable {
 
     public int getTurn(){
         return this.turn;
+    }
+
+    public int[][] getInitKing() {
+        int[][] initPos = {{0, 4}, {7, 4}};
+        return initPos;
     }
 
     public boolean getOutcome() {
@@ -69,12 +76,44 @@ public class GameState implements java.io.Serializable {
     public char getChessPieceLetter(int x, int y){
         return board[x][y].getLetter();
     }
-
-    /**
+    
+     /**
      * This method takes in a given position and removes that chess piece from that position.
      */
     public void removeChessPiece(int row, int col){
         board[row][col] = null;
+    }
+
+    public void changeKingPos(String color, int[] Pos) {
+        if (color.equals("black")) {
+            this.kingPos[0][0] = Pos[0];
+            this.kingPos[0][1] = Pos[1];
+        }
+        else {
+            this.kingPos[1][0] = Pos[0];
+            this.kingPos[1][1] = Pos[1];
+        }
+    }
+
+    public int[] getKingPos() {
+        if (this.turn == 0) {
+            return new int[] {this.kingPos[0][0], this.kingPos[0][1]};
+        }
+        return new int[] {this.kingPos[1][0], this.kingPos[1][1]};
+    }
+
+    public boolean isKing(ChessPiece piece) {
+        char letter = piece.getLetter();
+
+        if (letter == 'p' || letter == 'P' || letter == 'k' || letter == 'K' || letter == 'q' || letter == 'Q' || letter == 'b' || letter == 'B' || letter == 'r' || letter == 'R') {
+            return false;
+        }
+
+        else {
+            return true;
+        }
+
+
     }
 
     /**
@@ -82,17 +121,47 @@ public class GameState implements java.io.Serializable {
      */
     public boolean makeMove(int[] positions) {
         ChessPiece currPiece = board[positions[0]][positions[1]];
+        ChessPiece toPiece = board[positions[2]][positions[3]];
         if ((!(this.turn == 0 & currPiece.getColor().equals("black"))) && (!(this.turn == 1 & currPiece.getColor().equals("white")))) {
             CheckerGenerator checker = new CheckerGenerator();
             CheckPlayerMove currCheck = checker.generateChecker(currPiece);
             boolean valid = currCheck.checkMove(positions[2], positions[3], currPiece, this);
-            Check check = new Check();
+
             if (valid) {
+                boolean kingCheck = isKing(currPiece);
+                if (kingCheck) {
+                    Check check = new Check();
+                    board[positions[0]][positions[1]] = null;
+                    board[positions[2]][positions[3]] = currPiece;
+                    currPiece.setRow(positions[2]);
+                    currPiece.setColumn(positions[3]);
+                    boolean inCheck = check.isKingInCheck(((King) currPiece), this);
+                    if (inCheck) {
+                        board[positions[0]][positions[1]] = currPiece;
+                        board[positions[2]][positions[3]] = toPiece;
+                        currPiece.setRow(positions[0]);
+                        currPiece.setColumn(positions[1]);
+                        return false;
+                    }
+
+                    else {
+                        changeKingPos(currPiece.getColor(), new int[]{positions[2], positions[3]});
+                        currPiece.setHasMovedOnce();
+                        changeTurn();
+                        return true;
+                    }
+                }
                 board[positions[0]][positions[1]] = null;
                 board[positions[2]][positions[3]] = currPiece;
                 currPiece.setRow(positions[2]);
                 currPiece.setColumn(positions[3]);
                 currPiece.setHasMovedOnce();
+                int[] opKingPos = getKingPos();
+                Checkmate checkmate = new Checkmate();
+                boolean cMate = checkmate.isCheckmate(((King) board[opKingPos[0]][opKingPos[1]]), this);
+                if (cMate) {
+                    setOutcome();
+                }
                 changeTurn();
                 return true;
             }
