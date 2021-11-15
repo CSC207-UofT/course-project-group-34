@@ -80,6 +80,13 @@ public class CheckBishopMove extends CheckPlayerMove {
         return array;
     }
 
+    
+     /**
+    *
+    * Checker to see if a bishop move is valid
+    * returns true/false depending on the validity of the move
+    *
+    */
     public boolean checkMove(int newRow, int newColumn, ChessPiece bishop, GameState gameState) {
         int[] desiredMove = {newRow, newColumn};
         int[][] possibleMoves = validMoves((Bishop) bishop, gameState);
