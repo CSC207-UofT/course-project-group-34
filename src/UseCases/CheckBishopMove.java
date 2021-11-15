@@ -11,6 +11,13 @@ public class CheckBishopMove extends CheckPlayerMove {
 
     public CheckBishopMove() { } 
     
+    /**
+    *
+    * Considers valid moves made by the bishop
+    * returns an array of the updated gamestate after the bishop has moved
+    *
+    */
+    
     public int[][] validMoves(ChessPiece bishop, GameState gameState) {
         ArrayList result = new ArrayList(); 
         int row = bishop.getRow(); 
