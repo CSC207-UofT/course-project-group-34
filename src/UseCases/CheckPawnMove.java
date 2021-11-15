@@ -1,21 +1,20 @@
 package UseCases;
 
-import Entities.Pawn;
 import Entities.ChessPiece;
 import Other.GameState;
 
-import java.util.Arrays;
-
+/**
+ * This class is a subclass of CheckPlayerMove responsible for verifying the validity of moves
+ * for Pawns.
+ */
 public class CheckPawnMove extends CheckPlayerMove {
 
     public CheckPawnMove() { }
-    
-     /**
-    *
-    * Considers valid moves made by the pawn
-    * returns an array of the updated gamestate after the pawn has moved
-    *
-    */
+
+    /**
+     * This method generates a 2-dimensional array of integers that represents a list of valid moves
+     * that the Pawn can make with respect to the current state of the game.
+     */
     public int[][] validMoves(ChessPiece pawn, GameState gameState) {
         int[][] result = new int[4][2];
         int row = pawn.getRow();
@@ -30,18 +29,21 @@ public class CheckPawnMove extends CheckPlayerMove {
                 result[0][1] = column;
             }
 
-            if (!pawn.getHasMovedOnce() && row - 2 > -1 && board[row - 1][column] == null && board[row - 2][column] == null) {
+            if (!pawn.getHasMovedOnce() && row - 2 > -1 && board[row - 1][column] == null
+                    && board[row - 2][column] == null) {
                 result[1][0] = row - 2;
                 result[1][1] = column;
             }
 
             // Check attack moves
-            if (row - 1 > -1 && column - 1 > -1 && board[row - 1][column - 1] != null) {
+            if (row - 1 > -1 && column - 1 > -1 && board[row - 1][column - 1] != null
+                    && super.isEnemy(pawn, board[row - 1][column - 1])) {
                 result[2][0] = row - 1;
                 result[2][1] = column - 1;
             }
 
-            if (row - 1 > -1 && column + 1 < 8 && board[row - 1][column + 1] != null) {
+            if (row - 1 > -1 && column + 1 < 8 && board[row - 1][column + 1] != null
+                    && super.isEnemy(pawn, board[row - 1][column + 1])) {
                 result[3][0] = row - 1;
                 result[3][1] = column + 1;
             }
@@ -52,18 +54,21 @@ public class CheckPawnMove extends CheckPlayerMove {
                 result[0][1] = column;
             }
 
-            if (!pawn.getHasMovedOnce() && row + 2 < 8 && board[row + 1][column] == null && board[row + 2][column] == null) {
+            if (!pawn.getHasMovedOnce() && row + 2 < 8 && board[row + 1][column] == null
+                    && board[row + 2][column] == null) {
                 result[1][0] = row + 2;
                 result[1][1] = column;
             }
 
             // Check attack moves
-            if (row + 1 < 8 && column - 1 > -1 && board[row + 1][column - 1] != null) {
+            if (row + 1 < 8 && column - 1 > -1 && board[row + 1][column - 1] != null
+                    && super.isEnemy(pawn, board[row + 1][column - 1])) {
                 result[2][0] = row + 1;
                 result[2][1] = column - 1;
             }
 
-            if (row + 1 < 8 && column + 1 < 8 && board[row + 1][column + 1] != null) {
+            if (row + 1 < 8 && column + 1 < 8 && board[row + 1][column + 1] != null
+                    && super.isEnemy(pawn, board[row + 1][column + 1])) {
                 result[3][0] = row + 1;
                 result[3][1] = column + 1;
             }
@@ -71,23 +76,5 @@ public class CheckPawnMove extends CheckPlayerMove {
 
         return result;
     }
-     
-     /**
-    *
-    * Checker to see if pawn's move is valid
-    * returns true/false depending on the validity of the move
-    *
-    */
-    public boolean checkMove(int newRow, int newColumn, ChessPiece pawn, GameState gameState) {
-        int[] desiredMove = {newRow, newColumn};
-        int[][] possibleMoves = validMoves((Pawn) pawn, gameState);
-        
-        for (int[] move : possibleMoves) {
-            if (Arrays.equals(desiredMove, move)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
+    
 }
