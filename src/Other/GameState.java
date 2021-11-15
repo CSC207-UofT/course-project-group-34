@@ -2,23 +2,28 @@ package Other;
 
 import Entities.ChessPiece;
 import Entities.Pawn;
+import Other.Checkmate.Check;
 import UseCases.CheckPawnMove;
 import UseCases.CheckPlayerMove;
 import UseCases.CheckerGenerator;
 
 /**
-* This class is responsible for controlling everything about our 2D array that represents the chess board. 
-* This predominantly includes keeping track of which player turn it is as well as moving chess pieces. 
-*/
+ * This class is responsible for controlling everything about our 2D array that represents the chess board.
+ * This predominantly includes keeping track of which player turn it is as well as moving chess pieces.
+ */
 public class GameState implements java.io.Serializable {
 
     private ChessPiece[][] board;
     private int turn;
+    private boolean isOver;
+    private boolean isCheck;
 
     public GameState(){
 
         this.board = new ChessPiece[8][8];
         this.turn = 0;
+        this.isOver = false;
+        this.isCheck = false;
     }
 
     public ChessPiece[][] getBoard(){
@@ -31,6 +36,22 @@ public class GameState implements java.io.Serializable {
 
     public int getTurn(){
         return this.turn;
+    }
+
+    public boolean getOutcome() {
+        return this.isOver;
+    }
+
+    public void setOutcome() {
+        this.isOver = true;
+    }
+
+    public boolean getCheck() {
+        return this.isCheck;
+    }
+
+    public void setCheck() {
+        this.isCheck = true;
     }
 
     /**
@@ -48,8 +69,8 @@ public class GameState implements java.io.Serializable {
     public char getChessPieceLetter(int x, int y){
         return board[x][y].getLetter();
     }
-    
-     /**
+
+    /**
      * This method takes in a given position and removes that chess piece from that position.
      */
     public void removeChessPiece(int row, int col){
@@ -65,10 +86,13 @@ public class GameState implements java.io.Serializable {
             CheckerGenerator checker = new CheckerGenerator();
             CheckPlayerMove currCheck = checker.generateChecker(currPiece);
             boolean valid = currCheck.checkMove(positions[2], positions[3], currPiece, this);
+            Check check = new Check();
             if (valid) {
                 board[positions[0]][positions[1]] = null;
                 board[positions[2]][positions[3]] = currPiece;
-                ((Pawn) currPiece).setHasMovedOnce();
+                currPiece.setRow(positions[2]);
+                currPiece.setColumn(positions[3]);
+                currPiece.setHasMovedOnce();
                 changeTurn();
                 return true;
             }

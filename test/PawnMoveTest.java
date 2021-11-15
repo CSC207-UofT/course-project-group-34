@@ -18,7 +18,7 @@ public class PawnMoveTest {
     @Before
     public void setupMoveDouble() {
         LoadGame init = new LoadGame();
-        state = init.loadGame();
+        GameState state = init.loadGame();
     }
 
     @Test(timeout = 100)

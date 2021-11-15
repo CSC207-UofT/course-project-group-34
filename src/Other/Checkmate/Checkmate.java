@@ -4,6 +4,7 @@ import Entities.ChessPiece;
 import Entities.King;
 import Other.GameState;
 import UseCases.*;
+import Entities.*;
 
 import java.util.Arrays;
 
@@ -15,6 +16,9 @@ import java.util.Arrays;
  *      2. The King cannot get out of check
  */
 public class Checkmate {
+
+    private int[] sharedPos = null;
+    private boolean hasSharedPos;
 
     /**
      * This method is responsible for determining whether the GameState in is Checkmate.
@@ -30,12 +34,14 @@ public class Checkmate {
         // If the King is not in check initially, return false early on
         Check check = new Check();
         if(!(check.isKingInCheck(king, state))){
+
             return false;
         }
 
         // Generate list of valid moves for the King piece and keeping track of its original position
         CheckKingMove checkMoves = new CheckKingMove();
         int[][] validMoves = checkMoves.validMoves(king, state);
+
         int[][] positions = check.getPositions();
 
         state.removeChessPiece(king.getRow(), king.getColumn());
@@ -48,6 +54,7 @@ public class Checkmate {
             if(!(check.isKingInCheck(tempKing, state))){
                 state.removeChessPiece(move[0], move[1]);
                 state.addChessPiece(king);
+
                 return false;
             }
             state.removeChessPiece(move[0], move[1]);
@@ -57,7 +64,8 @@ public class Checkmate {
         // see if the opposing piece can be captured or blocked, and determine whether our
         // game is in checkmate based on that.
         state.addChessPiece(king);
-        return checkPositions(positions, state, king);
+
+        return !(checkPositions(positions, state, king));
     }
 
     /**
@@ -74,14 +82,13 @@ public class Checkmate {
         // that piece can block or capture the piece that has our King in Check.
         for(int i = 0; i < 8; i++){
             for(int x = 0; x < 8; x++){
-                if(board[i][x] != null && board[i][x].getColor().equals(king.getColor())){
+                if(board[i][x] != null && board[i][x].getColor().equals(king.getColor()) && !(board[i][x] instanceof King) ){
 
                     CheckPlayerMove moves = currChecker.generateChecker(board[i][x]);
                     int[][] validMoves = getValidMoves(moves, board[i][x], state);
+                    hasSharedPosition(positions, validMoves);
 
-                    // Used to see if the King can be put in check once we move the piece.
-                    Object[][] sharedPos = hasSharedPosition(positions, validMoves);
-                    if((boolean) sharedPos[0][0] && !(moveCausesCheck(king, board[i][x], state))){
+                    if(this.hasSharedPos && !(moveCausesCheck(king, board[i][x], state, sharedPos[0], sharedPos[1]))){
                         return true;
                     }
                 }
@@ -94,18 +101,44 @@ public class Checkmate {
      * This method is used to determine if the king is in check once we remove a chess piece from the board.
      * Returns true if the king is still in check, and false otherwise.
      */
-    private boolean moveCausesCheck(King king, ChessPiece currPiece, GameState state){
+    private boolean moveCausesCheck(King king, ChessPiece currPiece, GameState state, int row, int col){
         Check check = new Check();
         int currRow = currPiece.getRow();
         int currCol = currPiece.getColumn();
 
+        ChessPiece tempPiece = getCopy(currPiece, row, col);
+
         state.removeChessPiece(currRow, currCol);
+        state.addChessPiece(tempPiece);
         if(check.isKingInCheck(king, state)){
+            state.removeChessPiece(row, col);
             state.addChessPiece(currPiece);
             return true;
         }
+        state.removeChessPiece(row, col);
         state.addChessPiece(currPiece);
         return false;
+    }
+
+    /**
+     * This method takes in a chess piece instance and returns a copy of that instance.
+     */
+    private ChessPiece getCopy(ChessPiece currPiece, int row, int col){
+        if(currPiece instanceof Pawn){
+            return new Pawn(row, col, currPiece.getColor());
+        }
+        if(currPiece instanceof Queen){
+            return new Queen(row, col, currPiece.getColor());
+        }
+        if(currPiece instanceof Knight){
+            return new Knight(row, col, currPiece.getColor());
+        }
+        if(currPiece instanceof Rook){
+            return new Rook(row, col, currPiece.getColor());
+        }
+        else{
+            return new Bishop(row, col, currPiece.getColor());
+        }
     }
 
 
@@ -132,19 +165,21 @@ public class Checkmate {
      * Helper method used in checkPosition. Used to iterate over two separate 2d arrays. Returns
      * true if they share at least one array element, false otherwise.
      */
-    private Object[][] hasSharedPosition(int[][] arr1, int[][] arr2){
+    private void hasSharedPosition(int[][] arr1, int[][] arr2){
         if(arr1.length == 0 || arr2.length == 0){
-            return new Object[][]{{false}};
+            this.hasSharedPos = false;
+            return;
         }
-
         for(int[] pos1 : arr1){
             for(int[] pos2 : arr2){
                 if(Arrays.equals(pos1, pos2)){
-                    return new Object[][]{{true},{pos2}};
+                    this.sharedPos = pos1;
+                    this.hasSharedPos = true;
+                    return;
                 }
             }
         }
-        return new Object[][]{{false}};
+        this.hasSharedPos = false;
     }
 
 }
