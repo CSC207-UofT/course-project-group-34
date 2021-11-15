@@ -44,8 +44,8 @@ public class LoadGame {
      */
     public void loadChessPieces(GameState state, String color, int row1, int row2){
         ChessPiece[] pieces = new ChessPiece[16];
-        pieces[0] = new King(row1, 3, color);
-        pieces[1] = new Queen(row1, 4, color);
+        pieces[0] = new King(row1, 4, color);
+        pieces[1] = new Queen(row1, 3, color);
         pieces[2] = new Rook(row1, 0, color);
         pieces[3] = new Rook(row1, 7, color);
         pieces[4] = new Bishop(row1, 2, color);
