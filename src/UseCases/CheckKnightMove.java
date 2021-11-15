@@ -11,6 +11,12 @@ public class CheckKnightMove extends CheckPlayerMove {
 
     public CheckKnightMove() { } 
     
+     /**
+    *
+    * Considers valid moves made by the king
+    * returns an array of the updated gamestate after the king has moved
+    *
+    */
     public int[][] validMoves(ChessPiece knight, GameState gameState) {
         ArrayList result = new ArrayList(); 
         int row = knight.getRow(); 
@@ -54,6 +60,12 @@ public class CheckKnightMove extends CheckPlayerMove {
 
     }
 
+     /**
+    *
+    * Checker to see if king's move is valid
+    * returns true/false depending on the validity of the move
+    *
+    */
     public boolean checkMove(int newRow, int newColumn, ChessPiece knight, GameState gameState) {
         int[] desiredMove = {newRow, newColumn};
         int[][] possibleMoves = validMoves((Knight) knight, gameState);
