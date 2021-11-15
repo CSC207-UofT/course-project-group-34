@@ -9,7 +9,13 @@ import java.util.Arrays;
 public class CheckPawnMove extends CheckPlayerMove {
 
     public CheckPawnMove() { }
-
+    
+     /**
+    *
+    * Considers valid moves made by the pawn
+    * returns an array of the updated gamestate after the pawn has moved
+    *
+    */
     public int[][] validMoves(ChessPiece pawn, GameState gameState) {
         int[][] result = new int[4][2];
         int row = pawn.getRow();
@@ -66,6 +72,12 @@ public class CheckPawnMove extends CheckPlayerMove {
         return result;
     }
      
+     /**
+    *
+    * Checker to see if pawn's move is valid
+    * returns true/false depending on the validity of the move
+    *
+    */
     public boolean checkMove(int newRow, int newColumn, ChessPiece pawn, GameState gameState) {
         int[] desiredMove = {newRow, newColumn};
         int[][] possibleMoves = validMoves((Pawn) pawn, gameState);
