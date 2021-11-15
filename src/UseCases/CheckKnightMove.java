@@ -1,82 +1,71 @@
 package UseCases; 
 
-import Entities.Knight;
 import Entities.ChessPiece; 
 import Other.GameState; 
 
-import java.util.ArrayList; 
-import java.util.Arrays;
+import java.util.ArrayList;
 
+/**
+ * This class is a subclass of CheckPlayerMove responsible for verifying the validity of moves
+ * for Knights.
+ */
 public class CheckKnightMove extends CheckPlayerMove {
 
-    public CheckKnightMove() { } 
-    
-     /**
-    *
-    * Considers valid moves made by the king
-    * returns an array of the updated gamestate after the king has moved
-    *
-    */
+    public CheckKnightMove() { }
+
+    /**
+     * This method generates a 2-dimensional array of integers that represents a list of valid moves
+     * that the Knight can make with respect to the current state of the game.
+     */
     public int[][] validMoves(ChessPiece knight, GameState gameState) {
         ArrayList result = new ArrayList(); 
         int row = knight.getRow(); 
         int column = knight.getColumn(); 
         ChessPiece[][] board = gameState.getBoard(); 
 
-        if (row - 2 > -1 && column -1 > -1) {
+        if (row - 2 > -1 && column -1 > -1 &&
+                (board[row - 2][column - 1] == null || super.isEnemy(knight, board[row - 2][column - 1]))) {
             result.add(new int[] {row - 2, column + 1});
         }
 
-        if (row - 2 > -1 && column + 1 < 8) {
+        if (row - 2 > -1 && column + 1 < 8 &&
+                (board[row - 2][column + 1] == null || super.isEnemy(knight, board[row - 2][column + 1]))) {
             result.add(new int[] {row - 2, column - 1});
         }
 
-        if (row - 1 > -1 && column + 2 < 8) {
+        if (row - 1 > -1 && column + 2 < 8 &&
+                (board[row - 1][column + 2] == null || super.isEnemy(knight, board[row - 1][column + 2]))) {
             result.add(new int[] {row - 1, column + 2});
         }
 
-        if (row + 1 < 8 && column + 2 < 8) {
+        if (row + 1 < 8 && column + 2 < 8 &&
+                (board[row + 1][column + 2] == null || super.isEnemy(knight, board[row + 1][column + 2]))) {
             result.add(new int[] {row + 1, column + 2});
         }
 
-        if (row + 2 < 8 && column + 1 < 8) {
+        if (row + 2 < 8 && column + 1 < 8 &&
+                (board[row + 2][column + 1] == null || super.isEnemy(knight, board[row + 2][column + 1]))) {
             result.add(new int[] {row + 2, column + 1}); 
         }
 
-        if (row + 2 < 8 && column - 1 > -1) {
+        if (row + 2 < 8 && column - 1 > -1 &&
+                (board[row + 2][column - 1] == null || super.isEnemy(knight, board[row + 2][column - 1]))) {
             result.add(new int[] {row + 2, column - 1}); 
         }
 
-        if (row + 1 < 8 && column - 2 > -1) {
+        if (row + 1 < 8 && column - 2 > -1 &&
+                (board[row + 1][column - 2] == null || super.isEnemy(knight, board[row + 1][column - 2]))) {
             result.add(new int[] {row + 1, column - 2});
         }
 
-        if (row - 1 > -1 && column - 2 > -1) {
+        if (row - 1 > -1 && column - 2 > -1 &&
+                (board[row - 1][column - 2] == null || super.isEnemy(knight, board[row - 1][column - 2]))) {
             result.add(new int[] {row - 1, column - 2});
         }
 
-        int[][] array = result.toArray();
+        int[][] array = super.toArrayMoves(result); 
         return array;
 
-    }
-
-     /**
-    *
-    * Checker to see if king's move is valid
-    * returns true/false depending on the validity of the move
-    *
-    */
-    public boolean checkMove(int newRow, int newColumn, ChessPiece knight, GameState gameState) {
-        int[] desiredMove = {newRow, newColumn};
-        int[][] possibleMoves = validMoves((Knight) knight, gameState);
-        
-        for (int[] move : possibleMoves) {
-            if (Arrays.equals(desiredMove, move)) {
-                return true;
-            }
-        }
-
-        return false;
     }
   
 }
