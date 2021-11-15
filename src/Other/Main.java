@@ -21,18 +21,25 @@ public class Main {
         // Printing out the UI
         System.out.println(x.printBoard(state));
 
-        boolean cond = false;
-        int[] arr = getPlayerMove();
-        cond = state.makeMove(arr);
+
+        boolean isOver = false;
         saveGame(state);
         
         // While loop asking for user input, and will
         // continue to do so until the input in valid.
-        while(!cond) {
-            System.out.println("\nThat is not a valid move, please try again.");
+        while(!isOver) {
             System.out.println(x.printBoard(state));
-            arr = getPlayerMove();
-            cond = state.makeMove(arr);
+            int[] arr = getPlayerMove(state);
+            boolean cond = state.makeMove(arr);
+            if (!cond) {
+                System.out.println("\nThat is not a valid move, please try again.");
+                continue;
+            }
+            boolean outcome = state.getOutcome();
+            if (outcome) {
+                isOver = true;
+                System.out.println("The game is over!");
+            }
         }
         // Printing out our chess board after the new move
         System.out.println(x.printBoard(state));
@@ -66,18 +73,28 @@ public class Main {
 
     // This method retrieves user input, it asks the player what pawn
     // they would like to move and where.
-    public static int[] getPlayerMove(){
+    public static int[] getPlayerMove(GameState state){
+        String player;
+        if(state.getTurn() == 0){
+            player = "White";
+        }
+        else{
+            player = "Black";
+        }
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("\nPlayer White, which pawn will you move? (ex. row = 7, col = 1, => '71'): ");
+        System.out.println("\nPlayer "+ player + ", which piece will you move? (ex. row = 7, col = 1, => '71'): ");
         int moveFrom = sc.nextInt();
 
-        System.out.println("\nPlayer White, where will you move the pawn to? (ex. row = 8, col = 1, => '81'):");
+        System.out.println("\nPlayer " + player + ", where will you move the piece to? (ex. row = 8, col = 1, => '81'):");
         int moveTo = sc.nextInt();
         
         int rcFrom = moveFrom - 11;
         int rcTo = moveTo - 11;
 
+        System.out.println();
+
         return new int[]{Math.floorDiv(rcFrom, 10), rcFrom % 10, Math.floorDiv(rcTo, 10), rcTo % 10};
     }
+
 }
