@@ -21,19 +21,26 @@ public class Main {
         // Printing out the UI
         System.out.println(x.printBoard(state));
 
-        boolean cond = false;
-        int[] arr = getPlayerMove();
-        cond = state.makeMove(arr);
+
+        boolean isOver = false;
+//        int[] arr = getPlayerMove();
+//        cond = state.makeMove(arr);
         saveGame(state);
         
         // While loop asking for user input, and will
         // continue to do so until the input in valid.
-        while(true) {
+        while(!isOver) {
             System.out.println(x.printBoard(state));
-            arr = getPlayerMove();
-            cond = state.makeMove(arr);
+            int[] arr = getPlayerMove();
+            boolean cond = state.makeMove(arr);
             if (!cond) {
                 System.out.println("\nThat is not a valid move, please try again.");
+                continue;
+            }
+            boolean outcome = state.getOutcome();
+            if (outcome) {
+                isOver = true;
+                System.out.println("The game is over!");
             }
         }
         // Printing out our chess board after the new move
