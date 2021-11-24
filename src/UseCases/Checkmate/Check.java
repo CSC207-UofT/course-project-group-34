@@ -254,7 +254,7 @@ public class Check {
     private int hasOpposingQueenBishop(ChessPiece[][] board, int row, int col, String color) {
         if (board[row][col] != null) {
             if (!(board[row][col].getColor().equals(color)) &&
-                    board[row][col] instanceof Queen || board[row][col] instanceof Bishop) {
+                    (board[row][col] instanceof Queen || board[row][col] instanceof Bishop)) {
                 return 1;
             } else {
                 return -1;
