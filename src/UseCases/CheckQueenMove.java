@@ -18,7 +18,7 @@ public class CheckQueenMove extends CheckPlayerMove {
      * that the Queen can make with respect to the current state of the game.
      */
     public int[][] validMoves(ChessPiece queen, GameState gameState) {
-        ArrayList result = new ArrayList();
+        ArrayList<int[]> result = new ArrayList<>();
         int row = queen.getRow(); 
         int column = queen.getColumn(); 
         ChessPiece[][] board = gameState.getBoard(); 
@@ -119,8 +119,7 @@ public class CheckQueenMove extends CheckPlayerMove {
             result.add(new int[] {currentRow, currentColumn}); 
         }
 
-        int[][] array = super.toArrayMoves(result); 
-        return array;
+        return super.toArrayMoves(result);
     }
   
 }

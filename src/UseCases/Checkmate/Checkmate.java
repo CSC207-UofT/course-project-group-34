@@ -33,8 +33,7 @@ public class Checkmate {
 
         // If the King is not in check initially, return false early on
         Check check = new Check();
-        if(!(check.isKingInCheck(king, state))){
-
+        if(!(check.isKingInCheck(king, state))) {
             return false;
         }
 

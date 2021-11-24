@@ -1,7 +1,9 @@
 package Controllers;
 
 import Entities.ChessPiece;
+import Entities.King;
 import UseCases.*;
+import UseCases.Checkmate.*;
 
 /**
 * This class is responsible for controlling everything about our 2D array that represents the chess board. 
@@ -37,8 +39,7 @@ public class GameState implements java.io.Serializable {
     }
 
     public int[][] getInitKing() {
-        int[][] initPos = {{0, 4}, {7, 4}};
-        return initPos;
+        return new int[][]{{7, 4}, {0, 4}};
     }
 
     public boolean getOutcome() {
@@ -101,13 +102,8 @@ public class GameState implements java.io.Serializable {
     public boolean isKing(ChessPiece piece) {
         char letter = piece.getLetter();
 
-        if (letter == 'p' || letter == 'P' || letter == 'k' || letter == 'K' || letter == 'q' || letter == 'Q' || letter == 'b' || letter == 'B' || letter == 'r' || letter == 'R') {
-            return false;
-        }
-
-        else {
-            return true;
-        }
+        return letter != 'p' && letter != 'P' && letter != 'k' && letter != 'K' && letter != 'q' &&
+                letter != 'Q' && letter != 'b' && letter != 'B' && letter != 'r' && letter != 'R';
 
 
     }
@@ -118,60 +114,47 @@ public class GameState implements java.io.Serializable {
     public boolean makeMove(int[] positions) {
         ChessPiece currPiece = board[positions[0]][positions[1]];
         ChessPiece toPiece = board[positions[2]][positions[3]];
+
         if ((!(this.turn == 0 & currPiece.getColor().equals("black"))) && (!(this.turn == 1 & currPiece.getColor().equals("white")))) {
             CheckerGenerator checker = new CheckerGenerator();
             CheckPlayerMove currCheck = checker.generateChecker(currPiece);
             boolean valid = currCheck.checkMove(positions[2], positions[3], currPiece, this);
 
             if (valid) {
-                /**
-                boolean kingCheck = isKing(currPiece);
-                if (kingCheck) {
-                    Check check = new Check();
-                    board[positions[0]][positions[1]] = null;
-                    board[positions[2]][positions[3]] = currPiece;
-                    currPiece.setRow(positions[2]);
-                    currPiece.setColumn(positions[3]);
-                    boolean inCheck = check.isKingInCheck(((King) currPiece), this);
-                    if (inCheck) {
-                        board[positions[0]][positions[1]] = currPiece;
-                        board[positions[2]][positions[3]] = toPiece;
-                        currPiece.setRow(positions[0]);
-                        currPiece.setColumn(positions[1]);
-                        return false;
-                    }
-
-                    else {
-                        changeKingPos(currPiece.getColor(), new int[]{positions[2], positions[3]});
-                        currPiece.setHasMovedOnce();
-                        changeTurn();
-                        return true;
-                    }
-                }
-                 */
+                Check check = new Check();
                 board[positions[0]][positions[1]] = null;
                 board[positions[2]][positions[3]] = currPiece;
                 currPiece.setRow(positions[2]);
                 currPiece.setColumn(positions[3]);
-                currPiece.setHasMovedOnce();
-                /**
-                int[] opKingPos = getKingPos();
-                Checkmate checkmate = new Checkmate();
-                boolean cMate = checkmate.isCheckmate(((King) board[opKingPos[0]][opKingPos[1]]), this);
-                if (cMate) {
-                    setOutcome();
+                int[] friendlyKingPos = getKingPos();
+                boolean inCheck = check.isKingInCheck((King) board[friendlyKingPos[0]][friendlyKingPos[1]], this);
+                if (inCheck) {
+                    board[positions[0]][positions[1]] = currPiece;
+                    board[positions[2]][positions[3]] = toPiece;
+                    currPiece.setRow(positions[0]);
+                    currPiece.setColumn(positions[1]);
+                    return false;
+                } else {
+                    currPiece.setHasMovedOnce();
+                    changeTurn();
+                    if (isKing(currPiece)) {
+                        changeKingPos(currPiece.getColor(), new int[]{positions[2], positions[3]});
+                    }
+                    int[] opKingPos = getKingPos();
+                    Checkmate checkmate = new Checkmate();
+                    boolean cMate = checkmate.isCheckmate(((King) board[opKingPos[0]][opKingPos[1]]), this);
+                    if (cMate) {
+                        setOutcome();
+                    }
+                    return true;
                 }
-                 */
-                changeTurn();
-                return true;
             }
         }
         return false;
-
     }
 
     public String toString() {
-        StringBuffer state = new StringBuffer("");
+        StringBuffer state = new StringBuffer();
         for (int r = 0; r < 8; r++) {
             state.append("[");
             for (int c = 0; c < 8; c++) {

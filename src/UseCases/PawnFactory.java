@@ -17,7 +17,7 @@ public class PawnFactory {
     /**
      * This method takes in string value, transformType and a Pawn chess piece.
      * It creates an instance of a chess piece based upon the transformType and
-     * sets its constuctor values to those held by the pawn.
+     * sets its constructor values to those held by the pawn.
      *
      * @param transformType - a string value representing the chess piece instance to create
      * @param pawn - a pawn value whose attributes will be transferred to the new chess piece
@@ -25,7 +25,7 @@ public class PawnFactory {
      */
     public ChessPiece getChessPiece(String transformType, Pawn pawn){
 
-        // Unpacking neccesary attributes from the pawn piece
+        // Unpacking necessary attributes from the pawn piece
         int row = pawn.getRow();
         int col = pawn.getColumn();
         String color = pawn.getColor();

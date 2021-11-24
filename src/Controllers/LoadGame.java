@@ -1,6 +1,5 @@
 package Controllers;
 
-import Controllers.GameState;
 import Entities.Bishop;
 import Entities.ChessPiece;
 import Entities.King;
@@ -41,7 +40,6 @@ public class LoadGame {
      *
      * @param state - an instance of a GameState object
      * @param color - color of the chess pieces being added
-     * @return state
      */
     public void loadChessPieces(GameState state, String color, int row1, int row2){
         ChessPiece[] pieces = new ChessPiece[16];
