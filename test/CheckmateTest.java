@@ -1,11 +1,11 @@
 import Entities.King;
-import Other.Checkmate.Checkmate;
+import UseCases.Checkmate.Checkmate;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import Other.GameState;
-import Other.LoadGame;
+import Controllers.GameState;
+import Controllers.LoadGame;
 
 /**
  * This Class is responsible for testing that the program is able to correctly identify when the King piece

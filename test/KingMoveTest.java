@@ -1,9 +1,8 @@
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import Other.GameState;
-import Other.LoadGame;
+import Controllers.GameState;
+import Controllers.LoadGame;
 
 /**
  * This Class is responsible for testing the movements of our King chess

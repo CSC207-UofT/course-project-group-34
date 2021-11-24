@@ -1,7 +1,7 @@
 package UseCases;
 
 import Entities.ChessPiece;
-import Other.GameState;
+import Controllers.GameState;
 
 /**
  * This class is a subclass of CheckPlayerMove responsible for verifying the validity of moves

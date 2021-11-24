@@ -1,8 +1,8 @@
-package Other.Checkmate;
+package UseCases.Checkmate;
 
 import Entities.ChessPiece;
 import Entities.King;
-import Other.GameState;
+import Controllers.GameState;
 import UseCases.*;
 import Entities.*;
 

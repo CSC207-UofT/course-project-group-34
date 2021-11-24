@@ -1,7 +1,7 @@
-package Other.Checkmate;
+package UseCases.Checkmate;
 
 import Entities.*;
-import Other.GameState;
+import Controllers.GameState;
 
 import java.util.ArrayList;
 
@@ -151,7 +151,7 @@ public class Check {
     private int hasOpposingQueenRook(ChessPiece[][] board, int row, int col, String color) {
         if (board[row][col] != null) {
             if (!(board[row][col].getColor().equals(color)) &&
-                    board[row][col] instanceof Queen || board[row][col] instanceof Rook) {
+                    (board[row][col] instanceof Queen || board[row][col] instanceof Rook)) {
                 return 1;
             } else {
                 return -1;

@@ -1,7 +1,7 @@
 package UseCases;
 
 import Entities.ChessPiece;
-import Other.GameState;
+import Controllers.GameState;
 
 import java.util.ArrayList;
 
