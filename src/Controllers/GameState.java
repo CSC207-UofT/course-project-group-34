@@ -59,26 +59,11 @@ public class GameState implements java.io.Serializable {
     }
 
     /**
-     * This method adds the ChessPiece object from our parameter and into our
-     * 2D array that represents the chess board.
-     */
-    public void addChessPiece(ChessPiece chessPiece){
-        board[chessPiece.getRow()][chessPiece.getColumn()] = chessPiece;
-    }
-
-    /**
      * Obtains the "letter" identifier of the chess piece at the given
      * x and y coordinate. Used in CLIBoard.
      */
     public char getChessPieceLetter(int x, int y){
         return board[x][y].getLetter();
-    }
-    
-     /**
-     * This method takes in a given position and removes that chess piece from that position.
-     */
-    public void removeChessPiece(int row, int col){
-        board[row][col] = null;
     }
 
     public void changeKingPos(String color, int[] Pos) {
@@ -118,7 +103,7 @@ public class GameState implements java.io.Serializable {
         if ((!(this.turn == 0 & currPiece.getColor().equals("black"))) && (!(this.turn == 1 & currPiece.getColor().equals("white")))) {
             CheckerGenerator checker = new CheckerGenerator();
             CheckPlayerMove currCheck = checker.generateChecker(currPiece);
-            boolean valid = currCheck.checkMove(positions[2], positions[3], currPiece, this);
+            boolean valid = currCheck.checkMove(positions[2], positions[3], currPiece, board);
 
             if (valid) {
                 Check check = new Check();
@@ -127,7 +112,7 @@ public class GameState implements java.io.Serializable {
                 currPiece.setRow(positions[2]);
                 currPiece.setColumn(positions[3]);
                 int[] friendlyKingPos = getKingPos();
-                boolean inCheck = check.isKingInCheck((King) board[friendlyKingPos[0]][friendlyKingPos[1]], this);
+                boolean inCheck = check.isKingInCheck((King) board[friendlyKingPos[0]][friendlyKingPos[1]], board);
                 if (inCheck) {
                     board[positions[0]][positions[1]] = currPiece;
                     board[positions[2]][positions[3]] = toPiece;
@@ -142,7 +127,7 @@ public class GameState implements java.io.Serializable {
                     }
                     int[] opKingPos = getKingPos();
                     Checkmate checkmate = new Checkmate();
-                    boolean cMate = checkmate.isCheckmate(((King) board[opKingPos[0]][opKingPos[1]]), this);
+                    boolean cMate = checkmate.isCheckmate(((King) board[opKingPos[0]][opKingPos[1]]), board);
                     if (cMate) {
                         setOutcome();
                     }

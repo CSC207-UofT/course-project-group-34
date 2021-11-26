@@ -1,7 +1,6 @@
 package UseCases;
 
 import Entities.ChessPiece;
-import Controllers.GameState;
 
 /**
  * This class is a subclass of CheckPlayerMove responsible for verifying the validity of moves
@@ -15,11 +14,10 @@ public class CheckPawnMove extends CheckPlayerMove {
      * This method generates a 2-dimensional array of integers that represents a list of valid moves
      * that the Pawn can make with respect to the current state of the game.
      */
-    public int[][] validMoves(ChessPiece pawn, GameState gameState) {
+    public int[][] validMoves(ChessPiece pawn, ChessPiece[][] board) {
         int[][] result = new int[4][2];
         int row = pawn.getRow();
         int column = pawn.getColumn();
-        ChessPiece[][] board = gameState.getBoard();
 
 
         if (pawn.getColor().equals("white")) {

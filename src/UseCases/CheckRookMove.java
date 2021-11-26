@@ -1,7 +1,6 @@
 package UseCases; 
 
-import Entities.ChessPiece; 
-import Controllers.GameState;
+import Entities.ChessPiece;
 
 import java.util.ArrayList;
 
@@ -17,11 +16,10 @@ public class CheckRookMove extends CheckPlayerMove {
      * This method generates a 2-dimensional array of integers that represents a list of valid moves
      * that the Rook can make with respect to the current state of the game.
      */
-    public int[][] validMoves(ChessPiece rook, GameState gameState) {
+    public int[][] validMoves(ChessPiece rook, ChessPiece[][] board) {
         ArrayList<int[]> result = new ArrayList<>();
         int row = rook.getRow(); 
-        int column = rook.getColumn(); 
-        ChessPiece[][] board = gameState.getBoard(); 
+        int column = rook.getColumn();
         
         // Moving up
         int currentRow = row - 1; 

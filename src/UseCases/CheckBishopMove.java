@@ -1,7 +1,6 @@
 package UseCases; 
 
-import Entities.ChessPiece; 
-import Controllers.GameState;
+import Entities.ChessPiece;
 
 import java.util.ArrayList;
 
@@ -17,11 +16,10 @@ public class CheckBishopMove extends CheckPlayerMove {
      * This method generates a 2-dimensional array of integers that represents a list of valid moves
      * that the Bishop can make with respect to the current state of the game.
      */
-    public int[][] validMoves(ChessPiece bishop, GameState gameState) {
+    public int[][] validMoves(ChessPiece bishop, ChessPiece[][] board) {
         ArrayList<int[]> result = new ArrayList<>();
         int row = bishop.getRow(); 
-        int column = bishop.getColumn(); 
-        ChessPiece[][] board = gameState.getBoard(); 
+        int column = bishop.getColumn();
 
         // Moving up & right 
         int currentRow = row - 1;

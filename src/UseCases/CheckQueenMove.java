@@ -1,7 +1,6 @@
 package UseCases; 
 
-import Entities.ChessPiece; 
-import Controllers.GameState;
+import Entities.ChessPiece;
 
 import java.util.ArrayList;
 
@@ -17,11 +16,10 @@ public class CheckQueenMove extends CheckPlayerMove {
      * This method generates a 2-dimensional array of integers that represents a list of valid moves
      * that the Queen can make with respect to the current state of the game.
      */
-    public int[][] validMoves(ChessPiece queen, GameState gameState) {
+    public int[][] validMoves(ChessPiece queen, ChessPiece[][] board) {
         ArrayList<int[]> result = new ArrayList<>();
         int row = queen.getRow(); 
-        int column = queen.getColumn(); 
-        ChessPiece[][] board = gameState.getBoard(); 
+        int column = queen.getColumn();
         
         // Moving up
         int currentRow = row - 1; 
