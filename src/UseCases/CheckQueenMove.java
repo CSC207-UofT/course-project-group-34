@@ -18,7 +18,7 @@ public class CheckQueenMove extends CheckPlayerMove {
      * that the Queen can make with respect to the current state of the game.
      */
     public int[][] validMoves(ChessPiece queen, GameState gameState) {
-        ArrayList result = new ArrayList();
+        ArrayList<int[]> result = new ArrayList<int[]>();
         int row = queen.getRow(); 
         int column = queen.getColumn(); 
         ChessPiece[][] board = gameState.getBoard(); 
@@ -31,10 +31,10 @@ public class CheckQueenMove extends CheckPlayerMove {
         }
 
         if (currentRow > -1 && super.isEnemy(queen, board[currentRow][column])) {
-            result.add(new int[] {currentRow, column}); 
+            result.add(new int[] {currentRow, column});
         }
 
-        // Moving up & right 
+        // Moving up & right
         currentRow = row - 1;
         int currentColumn = column + 1;
         while (currentRow > -1 && currentColumn < 8 && board[currentRow][currentColumn] == null) { 

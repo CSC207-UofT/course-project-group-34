@@ -18,7 +18,7 @@ public class CheckKnightMove extends CheckPlayerMove {
      * that the Knight can make with respect to the current state of the game.
      */
     public int[][] validMoves(ChessPiece knight, GameState gameState) {
-        ArrayList result = new ArrayList(); 
+        ArrayList<int[]> result = new ArrayList<>();
         int row = knight.getRow(); 
         int column = knight.getColumn(); 
         ChessPiece[][] board = gameState.getBoard(); 

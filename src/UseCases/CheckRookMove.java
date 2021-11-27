@@ -18,7 +18,7 @@ public class CheckRookMove extends CheckPlayerMove {
      * that the Rook can make with respect to the current state of the game.
      */
     public int[][] validMoves(ChessPiece rook, GameState gameState) {
-        ArrayList result = new ArrayList(); 
+        ArrayList<int[]> result = new ArrayList<>();
         int row = rook.getRow(); 
         int column = rook.getColumn(); 
         ChessPiece[][] board = gameState.getBoard(); 

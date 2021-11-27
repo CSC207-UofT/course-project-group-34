@@ -18,7 +18,7 @@ public class CheckBishopMove extends CheckPlayerMove {
      * that the Bishop can make with respect to the current state of the game.
      */
     public int[][] validMoves(ChessPiece bishop, GameState gameState) {
-        ArrayList result = new ArrayList(); 
+        ArrayList<int[]> result = new ArrayList<>();
         int row = bishop.getRow(); 
         int column = bishop.getColumn(); 
         ChessPiece[][] board = gameState.getBoard(); 
