@@ -59,6 +59,14 @@ public class GameState implements java.io.Serializable {
     }
 
     /**
+     * This method adds the ChessPiece object from our parameter and into our
+     * 2D array that represents the chess board.
+     */
+    public void addChessPiece(ChessPiece chessPiece) {
+        board[chessPiece.getRow()][chessPiece.getColumn()] = chessPiece;
+    }
+
+    /**
      * Obtains the "letter" identifier of the chess piece at the given
      * x and y coordinate. Used in CLIBoard.
      */
