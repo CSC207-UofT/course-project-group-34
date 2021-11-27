@@ -20,6 +20,7 @@ public class CheckKingMove extends CheckPlayerMove {
         ArrayList<int[]> result = new ArrayList<>();
         int row = king.getRow();
         int column = king.getColumn();
+        String color = king.getColor();
 
         // Checking moves to one row above
 
@@ -63,6 +64,28 @@ public class CheckKingMove extends CheckPlayerMove {
             if (column + 1 < 8 &&
                     (board[row + 1][column + 1] == null || super.isEnemy(king, board[row + 1][column + 1]))) {
                 result.add(new int[]{row + 1, column + 1});
+            }
+        }
+
+        // Checking castling
+
+        if (color.equals("white")) {
+            if (!king.getHasMovedOnce() && !board[8][8].getHasMovedOnce() && board[8][6] == null && board[8][7] == null){
+                result.add(new int[]{row, column + 2});
+            }
+            if (!king.getHasMovedOnce() && !board[8][1].getHasMovedOnce() && board[8][2] == null && board[8][3] == null
+                && board[8][4] == null){
+                result.add(new int[]{row, column - 2});
+            }
+        }
+
+        if (color.equals("black")) {
+            if (!king.getHasMovedOnce() && !board[1][8].getHasMovedOnce() && board[1][6] == null && board[1][7] == null){
+                result.add(new int[]{row, column + 2});
+            }
+            if (!king.getHasMovedOnce() && !board[1][1].getHasMovedOnce() && board[1][2] == null && board[1][3] == null
+                    && board[1][4] == null){
+                result.add(new int[]{row, column - 2});
             }
         }
 
