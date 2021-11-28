@@ -119,7 +119,12 @@ public class GameState implements java.io.Serializable {
                 board[positions[2]][positions[3]] = currPiece;
                 currPiece.setRow(positions[2]);
                 currPiece.setColumn(positions[3]);
-                int[] friendlyKingPos = getKingPos();
+                int[] friendlyKingPos; 
+                if (isKing(currPiece)) {
+                    friendlyKingPos = new int[] {positions[2], positions[3]};
+                } else {
+                    friendlyKingPos = getKingPos(); 
+                }
                 boolean inCheck = check.isKingInCheck((King) board[friendlyKingPos[0]][friendlyKingPos[1]], board);
                 if (inCheck) {
                     board[positions[0]][positions[1]] = currPiece;
