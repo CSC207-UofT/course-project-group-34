@@ -19,7 +19,7 @@ public class Main {
         GameState state = game.loadGame();
         File output = new File("output.txt");
         FileWriter writer = new FileWriter(output);
-        
+        int move_count = 0;
         // Printing out the UI
         System.out.println(x.printBoard(state));
 
@@ -37,10 +37,16 @@ public class Main {
                 System.out.println("\nThat is not a valid move, please try again.");
                 continue;
             }
+            move_count = move_count + 1;
             boolean outcome = state.getOutcome();
             if (outcome) {
                 isOver = true;
                 System.out.println("The game is over!");
+                if (move_count % 2 == 1){
+                    System.out.println("The player using the white pieces won in " + ((move_count/2) + 1) + "moves" );
+                } else {
+                    System.out.println("The player using the black pieces won in " + (move_count/2) + "moves");
+                }
             }
         }
         // Printing out our chess board after the new move
