@@ -25,6 +25,10 @@ public class Check {
      */
     public boolean isKingInCheck(King king, ChessPiece[][] board){
 
+        if (king == null){
+            return false;
+        }
+
         return checkLeftRight(king, board) || checkForwardsBackwards(king, board) ||
                 checkDiagonals(king, board) || checkKnight(king, board) || checkPawn(king, board);
     }
