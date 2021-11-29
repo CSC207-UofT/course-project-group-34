@@ -75,7 +75,7 @@ public class GameState implements java.io.Serializable {
     }
 
     public void changeKingPos(String color, int[] Pos) {
-        if (color.equals("black")) {
+        if (color.equals("white")) {
             this.kingPos[0][0] = Pos[0];
             this.kingPos[0][1] = Pos[1];
         }
