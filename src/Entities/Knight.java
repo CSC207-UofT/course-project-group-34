@@ -3,7 +3,7 @@ package Entities;
 /*
 * This class represents a Knight chess piece for our chess game. 
 */
-public class Knight extends ChessPiece {
+public class Knight extends ChessPiece  implements java.io.Serializable {
 
   public Knight(int row, int column, String color){
 

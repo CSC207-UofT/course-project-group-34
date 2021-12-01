@@ -3,7 +3,7 @@ package Entities;
 /*
 * This class represents a Pawn chess piece for our chess game.
 */
-public class Pawn extends ChessPiece {
+public class Pawn extends ChessPiece  implements java.io.Serializable {
   
   private boolean hasMovedOnce;
 

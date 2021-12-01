@@ -76,5 +76,4 @@ public class CheckPawnMove extends CheckPlayerMove {
 
         return result;
     }
-     
 }
