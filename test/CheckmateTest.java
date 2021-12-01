@@ -18,7 +18,7 @@ public class CheckmateTest {
 
     // Testing that the Check class can identify that the King is in checkmate after the moves written below
     @Before
-    public void setupKingCheckMate() {
+    public void setupWhiteKingInBasicCheckMate() {
         LoadGame init = new LoadGame();
         state = init.loadGame();
         king = (King) state.getBoard()[7][4];
@@ -37,13 +37,13 @@ public class CheckmateTest {
 
     // Test to determine if Checkmate can identify when the gamestate is in checkmate
     @Test(timeout = 100)
-    public void testKingCheckmate() {
+    public void testWhiteKingInBasicCheckmate() {
         assertTrue(checkmate.isCheckmate(king, state.getBoard()));
     }
 
-    // Testing to see if checkmate can recognize that the game is not in checkmate
+    // Testing to see if checkmate can recognize that the King is in Check, but not Checkmate
     @Test(timeout = 100)
-    public void testKingCheckmate2() {
+    public void testWhiteKingCheckButNotCheckmate() {
         LoadGame init = new LoadGame();
         state = init.loadGame();
         king = (King) state.getBoard()[7][4];
@@ -62,9 +62,10 @@ public class CheckmateTest {
         assertFalse(checkmate.isCheckmate(king, state.getBoard()));
     }
 
-    // Testing to see if checkmate can recognize that the game is not in checkmate
+    // Testing to see if checkmate can recognize that a fresh state of the game is
+    // not in checkmate
     @Test(timeout = 100)
-    public void testKingCheckmate3() {
+    public void testInitialGameIsNotInCheckmate() {
         LoadGame init = new LoadGame();
         state = init.loadGame();
         king = (King) state.getBoard()[7][4];
@@ -75,7 +76,7 @@ public class CheckmateTest {
 
     // Check to see if the black king is not in checkmate, but it is in check
     @Test(timeout = 100)
-    public void testKingCheckmate4() {
+    public void testBlackKingCheckButNotCheckmate() {
         LoadGame init = new LoadGame();
         state = init.loadGame();
         king = (King) state.getBoard()[0][4];

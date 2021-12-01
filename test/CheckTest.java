@@ -7,7 +7,6 @@ import Controllers.GameState;
 import Controllers.LoadGame;
 import UseCases.Checkmate.Check;
 
-
 /**
  * This Class is responsible for testing that the program is able to correctly identify when the King piece
  * is declared to be in check.
@@ -19,7 +18,7 @@ public class CheckTest {
 
     // Testing that the Check class can identify that the King is in check after the moves written below
     @Before
-    public void setupKingCheck() {
+    public void setupWhiteKingCheck() {
         LoadGame init = new LoadGame();
         state = init.loadGame();
         king = (King) state.getBoard()[0][4];
@@ -33,14 +32,15 @@ public class CheckTest {
         state.makeMove(arr3);
     }
 
+    // Test to see if check can recognize that the White King is in Fools Check
     @Test(timeout = 100)
-    public void testKingCheck() {
+    public void testWhiteKingCheck() {
         assertTrue(KingCheck.isKingInCheck(king, state.getBoard()));
     }
 
-    // Test that the King is in check during an empty game
+    // Test to ensure that the Black King is not in check at the Start of an empty game.
     @Test(timeout = 100)
-    public void testKingCheck2() {
+    public void testNoCheckStartOfGame() {
         LoadGame init = new LoadGame();
         state = init.loadGame();
         king = (King) state.getBoard()[0][4];
@@ -49,9 +49,9 @@ public class CheckTest {
         assertFalse(KingCheck.isKingInCheck(king, state.getBoard()));
     }
 
-    // Check to see if the king is in check after these moves
+    // Check to see if the White King is in basic check after the moves specified.
     @Test(timeout = 100)
-    public void testKingCheckmate3() {
+    public void testWhiteKingInBasicCheck() {
         LoadGame init = new LoadGame();
         state = init.loadGame();
         king = (King) state.getBoard()[7][4];
@@ -69,6 +69,4 @@ public class CheckTest {
 
         assertTrue(KingCheck.isKingInCheck(king, state.getBoard()));
     }
-
-
 }
