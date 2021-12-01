@@ -72,13 +72,31 @@ public class CheckKingMove extends CheckPlayerMove {
                 && board[row][column - 3] == null && board[row][column - 4] != null
                 && (board[row][column - 4].getLetter() == 'r' || board[row][column - 4].getLetter() == 'R')
                 && !board[row][column - 4].getHasMovedOnce()) {
-            result.add(new int[] {row, column - 2});
+            Check check = new Check();
+            king.setColumn(column - 1);
+            board[row][column] = null;
+            board[row][column - 1] = king;
+            if (!check.isKingInCheck((King) king, board)) {
+                king.setColumn(column);
+                board[row][column] = king;
+                board[row][column - 1] = null;
+                result.add(new int[] {row, column - 2});
+            }
         }
 
         if (!king.getHasMovedOnce() && board[row][column + 1] == null && board[row][column + 2] == null
                 && board[row][column + 3] != null && (board[row][column + 3].getLetter() == 'r'
                 || board[row][column + 3].getLetter() == 'R') && !board[row][column + 3].getHasMovedOnce()) {
-            result.add(new int[] {row, column + 2});
+            Check check = new Check();
+            king.setColumn(column + 1);
+            board[row][column] = null;
+            board[row][column + 1] = king;
+            if (!check.isKingInCheck((King) king, board)) {
+                king.setColumn(column);
+                board[row][column] = king;
+                board[row][column + 1] = null;
+                result.add(new int[] {row, column + 2});
+            }
         }
 
         return super.toArrayMoves(result);

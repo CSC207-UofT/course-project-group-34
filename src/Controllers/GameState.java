@@ -106,6 +106,9 @@ public class GameState implements java.io.Serializable {
      * This method takes an input and changes the gamestate according if the move is value
      */
     public boolean makeMove(int[] positions) {
+        if (positions[0] < 0 || positions[1] > 7 || board[positions[0]][positions[1]] == null) {
+            return false;
+        }
         ChessPiece currPiece = board[positions[0]][positions[1]];
         ChessPiece toPiece = board[positions[2]][positions[3]];
 
