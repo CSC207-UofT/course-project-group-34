@@ -1,7 +1,8 @@
 package UseCases;
 
 import Entities.ChessPiece;
-
+import Entities.King;
+import UseCases.Checkmate.Check;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +21,6 @@ public class CheckKingMove extends CheckPlayerMove {
         ArrayList<int[]> result = new ArrayList<>();
         int row = king.getRow();
         int column = king.getColumn();
-        String color = king.getColor();
 
         // Checking moves to one row above
 
@@ -67,25 +67,35 @@ public class CheckKingMove extends CheckPlayerMove {
             }
         }
 
-        // Checking castling
-
-        if (color.equals("white")) {
-            if (!king.getHasMovedOnce() && !board[8][8].getHasMovedOnce() && board[8][6] == null && board[8][7] == null){
-                result.add(new int[]{row, column + 2});
-            }
-            if (!king.getHasMovedOnce() && !board[8][1].getHasMovedOnce() && board[8][2] == null && board[8][3] == null
-                && board[8][4] == null){
-                result.add(new int[]{row, column - 2});
+        // Castling
+        if (!king.getHasMovedOnce() && board[row][column - 1] == null && board[row][column - 2] == null
+                && board[row][column - 3] == null && board[row][column - 4] != null
+                && (board[row][column - 4].getLetter() == 'r' || board[row][column - 4].getLetter() == 'R')
+                && !board[row][column - 4].getHasMovedOnce()) {
+            Check check = new Check();
+            king.setColumn(column - 1);
+            board[row][column] = null;
+            board[row][column - 1] = king;
+            if (!check.isKingInCheck((King) king, board)) {
+                king.setColumn(column);
+                board[row][column] = king;
+                board[row][column - 1] = null;
+                result.add(new int[] {row, column - 2});
             }
         }
 
-        if (color.equals("black")) {
-            if (!king.getHasMovedOnce() && !board[1][8].getHasMovedOnce() && board[1][6] == null && board[1][7] == null){
-                result.add(new int[]{row, column + 2});
-            }
-            if (!king.getHasMovedOnce() && !board[1][1].getHasMovedOnce() && board[1][2] == null && board[1][3] == null
-                    && board[1][4] == null){
-                result.add(new int[]{row, column - 2});
+        if (!king.getHasMovedOnce() && board[row][column + 1] == null && board[row][column + 2] == null
+                && board[row][column + 3] != null && (board[row][column + 3].getLetter() == 'r'
+                || board[row][column + 3].getLetter() == 'R') && !board[row][column + 3].getHasMovedOnce()) {
+            Check check = new Check();
+            king.setColumn(column + 1);
+            board[row][column] = null;
+            board[row][column + 1] = king;
+            if (!check.isKingInCheck((King) king, board)) {
+                king.setColumn(column);
+                board[row][column] = king;
+                board[row][column + 1] = null;
+                result.add(new int[] {row, column + 2});
             }
         }
 
