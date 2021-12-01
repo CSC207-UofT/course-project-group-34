@@ -2,6 +2,7 @@ package Controllers;
 
 import Entities.ChessPiece;
 import Entities.King;
+import Entities.Rook;
 import UseCases.*;
 import UseCases.Checkmate.*;
 
@@ -119,9 +120,25 @@ public class GameState implements java.io.Serializable {
                 board[positions[2]][positions[3]] = currPiece;
                 currPiece.setRow(positions[2]);
                 currPiece.setColumn(positions[3]);
-                int[] friendlyKingPos; 
+                int[] friendlyKingPos;
+                ChessPiece rook = new Rook(0, 0, "black"); // Dummy piece
+                int castling = 0;
                 if (isKing(currPiece)) {
                     friendlyKingPos = new int[] {positions[2], positions[3]};
+                    // Check castling
+                    if (positions[3] == positions[1] + 2) {
+                        rook = board[positions[0]][positions[3] + 1];
+                        rook.setColumn(positions[3] - 1);
+                        board[positions[0]][positions[3] + 1] = null;
+                        board[positions[0]][positions[3] - 1] = rook;
+                        castling = 1;
+                    } else if (positions[3] == positions[1] - 2) {
+                        rook = board[positions[0]][positions[3] - 2];
+                        rook.setColumn(positions[3] + 1);
+                        board[positions[0]][positions[3] - 2] = null;
+                        board[positions[0]][positions[3] + 1] = rook;
+                        castling = 2;
+                    }
                 } else {
                     friendlyKingPos = getKingPos(); 
                 }
@@ -131,6 +148,15 @@ public class GameState implements java.io.Serializable {
                     board[positions[2]][positions[3]] = toPiece;
                     currPiece.setRow(positions[0]);
                     currPiece.setColumn(positions[1]);
+                    if (castling == 1) {
+                        rook.setColumn(positions[3] + 1);
+                        board[positions[0]][positions[3] + 1] = rook;
+                        board[positions[0]][positions[3] - 1] = null;
+                    } else if (castling == 2) {
+                        rook.setColumn(positions[3] - 2);
+                        board[positions[0]][positions[3] - 2] = rook;
+                        board[positions[0]][positions[3] + 1] = null;
+                    }
                     return false;
                 } else {
                     currPiece.setHasMovedOnce();

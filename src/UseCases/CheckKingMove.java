@@ -1,7 +1,8 @@
 package UseCases;
 
 import Entities.ChessPiece;
-
+import Entities.King;
+import UseCases.Checkmate.Check;
 import java.util.ArrayList;
 
 /**
@@ -64,6 +65,20 @@ public class CheckKingMove extends CheckPlayerMove {
                     (board[row + 1][column + 1] == null || super.isEnemy(king, board[row + 1][column + 1]))) {
                 result.add(new int[]{row + 1, column + 1});
             }
+        }
+
+        // Castling
+        if (!king.getHasMovedOnce() && board[row][column - 1] == null && board[row][column - 2] == null
+                && board[row][column - 3] == null && board[row][column - 4] != null
+                && (board[row][column - 4].getLetter() == 'r' || board[row][column - 4].getLetter() == 'R')
+                && !board[row][column - 4].getHasMovedOnce()) {
+            result.add(new int[] {row, column - 2});
+        }
+
+        if (!king.getHasMovedOnce() && board[row][column + 1] == null && board[row][column + 2] == null
+                && board[row][column + 3] != null && (board[row][column + 3].getLetter() == 'r'
+                || board[row][column + 3].getLetter() == 'R') && !board[row][column + 3].getHasMovedOnce()) {
+            result.add(new int[] {row, column + 2});
         }
 
         return super.toArrayMoves(result);
