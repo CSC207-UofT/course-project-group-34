@@ -3,7 +3,6 @@ package UseCases;
 import Entities.Bishop;
 import Entities.ChessPiece;
 import Entities.Knight;
-import Entities.Pawn;
 import Entities.Queen;
 import Entities.Rook;
 
@@ -23,7 +22,7 @@ public class PawnFactory {
      * @param pawn - a pawn value whose attributes will be transferred to the new chess piece
      * @return - an instance of a chess piece
      */
-    public ChessPiece getChessPiece(String transformType, Pawn pawn){
+    public ChessPiece getChessPiece(String transformType, ChessPiece pawn){
 
         // Unpacking necessary attributes from the pawn piece
         int row = pawn.getRow();
@@ -44,7 +43,6 @@ public class PawnFactory {
             return new Knight(row, col, color);
         }
         else {
-            System.out.println(transformType + " is an undefined chess piece for this program.");
             return null;
         }
     }

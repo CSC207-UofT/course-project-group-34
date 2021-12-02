@@ -1,6 +1,7 @@
 package UseCases;
 
 import Entities.ChessPiece;
+import java.util.ArrayList;
 
 /**
  * This class is a subclass of CheckPlayerMove responsible for verifying the validity of moves
@@ -15,7 +16,7 @@ public class CheckPawnMove extends CheckPlayerMove {
      * that the Pawn can make with respect to the current state of the game.
      */
     public int[][] validMoves(ChessPiece pawn, ChessPiece[][] board) {
-        int[][] result = new int[4][2];
+        ArrayList<int[]> result = new ArrayList<>();
         int row = pawn.getRow();
         int column = pawn.getColumn();
 
@@ -23,55 +24,47 @@ public class CheckPawnMove extends CheckPlayerMove {
         if (pawn.getColor().equals("white")) {
             // Check non-attack moves
             if (row - 1 > -1 && board[row - 1][column] == null) {
-                result[0][0] = row - 1;
-                result[0][1] = column;
+                result.add(new int[] {row - 1, column});
             }
 
             if (!pawn.getHasMovedOnce() && row - 2 > -1 && board[row - 1][column] == null
                     && board[row - 2][column] == null) {
-                result[1][0] = row - 2;
-                result[1][1] = column;
+                result.add(new int[] {row - 2, column});
             }
 
             // Check attack moves
             if (row - 1 > -1 && column - 1 > -1 && board[row - 1][column - 1] != null
                     && super.isEnemy(pawn, board[row - 1][column - 1])) {
-                result[2][0] = row - 1;
-                result[2][1] = column - 1;
+                result.add(new int[] {row - 1, column - 1});
             }
 
             if (row - 1 > -1 && column + 1 < 8 && board[row - 1][column + 1] != null
                     && super.isEnemy(pawn, board[row - 1][column + 1])) {
-                result[3][0] = row - 1;
-                result[3][1] = column + 1;
+                result.add(new int[] {row - 1, column + 1});
             }
         } else {
             // Check non-attack moves
             if (row + 1 < 8 && board[row + 1][column] == null) {
-                result[0][0] = row + 1;
-                result[0][1] = column;
+                result.add(new int[] {row + 1, column});
             }
 
             if (!pawn.getHasMovedOnce() && row + 2 < 8 && board[row + 1][column] == null
                     && board[row + 2][column] == null) {
-                result[1][0] = row + 2;
-                result[1][1] = column;
+                result.add(new int[] {row + 2, column});
             }
 
             // Check attack moves
             if (row + 1 < 8 && column - 1 > -1 && board[row + 1][column - 1] != null
                     && super.isEnemy(pawn, board[row + 1][column - 1])) {
-                result[2][0] = row + 1;
-                result[2][1] = column - 1;
+                result.add(new int[] {row + 1, column - 1});
             }
 
             if (row + 1 < 8 && column + 1 < 8 && board[row + 1][column + 1] != null
                     && super.isEnemy(pawn, board[row + 1][column + 1])) {
-                result[3][0] = row + 1;
-                result[3][1] = column + 1;
+                result.add(new int[] {row + 1, column + 1});
             }
         }
 
-        return result;
+        return super.toArrayMoves(result);
     }
 }

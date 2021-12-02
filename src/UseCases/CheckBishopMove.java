@@ -17,62 +17,7 @@ public class CheckBishopMove extends CheckPlayerMove {
      * that the Bishop can make with respect to the current state of the game.
      */
     public int[][] validMoves(ChessPiece bishop, ChessPiece[][] board) {
-        ArrayList<int[]> result = new ArrayList<>();
-        int row = bishop.getRow(); 
-        int column = bishop.getColumn();
-
-        // Moving up & right 
-        int currentRow = row - 1;
-        int currentColumn = column + 1;
-        while (currentRow > -1 && currentColumn < 8 && board[currentRow][currentColumn] == null) { 
-            result.add(new int[] {currentRow, currentColumn});
-            currentRow--;
-            currentColumn++;
-        } 
-
-        if (currentRow > -1 && currentColumn < 8 && super.isEnemy(bishop, board[currentRow][currentColumn])) {
-            result.add(new int[] {currentRow, currentColumn}); 
-        }
-
-        // Moving down & right
-        currentRow = row + 1;
-        currentColumn = column + 1;
-        while (currentRow < 8 && currentColumn < 8 && board[currentRow][currentColumn] == null) { 
-            result.add(new int[] {currentRow, currentColumn});
-            currentRow++;
-            currentColumn++;
-        } 
-
-        if (currentRow < 8 && currentColumn < 8 && super.isEnemy(bishop, board[currentRow][currentColumn])) {
-            result.add(new int[] {currentRow, currentColumn}); 
-        }
-
-        // Moving down & left 
-        currentRow = row + 1;
-        currentColumn = column - 1;
-        while (currentRow < 8 && currentColumn > -1 && board[currentRow][currentColumn] == null) { 
-            result.add(new int[] {currentRow, currentColumn});
-            currentRow++;
-            currentColumn--;
-        } 
-
-        if (currentRow < 8 && currentColumn > -1 && super.isEnemy(bishop, board[currentRow][currentColumn])) {
-            result.add(new int[] {currentRow, currentColumn}); 
-        }
-
-        // Moving up & left 
-        currentRow = row - 1;
-        currentColumn = column - 1;
-        while (currentRow > -1 && currentColumn > -1 && board[currentRow][currentColumn] == null) { 
-            result.add(new int[] {currentRow, currentColumn});
-            currentRow--;
-            currentColumn--;
-        } 
-
-        if (currentRow > -1 && currentColumn > -1 && super.isEnemy(bishop, board[currentRow][currentColumn])) {
-            result.add(new int[] {currentRow, currentColumn}); 
-        }
-
+        ArrayList<int[]> result = super.diagonalMoves(bishop, board);
         return super.toArrayMoves(result);
     }
   

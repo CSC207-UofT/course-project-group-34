@@ -1,6 +1,8 @@
 import UI.CLIBoard;
+import Entities.ChessPiece;
 import Controllers.GameState;
 import Controllers.LoadGame;
+import Gateways.PawnTransformer;
 
 import java.io.*;
 import java.util.Scanner;
@@ -31,21 +33,33 @@ public class Main {
         // continue to do so until the input in valid.
         while(!isOver) {
             System.out.println(x.printBoard(state));
+            if (state.getCheck()) {
+                System.out.println("Your king is in check!");
+            }
             int[] arr = getPlayerMove(state);
             boolean cond = state.makeMove(arr);
             if (!cond) {
                 System.out.println("\nThat is not a valid move, please try again.");
                 continue;
             }
+            // Check if pawn is to be transformed
+            if (state.getTransform()) {
+                PawnTransformer transformer = new PawnTransformer();
+                ChessPiece[][] newBoard = transformer.transform(state.getPawnToTransform(), state.getBoard());
+                state.setBoard(newBoard);
+                state.setTransform(false);
+            }
             move_count = move_count + 1;
+
+            // Check if game is over
             boolean outcome = state.getOutcome();
             if (outcome) {
                 isOver = true;
                 System.out.println("The game is over!");
                 if (move_count % 2 == 1){
-                    System.out.println("The player using the white pieces won in " + ((move_count/2) + 1) + "moves" );
+                    System.out.println("The player using the white pieces won in " + ((move_count/2) + 1) + " moves." );
                 } else {
-                    System.out.println("The player using the black pieces won in " + (move_count/2) + "moves");
+                    System.out.println("The player using the black pieces won in " + (move_count/2) + " moves.");
                 }
             }
         }

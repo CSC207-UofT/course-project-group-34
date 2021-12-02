@@ -14,22 +14,24 @@ public class GameState implements java.io.Serializable {
 
     private ChessPiece[][] board;
     private int turn;
-    private boolean isOver;
-    private boolean isCheck;
     private int[][] kingPos;
+    private ChessPiece pawnToTransform;
+    private boolean transform;
 
     public GameState(){
 
         this.board = new ChessPiece[8][8];
         this.turn = 0;
-        this.isOver = false;
-        this.isCheck = false;
         this.kingPos = getInitKing();
+        this.pawnToTransform = null;
+        this.transform = false;
     }
 
     public ChessPiece[][] getBoard(){
         return this.board;
     }
+
+    public void setBoard(ChessPiece[][] newBoard) { this.board = newBoard;}
 
     public void changeTurn(){
         this.turn ^= 1;
@@ -44,20 +46,22 @@ public class GameState implements java.io.Serializable {
     }
 
     public boolean getOutcome() {
-        return this.isOver;
-    }
-
-    public void setOutcome() {
-        this.isOver = true;
+        int[] kingPos = getKingPos();
+        Checkmate checkmate = new Checkmate();
+        return checkmate.isCheckmate(((King) board[kingPos[0]][kingPos[1]]), board);
     }
 
     public boolean getCheck() {
-        return this.isCheck;
+        int[] kingPos = getKingPos();
+        Check check = new Check();
+        return check.isKingInCheck((King) board[kingPos[0]][kingPos[1]], board);
     }
 
-    public void setCheck() {
-        this.isCheck = true;
-    }
+    public boolean getTransform() { return this.transform; }
+
+    public void setTransform(boolean bool) { this.transform = bool;}
+
+    public ChessPiece getPawnToTransform() { return this.pawnToTransform; }
 
     /**
      * This method adds the ChessPiece object from our parameter and into our
@@ -112,12 +116,15 @@ public class GameState implements java.io.Serializable {
         ChessPiece currPiece = board[positions[0]][positions[1]];
         ChessPiece toPiece = board[positions[2]][positions[3]];
 
+        // Check that the player is moving a friendly piece
         if ((!(this.turn == 0 & currPiece.getColor().equals("black"))) && (!(this.turn == 1 & currPiece.getColor().equals("white")))) {
             CheckerGenerator checker = new CheckerGenerator();
             CheckPlayerMove currCheck = checker.generateChecker(currPiece);
             boolean valid = currCheck.checkMove(positions[2], positions[3], currPiece, board);
 
+            // Verify whether the desired move is valid
             if (valid) {
+                // Make the move on the board
                 Check check = new Check();
                 board[positions[0]][positions[1]] = null;
                 board[positions[2]][positions[3]] = currPiece;
@@ -126,6 +133,7 @@ public class GameState implements java.io.Serializable {
                 int[] friendlyKingPos;
                 ChessPiece rook = new Rook(0, 0, "black"); // Dummy piece
                 int castling = 0;
+                // Find position of king, perform castling if needed
                 if (isKing(currPiece)) {
                     friendlyKingPos = new int[] {positions[2], positions[3]};
                     // Check castling
@@ -146,7 +154,9 @@ public class GameState implements java.io.Serializable {
                     friendlyKingPos = getKingPos(); 
                 }
                 boolean inCheck = check.isKingInCheck((King) board[friendlyKingPos[0]][friendlyKingPos[1]], board);
+                // Verify whether the player's move is illegal because it puts their own king in check
                 if (inCheck) {
+                    // Reverses the changes made before returning false
                     board[positions[0]][positions[1]] = currPiece;
                     board[positions[2]][positions[3]] = toPiece;
                     currPiece.setRow(positions[0]);
@@ -162,16 +172,18 @@ public class GameState implements java.io.Serializable {
                     }
                     return false;
                 } else {
+                    // Move is successful
                     currPiece.setHasMovedOnce();
                     changeTurn();
                     if (isKing(currPiece)) {
                         changeKingPos(currPiece.getColor(), new int[]{positions[2], positions[3]});
                     }
                     int[] opKingPos = getKingPos();
-                    Checkmate checkmate = new Checkmate();
-                    boolean cMate = checkmate.isCheckmate(((King) board[opKingPos[0]][opKingPos[1]]), board);
-                    if (cMate) {
-                        setOutcome();
+                    // Check whether pawn has reached end and can be transformed
+                    if ((currPiece.getLetter() == 'p' && positions[2] == 0)
+                            || (currPiece.getLetter() == 'P') && positions[2] == 8) {
+                        pawnToTransform = currPiece;
+                        transform = true;
                     }
                     return true;
                 }
