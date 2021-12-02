@@ -55,8 +55,8 @@ public class GameState implements java.io.Serializable {
         return this.isCheck;
     }
 
-    public void setCheck() {
-        this.isCheck = true;
+    public void setCheck(boolean check) {
+        this.isCheck = check;
     }
 
     /**
@@ -173,6 +173,9 @@ public class GameState implements java.io.Serializable {
                     if (cMate) {
                         setOutcome();
                     }
+                    Check oppCheck = new Check();
+                    boolean oCheck = oppCheck.isKingInCheck((King) board[opKingPos[0]][opKingPos[1]], board);
+                    setCheck(oCheck);
                     return true;
                 }
             }
