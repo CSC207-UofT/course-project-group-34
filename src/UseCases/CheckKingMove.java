@@ -35,7 +35,7 @@ public class CheckKingMove extends CheckPlayerMove {
             }
 
             if (column + 1 < 8 &&
-                    board[row - 1][column + 1] == null || super.isEnemy(king, board[row - 1][column + 1])) {
+                    (board[row - 1][column + 1] == null || super.isEnemy(king, board[row - 1][column + 1]))) {
                 result.add(new int[]{row - 1, column + 1});
             }
         }
