@@ -21,7 +21,6 @@ public class QueenMoveTest {
         assertFalse(state.makeMove(arr));
     }
 
-
     // Testing that the Queen piece can make a move up
     @Test(timeout = 100)
     public void testMoveUp() {
@@ -35,8 +34,6 @@ public class QueenMoveTest {
         state.makeMove(arr3);
         assertEquals('q', state.getChessPieceLetter(5, 3));
     }
-
-
 
     // Testing that the Queen piece can make a move down
     @Test(timeout = 100)
@@ -56,8 +53,6 @@ public class QueenMoveTest {
         assertEquals('q', state.getChessPieceLetter(7, 3));
     }
 
-
-
     // Testing that the Queen piece can make a move to the right
     @Test(timeout = 100)
     public void testMoveRight() {
@@ -75,8 +70,6 @@ public class QueenMoveTest {
         state.makeMove(arr5);
         assertEquals('q', state.getChessPieceLetter(5, 6));
     }
-
-
 
     // Testing that the Queen piece can make a move to the left
     @Test(timeout = 100)
@@ -96,8 +89,6 @@ public class QueenMoveTest {
         assertEquals('q', state.getChessPieceLetter(5, 1));
     }
 
-
-
     // Testing that the Queen piece can make a diagonal move up and to the right
     @Test(timeout = 100)
     public void testMoveDiagonalRight() {
@@ -115,8 +106,6 @@ public class QueenMoveTest {
         state.makeMove(arr5);
         assertEquals('q', state.getChessPieceLetter(3, 5));
     }
-
-
 
     // Testing that the Queen piece can make a diagonal move up and to the left
     @Test(timeout = 100)

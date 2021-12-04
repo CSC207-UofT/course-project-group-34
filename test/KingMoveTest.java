@@ -126,7 +126,6 @@ public class KingMoveTest {
         assertEquals(letter, state.getChessPieceLetter(4, 5));
     }
 
-
     // Testing that the King piece can make a diagonal move up and to the left
     @Test(timeout = 100)
     public void testMoveDiagonalLeft() {
