@@ -1,5 +1,5 @@
 import Entities.ChessPiece;
-import UseCases.Checkmate.CopyState;
+import UseCases.CopyState;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

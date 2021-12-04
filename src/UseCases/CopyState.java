@@ -1,4 +1,4 @@
-package UseCases.Checkmate;
+package UseCases;
 
 import Controllers.GameState;
 import Entities.ChessPiece;
