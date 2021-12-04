@@ -45,16 +45,19 @@ public class Checkmate {
         removeChessPiece(board, king.getRow(), king.getColumn());
         for(int[] move : validMoves) {
             // Creates a temporary King object to test checkmate on
+            ChessPiece piece = board[move[0]][move[1]];
             King tempKing = new King(move[0], move[1], king.getColor());
             addChessPiece(board, tempKing);
 
             // Loops through each valid move, and determines whether the tempKing is still in check or not.
             if(!(check.isKingInCheck(tempKing, board))){
                 removeChessPiece(board, move[0], move[1]);
+                addChessPiece(board, piece);
                 addChessPiece(board, king);
                 return false;
             }
             removeChessPiece(board, move[0], move[1]);
+            addChessPiece(board, piece);
         }
         // If there are no valid moves where the King can take itself out of check, we then
         // see if the opposing piece can be captured or blocked, and determine whether our
