@@ -3,9 +3,9 @@ package UseCases;
 import Entities.Bishop;
 import Entities.ChessPiece;
 import Entities.Knight;
-import Entities.Pawn;
 import Entities.Queen;
 import Entities.Rook;
+import Entities.Pawn;
 
 /**
  * This class uses the Simple Factory design pattern in order to return an instance
@@ -43,9 +43,37 @@ public class ChessPieceFactory {
         else if(transformType.equalsIgnoreCase("KNIGHT")){
             return new Knight(row, col, color);
         }
+        else if(transformType.equalsIgnoreCase("PAWN")){
+            return new Pawn(row, col, color);
+        }
         else {
             System.out.println(transformType + " is an undefined chess piece for this program.");
             return null;
         }
     }
+
+    /**
+     * This method takes in a chess piece instance and returns an exact copy of that instance, with
+     * a different memory adress.
+     */
+    public ChessPiece getCopy(ChessPiece currPiece){
+
+        if(currPiece.getLetter() == 'p' || currPiece.getLetter() == 'P'){
+            return this.getChessPiece("PAWN", currPiece);
+        }
+        if(currPiece.getLetter() == 'q' || currPiece.getLetter() == 'Q'){
+            return this.getChessPiece("QUEEN", currPiece);
+        }
+        if(currPiece.getLetter() == 'k' || currPiece.getLetter() == 'K'){
+            return this.getChessPiece("KNIGHT", currPiece);
+        }
+        if(currPiece.getLetter() == 'r' || currPiece.getLetter() == 'R'){
+            return this.getChessPiece("ROOK", currPiece);
+        }
+        if(currPiece.getLetter() == 'b' || currPiece.getLetter() == 'B'){
+            return this.getChessPiece("BISHOP", currPiece);
+        }
+        return this.getChessPiece("KING", currPiece);
+    }
+
 }

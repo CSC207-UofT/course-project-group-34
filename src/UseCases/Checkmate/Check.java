@@ -6,8 +6,6 @@ import UseCases.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
-
 /**
  * This class is responsible for determining whether a given King chess piece is in Check or not.
  * Recall that a King is in check when it is in a viable position to be "captured" by an opposing
@@ -75,9 +73,10 @@ public class Check{
      * list of valid moves corresponding to that piece.
      */
     private int[][] generateValidMoves(ChessPiece piece, ChessPiece[][] board){
+        CheckMoveFactory moveFactory = new CheckMoveFactory();
         CheckerGenerator checkerGen = new CheckerGenerator();
         CheckPlayerMove check = checkerGen.generateChecker(piece);
-        return getValidMoves(check, piece, board);
+        return moveFactory.getValidMoves(check, piece, board);
     }
 
     /**
@@ -161,34 +160,13 @@ public class Check{
      */
     private boolean positionExp(int row, int col, int[] pos, ArrayList<int[]> arr, int inc1, int inc2){
         do {
-
             row = row + inc1;
             col = col + inc2;
 
             arr.add(new int[] {row, col});
-
         } while (row != pos[0] && col != pos[1]);
         this.positions = toArrayMoves(arr);
         return true;
-    }
-
-    /**
-     * Helper method used to generate the 2D list of valid moves for each chess piece.
-     */
-    private int[][] getValidMoves(CheckPlayerMove moves, ChessPiece piece, ChessPiece[][] board){
-        if(moves instanceof CheckPawnMove){
-            return ((CheckPawnMove) moves).validMoves(piece, board);
-        }
-        if(moves instanceof CheckKnightMove){
-            return ((CheckKnightMove) moves).validMoves(piece, board);
-        }
-        if(moves instanceof CheckQueenMove){
-            return ((CheckQueenMove) moves).validMoves(piece, board);
-        }
-        if(moves instanceof CheckBishopMove){
-            return ((CheckBishopMove) moves).validMoves(piece, board);
-        }
-        return ((CheckRookMove) moves).validMoves(piece, board);
     }
 
     /**
