@@ -1,4 +1,5 @@
 import Entities.King;
+import Entities.Queen;
 import UseCases.Checkmate.Checkmate;
 import org.junit.Before;
 import org.junit.Test;
@@ -88,6 +89,32 @@ public class CheckmateTest {
         state.makeMove(arr);
         state.makeMove(arr2);
         state.makeMove(arr3);
+
+        assertFalse(checkmate.isCheckmate(king, state.getBoard()));
+    }
+
+    // Test to determine whether the Black King can escape Checkmate when
+    // the White Queen captures the enemy piece blocking it's path.
+    @Test(timeout = 100)
+    public void testBlackKingCanEscapeCheckmate() {
+        LoadGame init = new LoadGame();
+        state = init.loadGame();
+        king = (King) state.getBoard()[0][4];
+        Checkmate checkmate = new Checkmate();
+
+        int[] arr = {6, 5, 4, 5};
+        int[] arr2 = {1, 4, 3, 4};
+        int[] arr3 = {6, 6, 5, 6};
+        int[] arr4 = {0, 3, 4, 7};
+        int[] arr5 = {7, 4, 6, 5};
+        int[] arr6 = {4, 7, 5, 6};
+
+        state.makeMove(arr);
+        state.makeMove(arr2);
+        state.makeMove(arr3);
+        state.makeMove(arr4);
+        state.makeMove(arr5);
+        state.makeMove(arr6);
 
         assertFalse(checkmate.isCheckmate(king, state.getBoard()));
     }

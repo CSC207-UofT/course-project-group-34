@@ -106,16 +106,21 @@ public class Checkmate {
         int currCol = currPiece.getColumn();
         boolean cond = false;
 
+        // Create a new factory instance, obtain a duplicate copy of our
+        // chess piece that is being moved
         ChessPieceFactory factory = new ChessPieceFactory();
         ChessPiece tempPiece = factory.getCopy(currPiece);
         tempPiece.setRow(row);
         tempPiece.setColumn(col);
 
+        // Switch our original piece with a duplicate one
         removeChessPiece(board, currRow, currCol);
         addChessPiece(board, tempPiece);
 
+        // If our duplicate piece causes check, we set our return condition to true
         if(check.isKingInCheck(king, board)){cond = true;}
 
+        // Switching back to our original piece
         removeChessPiece(board, row, col);
         addChessPiece(board, currPiece);
 

@@ -6,6 +6,7 @@ import Entities.Knight;
 import Entities.Queen;
 import Entities.Rook;
 import Entities.Pawn;
+import Entities.King;
 
 /**
  * This class uses the Simple Factory design pattern in order to return an instance
@@ -45,6 +46,9 @@ public class ChessPieceFactory {
         }
         else if(transformType.equalsIgnoreCase("PAWN")){
             return new Pawn(row, col, color);
+        }
+        else if(transformType.equalsIgnoreCase("KING")){
+            return new King(row, col, color);
         }
         else {
             System.out.println(transformType + " is an undefined chess piece for this program.");
