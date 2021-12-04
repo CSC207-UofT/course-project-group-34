@@ -46,9 +46,7 @@ public class Checkmate {
         for(int[] move : validMoves) {
             // Creates a temporary King object to test checkmate on
             boolean bool = (board[move[0]][move[1]] != null);
-            if (bool) {
-                ChessPiece piece = board[move[0]][move[1]];
-            }
+            ChessPiece piece = board[move[0]][move[1]];
             King tempKing = new King(move[0], move[1], king.getColor());
             addChessPiece(board, tempKing);
 
@@ -60,6 +58,10 @@ public class Checkmate {
                 }
                 addChessPiece(board, king);
                 return false;
+            }
+            removeChessPiece(board, move[0], move[1]);
+            if (bool) {
+                addChessPiece(board, piece);
             }
             removeChessPiece(board, move[0], move[1]);
             if (bool) {
