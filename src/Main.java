@@ -33,6 +33,7 @@ public class Main {
         // continue to do so until the input in valid.
         while(!isOver) {
             System.out.println(x.printBoard(state));
+            getCheck(state);
             if (state.getCheck()) {
                 System.out.println("Your king is in check!");
             }
@@ -117,6 +118,24 @@ public class Main {
         System.out.println();
 
         return new int[]{Math.floorDiv(rcFrom, 10), rcFrom % 10, Math.floorDiv(rcTo, 10), rcTo % 10};
+    }
+
+    public static void getCheck(GameState state){
+        if (state.getTurn() == 0){
+            if(state.getCheck()){
+                System.out.println("Player White, Your king is in check."); ;
+            } else{
+                System.out.println("It is the White player's turn.");
+            }
+        }
+        else {
+            if(state.getCheck()){
+                System.out.println("Player Black, Your king is in check."); ;
+            } else{
+                System.out.println("It is the Black player's turn.");
+            }
+        }
+
     }
 
 }
