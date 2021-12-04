@@ -1,9 +1,8 @@
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import Other.GameState;
-import Other.LoadGame;
+import Controllers.GameState;
+import Controllers.LoadGame;
 
 /**
  * This Class is responsible for testing the movements of our King chess
@@ -113,7 +112,7 @@ public class KingMoveTest {
         int[] arr = {6, 4, 4, 4};
         int[] arr2 = {1, 7, 3, 7};
         int[] arr3 = {7, 4, 6, 4};
-        int[] arr4 = {1, 6, 3, 6};
+        int[] arr4 = {1, 6, 2, 6};
         int[] arr5 = {6, 4, 5, 4};
         int[] arr6 = {1, 0, 3, 0};
         int[] arr7 = {5, 4, 4, 5};

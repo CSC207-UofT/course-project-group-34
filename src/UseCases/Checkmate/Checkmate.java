@@ -1,8 +1,7 @@
-package Other.Checkmate;
+package UseCases.Checkmate;
 
 import Entities.ChessPiece;
 import Entities.King;
-import Other.GameState;
 import UseCases.*;
 import Entities.*;
 
@@ -29,43 +28,42 @@ public class Checkmate {
      * @return - true, if the GameState is in Checkmate
      *         - false, otherwise
      */
-    public boolean isCheckmate(King king, GameState state){
+    public boolean isCheckmate(King king, ChessPiece[][] board){
 
         // If the King is not in check initially, return false early on
         Check check = new Check();
-        if(!(check.isKingInCheck(king, state))){
-
+        if(!(check.isKingInCheck(king, board))) {
             return false;
         }
 
         // Generate list of valid moves for the King piece and keeping track of its original position
         CheckKingMove checkMoves = new CheckKingMove();
-        int[][] validMoves = checkMoves.validMoves(king, state);
+        int[][] validMoves = checkMoves.validMoves(king, board);
 
         int[][] positions = check.getPositions();
 
-        state.removeChessPiece(king.getRow(), king.getColumn());
+        removeChessPiece(board, king.getRow(), king.getColumn());
         for(int[] move : validMoves) {
             // Creates a temporary King object to test checkmate on
             King tempKing = new King(move[0], move[1], king.getColor());
-            state.addChessPiece(tempKing);
+            addChessPiece(board, tempKing);
 
             // Loops through each valid move, and determines whether the tempKing is still in check or not.
-            if(!(check.isKingInCheck(tempKing, state))){
-                state.removeChessPiece(move[0], move[1]);
-                state.addChessPiece(king);
+            if(!(check.isKingInCheck(tempKing, board))){
+                removeChessPiece(board, move[0], move[1]);
+                addChessPiece(board, king);
 
                 return false;
             }
-            state.removeChessPiece(move[0], move[1]);
+            removeChessPiece(board, move[0], move[1]);
         }
 
         // If there are no valid moves where the King can take itself out of check, we then
         // see if the opposing piece can be captured or blocked, and determine whether our
         // game is in checkmate based on that.
-        state.addChessPiece(king);
+        addChessPiece(board, king);
 
-        return !(checkPositions(positions, state, king));
+        return !(checkPositions(positions, board, king));
     }
 
     /**
@@ -73,8 +71,7 @@ public class Checkmate {
      * chess piece putting the king in check. Returns true if the opposing piece can be blocked
      * or captured, and false otherwise.
      */
-    private boolean checkPositions(int[][] positions, GameState state, King king){
-        ChessPiece[][] board = state.getBoard();
+    private boolean checkPositions(int[][] positions, ChessPiece[][] board, King king){
         CheckerGenerator currChecker = new CheckerGenerator();
 
         // For each position in the chess board, IF there is piece that belongs to the same team,
@@ -85,10 +82,10 @@ public class Checkmate {
                 if(board[i][x] != null && board[i][x].getColor().equals(king.getColor()) && !(board[i][x] instanceof King) ){
 
                     CheckPlayerMove moves = currChecker.generateChecker(board[i][x]);
-                    int[][] validMoves = getValidMoves(moves, board[i][x], state);
+                    int[][] validMoves = getValidMoves(moves, board[i][x], board);
                     hasSharedPosition(positions, validMoves);
 
-                    if(this.hasSharedPos && !(moveCausesCheck(king, board[i][x], state, sharedPos[0], sharedPos[1]))){
+                    if(this.hasSharedPos && !(moveCausesCheck(king, board[i][x], board, sharedPos[0], sharedPos[1]))){
                         return true;
                     }
                 }
@@ -101,22 +98,21 @@ public class Checkmate {
      * This method is used to determine if the king is in check once we remove a chess piece from the board.
      * Returns true if the king is still in check, and false otherwise.
      */
-    private boolean moveCausesCheck(King king, ChessPiece currPiece, GameState state, int row, int col){
+    private boolean moveCausesCheck(King king, ChessPiece currPiece, ChessPiece[][] board, int row, int col){
         Check check = new Check();
         int currRow = currPiece.getRow();
         int currCol = currPiece.getColumn();
 
         ChessPiece tempPiece = getCopy(currPiece, row, col);
-
-        state.removeChessPiece(currRow, currCol);
-        state.addChessPiece(tempPiece);
-        if(check.isKingInCheck(king, state)){
-            state.removeChessPiece(row, col);
-            state.addChessPiece(currPiece);
+        removeChessPiece(board, currRow, currCol);
+        addChessPiece(board, tempPiece);
+        if(check.isKingInCheck(king, board)){
+            removeChessPiece(board, row, col);
+            addChessPiece(board, currPiece);
             return true;
         }
-        state.removeChessPiece(row, col);
-        state.addChessPiece(currPiece);
+        removeChessPiece(board, row, col);
+        addChessPiece(board, currPiece);
         return false;
     }
 
@@ -145,20 +141,20 @@ public class Checkmate {
     /**
      * Helper method used to generate the 2D list of valid moves for each chess piece.
      */
-    private int[][] getValidMoves(CheckPlayerMove moves, ChessPiece piece, GameState state){
+    private int[][] getValidMoves(CheckPlayerMove moves, ChessPiece piece, ChessPiece[][] board){
         if(moves instanceof CheckPawnMove){
-            return ((CheckPawnMove) moves).validMoves(piece, state);
+            return ((CheckPawnMove) moves).validMoves(piece, board);
         }
         if(moves instanceof CheckKnightMove){
-            return ((CheckKnightMove) moves).validMoves(piece, state);
+            return ((CheckKnightMove) moves).validMoves(piece, board);
         }
         if(moves instanceof CheckQueenMove){
-            return ((CheckQueenMove) moves).validMoves(piece, state);
+            return ((CheckQueenMove) moves).validMoves(piece, board);
         }
         if(moves instanceof CheckBishopMove){
-            return ((CheckBishopMove) moves).validMoves(piece, state);
+            return ((CheckBishopMove) moves).validMoves(piece, board);
         }
-        return ((CheckRookMove) moves).validMoves(piece, state);
+        return ((CheckRookMove) moves).validMoves(piece, board);
     }
 
     /**
@@ -180,6 +176,21 @@ public class Checkmate {
             }
         }
         this.hasSharedPos = false;
+    }
+
+    /**
+     * This method adds the ChessPiece object from our parameter and into our
+     * 2D array that represents the chess board.
+     */
+    public void addChessPiece(ChessPiece[][] board, ChessPiece chessPiece){
+        board[chessPiece.getRow()][chessPiece.getColumn()] = chessPiece;
+    }
+
+    /**
+     * This method takes in a given position and removes that chess piece from that position.
+     */
+    public void removeChessPiece(ChessPiece[][] board, int row, int col) {
+        board[row][col] = null;
     }
 
 }

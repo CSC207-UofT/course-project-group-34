@@ -1,8 +1,8 @@
 package UseCases;
 
 import Entities.ChessPiece;
-import Other.GameState;
-
+import Entities.King;
+import UseCases.Checkmate.Check;
 import java.util.ArrayList;
 
 /**
@@ -17,11 +17,10 @@ public class CheckKingMove extends CheckPlayerMove {
      * This method generates a 2-dimensional array of integers that represents a list of valid moves
      * that the King can make with respect to the current state of the game.
      */
-    public int[][] validMoves(ChessPiece king, GameState gameState) {
-        ArrayList result = new ArrayList();
+    public int[][] validMoves(ChessPiece king, ChessPiece[][] board) {
+        ArrayList<int[]> result = new ArrayList<>();
         int row = king.getRow();
         int column = king.getColumn();
-        ChessPiece[][] board = gameState.getBoard();
 
         // Checking moves to one row above
 
@@ -36,7 +35,7 @@ public class CheckKingMove extends CheckPlayerMove {
             }
 
             if (column + 1 < 8 &&
-                    board[row - 1][column + 1] == null || super.isEnemy(king, board[row - 1][column + 1])) {
+                    (board[row - 1][column + 1] == null || super.isEnemy(king, board[row - 1][column + 1]))) {
                 result.add(new int[]{row - 1, column + 1});
             }
         }
@@ -68,8 +67,39 @@ public class CheckKingMove extends CheckPlayerMove {
             }
         }
 
-        int[][] array = super.toArrayMoves(result);
-        return array;
+        // Castling
+        if (!king.getHasMovedOnce() && board[row][column - 1] == null && board[row][column - 2] == null
+                && board[row][column - 3] == null && board[row][column - 4] != null
+                && (board[row][column - 4].getLetter() == 'r' || board[row][column - 4].getLetter() == 'R')
+                && !board[row][column - 4].getHasMovedOnce()) {
+            Check check = new Check();
+            king.setColumn(column - 1);
+            board[row][column] = null;
+            board[row][column - 1] = king;
+            if (!check.isKingInCheck((King) king, board)) {
+                king.setColumn(column);
+                board[row][column] = king;
+                board[row][column - 1] = null;
+                result.add(new int[] {row, column - 2});
+            }
+        }
+
+        if (!king.getHasMovedOnce() && board[row][column + 1] == null && board[row][column + 2] == null
+                && board[row][column + 3] != null && (board[row][column + 3].getLetter() == 'r'
+                || board[row][column + 3].getLetter() == 'R') && !board[row][column + 3].getHasMovedOnce()) {
+            Check check = new Check();
+            king.setColumn(column + 1);
+            board[row][column] = null;
+            board[row][column + 1] = king;
+            if (!check.isKingInCheck((King) king, board)) {
+                king.setColumn(column);
+                board[row][column] = king;
+                board[row][column + 1] = null;
+                result.add(new int[] {row, column + 2});
+            }
+        }
+
+        return super.toArrayMoves(result);
 
     }
 

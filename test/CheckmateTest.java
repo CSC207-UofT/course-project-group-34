@@ -1,11 +1,11 @@
 import Entities.King;
-import Other.Checkmate.Checkmate;
+import UseCases.Checkmate.Checkmate;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import Other.GameState;
-import Other.LoadGame;
+import Controllers.GameState;
+import Controllers.LoadGame;
 
 /**
  * This Class is responsible for testing that the program is able to correctly identify when the King piece
@@ -38,7 +38,7 @@ public class CheckmateTest {
     // Test to determine if Checkmate can identify when the gamestate is in checkmate
     @Test(timeout = 100)
     public void testKingCheckmate() {
-        assertTrue(checkmate.isCheckmate(king, state));
+        assertTrue(checkmate.isCheckmate(king, state.getBoard()));
     }
 
     // Testing to see if checkmate can recognize that the game is not in checkmate
@@ -59,7 +59,7 @@ public class CheckmateTest {
         state.makeMove(arr3);
         state.makeMove(arr4);
 
-        assertFalse(checkmate.isCheckmate(king, state));
+        assertFalse(checkmate.isCheckmate(king, state.getBoard()));
     }
 
     // Testing to see if checkmate can recognize that the game is not in checkmate
@@ -70,7 +70,7 @@ public class CheckmateTest {
         king = (King) state.getBoard()[7][4];
         checkmate = new Checkmate();
 
-        assertFalse(checkmate.isCheckmate(king, state));
+        assertFalse(checkmate.isCheckmate(king, state.getBoard()));
     }
 
     // Check to see if the black king is not in checkmate, but it is in check
@@ -88,6 +88,6 @@ public class CheckmateTest {
         state.makeMove(arr2);
         state.makeMove(arr3);
 
-        assertFalse(checkmate.isCheckmate(king, state));
+        assertFalse(checkmate.isCheckmate(king, state.getBoard()));
     }
 }

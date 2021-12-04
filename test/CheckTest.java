@@ -1,12 +1,11 @@
 import Entities.King;
-import Other.Checkmate.Checkmate;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import Other.GameState;
-import Other.LoadGame;
-import Other.Checkmate.Check;
+import Controllers.GameState;
+import Controllers.LoadGame;
+import UseCases.Checkmate.Check;
 
 
 /**
@@ -36,7 +35,7 @@ public class CheckTest {
 
     @Test(timeout = 100)
     public void testKingCheck() {
-        assertTrue(KingCheck.isKingInCheck(king, state));
+        assertTrue(KingCheck.isKingInCheck(king, state.getBoard()));
     }
 
     // Test that the King is in check during an empty game
@@ -47,7 +46,7 @@ public class CheckTest {
         king = (King) state.getBoard()[0][4];
         KingCheck = new Check();
 
-        assertFalse(KingCheck.isKingInCheck(king, state));
+        assertFalse(KingCheck.isKingInCheck(king, state.getBoard()));
     }
 
     // Check to see if the king is in check after these moves
@@ -68,7 +67,7 @@ public class CheckTest {
         state.makeMove(arr3);
         state.makeMove(arr4);
 
-        assertTrue(KingCheck.isKingInCheck(king, state));
+        assertTrue(KingCheck.isKingInCheck(king, state.getBoard()));
     }
 
 

@@ -1,7 +1,6 @@
-package Other.Checkmate;
+package UseCases.Checkmate;
 
 import Entities.*;
-import Other.GameState;
 
 import java.util.ArrayList;
 
@@ -24,10 +23,14 @@ public class Check {
      * @return - true, if the King is in check
      *         - false, otherwise
      */
-    public boolean isKingInCheck(King king, GameState state){
+    public boolean isKingInCheck(King king, ChessPiece[][] board){
 
-        return checkLeftRight(king, state) || checkForwardsBackwards(king, state) ||
-                checkDiagonals(king, state) || checkKnight(king, state) || checkPawn(king, state);
+        if (king == null){
+            return false;
+        }
+
+        return checkLeftRight(king, board) || checkForwardsBackwards(king, board) ||
+                checkDiagonals(king, board) || checkKnight(king, board) || checkPawn(king, board);
     }
 
     /**
@@ -58,10 +61,9 @@ public class Check {
      * @return - true, if there is an opposing Queen or Rook that can capture the King
      *         - false, otherwise
      */
-    private boolean checkLeftRight(King king, GameState state){
+    private boolean checkLeftRight(King king, ChessPiece[][] board){
         int col = king.getColumn();
         int row = king.getRow();
-        ChessPiece[][] board = state.getBoard();
         ArrayList<int[]> pos = new ArrayList<>();
 
         // Checking for any Rooks or Queens to the Right of the king
@@ -102,10 +104,9 @@ public class Check {
      * @return - true, if there is an opposing Queen or Rook that can capture the King
      *         - false, otherwise
      */
-    private boolean checkForwardsBackwards(King king, GameState state){
+    private boolean checkForwardsBackwards(King king, ChessPiece[][] board){
         int col = king.getColumn();
         int row = king.getRow();
-        ChessPiece[][] board = state.getBoard();
         ArrayList<int[]> pos = new ArrayList<>();
 
         // Checking for any Queens or Rooks directly down the board
@@ -151,7 +152,7 @@ public class Check {
     private int hasOpposingQueenRook(ChessPiece[][] board, int row, int col, String color) {
         if (board[row][col] != null) {
             if (!(board[row][col].getColor().equals(color)) &&
-                    board[row][col] instanceof Queen || board[row][col] instanceof Rook) {
+                    (board[row][col] instanceof Queen || board[row][col] instanceof Rook)) {
                 return 1;
             } else {
                 return -1;
@@ -167,10 +168,9 @@ public class Check {
      * @return - true, if there is either an opposing Queen or Bishop that can capture the King
      *         - false, otherwise
      */
-    private boolean checkDiagonals (King king, GameState state){
+    private boolean checkDiagonals (King king, ChessPiece[][] board){
         int col = king.getColumn();
         int row = king.getRow();
-        ChessPiece[][] board = state.getBoard();
         ArrayList<int[]> pos = new ArrayList<>();
 
         // Check for Queens or Bishops within up-right diagonal
@@ -254,7 +254,7 @@ public class Check {
     private int hasOpposingQueenBishop(ChessPiece[][] board, int row, int col, String color) {
         if (board[row][col] != null) {
             if (!(board[row][col].getColor().equals(color)) &&
-                    board[row][col] instanceof Queen || board[row][col] instanceof Bishop) {
+                    (board[row][col] instanceof Queen || board[row][col] instanceof Bishop)) {
                 return 1;
             } else {
                 return -1;
@@ -270,8 +270,7 @@ public class Check {
      * @return - true, if there opposing knight pieces that can capture the king
      *         - false, otherwise
      */
-    private boolean checkKnight(King king, GameState state){
-        ChessPiece[][] board = state.getBoard();
+    private boolean checkKnight(King king, ChessPiece[][] board){
         int row = king.getRow();
         int col = king.getColumn();
 
@@ -364,8 +363,7 @@ public class Check {
      * @return - true, if there is an opposing Pawn piece that can capture the King,
      *         - false, otherwise
      */
-    private boolean checkPawn(King king, GameState state){
-        ChessPiece[][] board = state.getBoard();
+    private boolean checkPawn(King king, ChessPiece[][] board){
         String color = king.getColor();
         int row = king.getRow();
         int col = king.getColumn();

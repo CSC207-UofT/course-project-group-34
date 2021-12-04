@@ -1,13 +1,6 @@
 package UseCases;
 
 import Entities.ChessPiece;
-import UseCases.CheckPlayerMove;
-import UseCases.CheckPawnMove;
-import UseCases.CheckKnightMove;
-import UseCases.CheckQueenMove;
-import UseCases.CheckBishopMove;
-import UseCases.CheckRookMove;
-import UseCases.CheckKingMove;
 
 /**
  * This class uses a simple factory method to determine what Move checker will
