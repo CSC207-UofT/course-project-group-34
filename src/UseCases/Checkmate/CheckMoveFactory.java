@@ -11,6 +11,10 @@ import UseCases.*;
 public class CheckMoveFactory{
     /**
      * Helper method used to generate the 2D list of valid moves for each chess piece.
+     * Takes in a CheckPlayerMove Object, a chess piece, a chess piece board and casts the
+     * CheckPlayerMove object to it's correct subclass based on the piece's letter attribute.
+     *
+     * Returns a list of valid moves based on it's casting.
      */
     public int[][] getValidMoves(CheckPlayerMove moves, ChessPiece piece, ChessPiece[][] board){
 

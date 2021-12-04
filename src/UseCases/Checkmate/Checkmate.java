@@ -86,6 +86,8 @@ public class Checkmate {
                     int[][] validMoves = moveFactory.getValidMoves(moves, board[i][x], board);
                     hasSharedPosition(positions, validMoves);
 
+                    // If there is a shared position, and acting upon that move does not cause check,
+                    // we know that the game is not in checkmate
                     if(this.hasSharedPos && !(moveCausesCheck(king, board[i][x], board, this.sharedPos[0],
                             this.sharedPos[1]))){
                         return true;
