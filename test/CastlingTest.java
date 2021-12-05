@@ -62,4 +62,22 @@ public class CastlingTest {
         state.makeMove(arr9);
         assertTrue((letter == state.getChessPieceLetter(7, 2)) & ('r' == state.getChessPieceLetter(7, 3)));
     }
+
+
+    // Testing that an invalid castling move cannot be made
+    @Test(timeout = 100)
+    public void testCastlingKingside() {
+        LoadGame init = new LoadGame();
+        state = init.loadGame();
+        int[] arr = {6, 4, 4, 4};
+        int[] arr2 = {1, 0, 3, 0};
+        int[] arr3 = {7, 5, 5, 3};
+        int[] arr4 = {1, 1, 3, 1};
+        int[] arr5 = {7, 4, 7, 6};
+        state.makeMove(arr);
+        state.makeMove(arr2);
+        state.makeMove(arr3);
+        state.makeMove(arr4);
+        assertFalse(state.makeMove(arr5));
+    }
 }
