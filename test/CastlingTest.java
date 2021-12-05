@@ -66,7 +66,7 @@ public class CastlingTest {
 
     // Testing that an invalid castling move cannot be made
     @Test(timeout = 100)
-    public void testCastlingKingside() {
+    public void testCastlingKingSideInvalid() {
         LoadGame init = new LoadGame();
         state = init.loadGame();
         int[] arr = {6, 4, 4, 4};
