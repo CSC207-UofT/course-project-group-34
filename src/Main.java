@@ -1,8 +1,16 @@
 package Other;
 
+import Controllers.GameState;
+import Controllers.LoadGame;
+import Entities.ChessPiece;
+import Gateways.PawnTransformer;
+import UI.CLIBoard;
+
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.lang.Math;
+import java.util.Stack;
 
 /**
  * This class is responsible for running our skeleton Chess Game implementation
@@ -17,11 +25,17 @@ public class Main {
         GameState state = newGame();
         File output = new File("output.txt");
         FileWriter writer = new FileWriter(output);
+        GameState deepCopy = deepClone(state);
+        Stack<GameState> history = new Stack<GameState>();
+        Stack<GameState> future = new Stack<GameState>();
+
 //        String s = loadGame();
 //        System.out.println(s);
         
         // Printing out the UI
-        System.out.println(x.printBoard(state));
+        assert deepCopy != null;
+
+        int move_count = 0;
 
 
         boolean isOver = false;
@@ -30,22 +44,86 @@ public class Main {
         // While loop asking for user input, and will
         // continue to do so until the input in valid.
         while(!isOver) {
+//            System.out.println(x.printBoard(state));
+//            int[] arr = getPlayerMove(state);
+//            boolean cond = state.makeMove(arr);
+//            if (!cond) {
+//                System.out.println("\nThat is not a valid move, please try again.");
+//                continue;
+//            }
+//            saveGame(state);
+//            boolean outcome = state.getOutcome();
+//            if (outcome) {
+//                isOver = true;
+//                System.out.println("The game is over!");
+//            }
+//        }
+//        // Printing out our chess board after the new move
+//        System.out.println(x.printBoard(state));
             System.out.println(x.printBoard(state));
+            if (history.size() > 0) {
+                System.out.println(x.printBoard(history.peek()));
+            }
+            getCheck(state);
+            if (state.getCheck()) {
+                System.out.println("Your king is in check!");
+            }
             int[] arr = getPlayerMove(state);
+            System.out.print(Arrays.toString(arr));
+            if (Arrays.toString(arr).equals(Arrays.toString(new int[]{8, 8, 8, 0}))) {
+                if (history.size() == 0) {
+                    System.out.println("cannot undo, there is no history");
+                    continue;
+                }
+                future.push(deepClone(state));
+                GameState prev = history.pop();
+                System.out.println(x.printBoard((prev)));
+                state = prev;
+                continue;
+            }
+            if (Arrays.toString(arr).equals(Arrays.toString(new int[]{8, 8, 8, 1}))) {
+                if (future.size() == 0) {
+                    System.out.println("cannot redo, there is no future");
+                    continue;
+                }
+                history.push(deepClone(state));
+                GameState post = future.pop();
+                System.out.println(x.printBoard((post)));
+                state = post;
+                continue;
+            }
+            GameState copy = deepClone(state);
             boolean cond = state.makeMove(arr);
             if (!cond) {
                 System.out.println("\nThat is not a valid move, please try again.");
                 continue;
             }
-            saveGame(state);
+            // Check if pawn is to be transformed
+            if (state.getTransform()) {
+                PawnTransformer transformer = new PawnTransformer();
+                ChessPiece[][] newBoard = transformer.transform(state.getPawnToTransform(), state.getBoard());
+                state.setBoard(newBoard);
+                state.setTransform(false);
+            }
+            move_count = move_count + 1;
+            saveGame((state));
+            history.push(copy);
+
+
+            // Check if game is over
             boolean outcome = state.getOutcome();
             if (outcome) {
                 isOver = true;
                 System.out.println("The game is over!");
+                if (move_count % 2 == 1){
+                    System.out.println("The player using the white pieces won in " + ((move_count/2) + 1) + " moves." );
+                } else {
+                    System.out.println("The player using the black pieces won in " + (move_count/2) + " moves.");
+                }
             }
         }
         // Printing out our chess board after the new move
-        System.out.println(x.printBoard(state));
+
 
     }
 
@@ -77,6 +155,21 @@ public class Main {
         }
     }
 
+    public static GameState deepClone(GameState state) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(state);
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return (GameState) ois.readObject();
+
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
+        }
+    }
+
     // This method retrieves user input, it asks the player what pawn
     // they would like to move and where.
     public static int[] getPlayerMove(GameState state){
@@ -98,9 +191,27 @@ public class Main {
         int rcFrom = moveFrom - 11;
         int rcTo = moveTo - 11;
 
-        System.out.println();
+        System.out.println(Arrays.toString(new int[]{Math.floorDiv(rcFrom, 10), rcFrom % 10, Math.floorDiv(rcTo, 10), rcTo % 10}));
 
         return new int[]{Math.floorDiv(rcFrom, 10), rcFrom % 10, Math.floorDiv(rcTo, 10), rcTo % 10};
+    }
+
+    public static void getCheck(GameState state){
+        if (state.getTurn() == 0){
+            if(state.getCheck()){
+                System.out.println("Player White, Your king is in check."); ;
+            } else{
+                System.out.println("It is the White player's turn.");
+            }
+        }
+        else {
+            if(state.getCheck()){
+                System.out.println("Player Black, Your king is in check."); ;
+            } else{
+                System.out.println("It is the Black player's turn.");
+            }
+        }
+
     }
 
 }

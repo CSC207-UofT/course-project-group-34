@@ -12,6 +12,8 @@ import UseCases.Checkmate.*;
 */
 public class GameState implements java.io.Serializable {
 
+    private static final long serialVersionUID = 602355574925137630L;
+
     private ChessPiece[][] board;
     private int turn;
     private int[][] kingPos;

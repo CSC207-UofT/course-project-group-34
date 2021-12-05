@@ -6,6 +6,8 @@ package Entities;
 */
 public abstract class ChessPiece implements java.io.Serializable {
 
+    private static final long serialVersionUID = 602355574925137630L;
+
     private int row;
     private int column;
     private String color;
