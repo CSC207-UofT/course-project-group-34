@@ -15,9 +15,27 @@ public class BishopMoveTest {
         state = init.loadGame();
     }
 
+    // Ensuring the leftmost Bishop cannot move during the start of the game
+    @Test(timeout = 100)
+    public void testLeftInvalidMove() {
+        LoadGame init = new LoadGame();
+        state = init.loadGame();
+        int[] arr = {7, 2, 5, 2};
+        assertFalse(state.makeMove(arr));
+    }
+
+    // Ensuring the rightmost Bishop cannot move during the start of the game
+    @Test(timeout = 100)
+    public void testRightInvalidMove() {
+        LoadGame init = new LoadGame();
+        state = init.loadGame();
+        int[] arr = {7, 5, 5, 5};
+        assertFalse(state.makeMove(arr));
+    }
+
     // Testing that the Bishop piece can move diagonally up and to the right
     @Test(timeout = 100)
-    public void testMove() {
+    public void testMoveDiagonalUpRight() {
         int[] arr = {6, 6, 4, 6};
         int[] arr2 = {1, 7, 3, 7};
         int[] arr3 = {7, 5, 5, 7};
