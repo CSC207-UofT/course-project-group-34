@@ -13,10 +13,12 @@ public class Main {
         
         //Creates our IU object and the object that loads a fresh game board
         CLIBoard x = new CLIBoard();
-        LoadGame game = new LoadGame();
-        GameState state = game.loadGame();
+//        LoadGame game = new LoadGame();
+        GameState state = newGame();
         File output = new File("output.txt");
         FileWriter writer = new FileWriter(output);
+//        String s = loadGame();
+//        System.out.println(s);
         
         // Printing out the UI
         System.out.println(x.printBoard(state));
@@ -35,6 +37,7 @@ public class Main {
                 System.out.println("\nThat is not a valid move, please try again.");
                 continue;
             }
+            saveGame(state);
             boolean outcome = state.getOutcome();
             if (outcome) {
                 isOver = true;
@@ -48,6 +51,7 @@ public class Main {
 
     public static void saveGame(GameState state) throws FileNotFoundException {
         try {
+//            String demo = "demo";
             FileOutputStream f = new FileOutputStream("object.txt");
             ObjectOutputStream o = new ObjectOutputStream(f);
 
@@ -61,13 +65,15 @@ public class Main {
         }
     }
 
-    public static void loadGame() throws FileNotFoundException {
+    public static GameState newGame() throws FileNotFoundException {
         try{
             ObjectInputStream is = new ObjectInputStream(new FileInputStream("object.txt"));
             GameState s = (GameState) is.readObject();
+            return s;
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            return new LoadGame().loadGame();
         }
     }
 
