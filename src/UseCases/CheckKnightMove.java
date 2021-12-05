@@ -1,7 +1,6 @@
 package UseCases; 
 
-import Entities.ChessPiece; 
-import Other.GameState; 
+import Entities.ChessPiece;
 
 import java.util.ArrayList;
 
@@ -17,20 +16,19 @@ public class CheckKnightMove extends CheckPlayerMove {
      * This method generates a 2-dimensional array of integers that represents a list of valid moves
      * that the Knight can make with respect to the current state of the game.
      */
-    public int[][] validMoves(ChessPiece knight, GameState gameState) {
-        ArrayList result = new ArrayList(); 
+    public int[][] validMoves(ChessPiece knight, ChessPiece[][] board) {
+        ArrayList<int[]> result = new ArrayList<>();
         int row = knight.getRow(); 
-        int column = knight.getColumn(); 
-        ChessPiece[][] board = gameState.getBoard(); 
+        int column = knight.getColumn();
 
-        if (row - 2 > -1 && column -1 > -1 &&
+        if (row - 2 > -1 && column - 1 > -1 &&
                 (board[row - 2][column - 1] == null || super.isEnemy(knight, board[row - 2][column - 1]))) {
-            result.add(new int[] {row - 2, column + 1});
+            result.add(new int[] {row - 2, column - 1});
         }
 
         if (row - 2 > -1 && column + 1 < 8 &&
                 (board[row - 2][column + 1] == null || super.isEnemy(knight, board[row - 2][column + 1]))) {
-            result.add(new int[] {row - 2, column - 1});
+            result.add(new int[] {row - 2, column + 1});
         }
 
         if (row - 1 > -1 && column + 2 < 8 &&
@@ -63,8 +61,7 @@ public class CheckKnightMove extends CheckPlayerMove {
             result.add(new int[] {row - 1, column - 2});
         }
 
-        int[][] array = super.toArrayMoves(result); 
-        return array;
+        return super.toArrayMoves(result);
 
     }
   
