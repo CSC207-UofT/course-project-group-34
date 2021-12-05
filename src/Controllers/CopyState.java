@@ -1,4 +1,4 @@
-package UseCases;
+package Controllers;
 
 import Controllers.GameState;
 import Entities.ChessPiece;
