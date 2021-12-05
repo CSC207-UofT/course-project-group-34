@@ -18,16 +18,31 @@ public class KnightInitMoveTest {
     // Testing that the Knight piece can move at the beginning of the game, specifically 2 units up and 1
     //to the right
     @Before
-    public void setupMove() {
+    public void setupRightMove() {
         LoadGame init = new LoadGame();
         state = init.loadGame();
     }
 
     @Test(timeout = 100)
-    public void testMove() {
+    public void testRightMove() {
         int[] arr = {7, 1, 5, 2};
         state.makeMove(arr);
         assertEquals('k', state.getChessPieceLetter(5, 2));
+    }
+
+    // Testing that the Knight piece can move at the beginning of the game, specifically 2 units up and 1
+    //to the left
+    @Before
+    public void setupLeftMove() {
+        LoadGame init = new LoadGame();
+        state = init.loadGame();
+    }
+
+    @Test(timeout = 100)
+    public void testLeftMove() {
+        int[] arr = {7, 1, 5, 0};
+        state.makeMove(arr);
+        assertEquals('k', state.getChessPieceLetter(5, 0));
     }
 
 
