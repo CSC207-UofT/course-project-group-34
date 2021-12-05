@@ -2,6 +2,7 @@ package Other;
 
 import Controllers.GameState;
 import Controllers.LoadGame;
+import Controllers.SizedStack;
 import Entities.ChessPiece;
 import Gateways.PawnTransformer;
 import UI.CLIBoard;
@@ -26,8 +27,8 @@ public class Main {
         File output = new File("output.txt");
         FileWriter writer = new FileWriter(output);
         GameState deepCopy = deepClone(state);
-        Stack<GameState> history = new Stack<GameState>();
-        Stack<GameState> future = new Stack<GameState>();
+        SizedStack<GameState> history = new SizedStack<GameState>(5);
+        SizedStack<GameState> future = new SizedStack<GameState>(5);
 
 //        String s = loadGame();
 //        System.out.println(s);
@@ -62,7 +63,7 @@ public class Main {
 //        System.out.println(x.printBoard(state));
             System.out.println(x.printBoard(state));
             if (history.size() > 0) {
-                System.out.println(x.printBoard(history.peek()));
+                System.out.println(x.printBoard((GameState) history.peek()));
             }
             getCheck(state);
             if (state.getCheck()) {
@@ -76,7 +77,7 @@ public class Main {
                     continue;
                 }
                 future.push(deepClone(state));
-                GameState prev = history.pop();
+                GameState prev = (GameState) history.pop();
                 System.out.println(x.printBoard((prev)));
                 state = prev;
                 continue;
@@ -87,7 +88,7 @@ public class Main {
                     continue;
                 }
                 history.push(deepClone(state));
-                GameState post = future.pop();
+                GameState post = (GameState) future.pop();
                 System.out.println(x.printBoard((post)));
                 state = post;
                 continue;

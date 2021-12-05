@@ -1,4 +1,8 @@
+package Controllers;
+
 import java.util.Stack;
+
+// This is helper class for GameState
 
 public class SizedStack<T> extends Stack {
 
