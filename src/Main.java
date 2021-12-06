@@ -22,7 +22,6 @@ public class Main {
         
         //Creates our IU object and the object that loads a fresh game board
         CLIBoard x = new CLIBoard();
-//        LoadGame game = new LoadGame();
         GameState state = newGame();
         File output = new File("output.txt");
         FileWriter writer = new FileWriter(output);
@@ -30,8 +29,6 @@ public class Main {
         SizedStack<GameState> history = new SizedStack<GameState>(5);
         SizedStack<GameState> future = new SizedStack<GameState>(5);
 
-//        String s = loadGame();
-//        System.out.println(s);
         
         // Printing out the UI
         assert deepCopy != null;
@@ -45,32 +42,14 @@ public class Main {
         // While loop asking for user input, and will
         // continue to do so until the input in valid.
         while(!isOver) {
-//            System.out.println(x.printBoard(state));
-//            int[] arr = getPlayerMove(state);
-//            boolean cond = state.makeMove(arr);
-//            if (!cond) {
-//                System.out.println("\nThat is not a valid move, please try again.");
-//                continue;
-//            }
-//            saveGame(state);
-//            boolean outcome = state.getOutcome();
-//            if (outcome) {
-//                isOver = true;
-//                System.out.println("The game is over!");
-//            }
-//        }
-//        // Printing out our chess board after the new move
-//        System.out.println(x.printBoard(state));
+
             System.out.println(x.printBoard(state));
-            if (history.size() > 0) {
-                System.out.println(x.printBoard((GameState) history.peek()));
-            }
             getCheck(state);
             if (state.getCheck()) {
                 System.out.println("Your king is in check!");
             }
             int[] arr = getPlayerMove(state);
-            System.out.print(Arrays.toString(arr));
+
             if (Arrays.toString(arr).equals(Arrays.toString(new int[]{8, 8, 8, 0}))) {
                 if (history.size() == 0) {
                     System.out.println("cannot undo, there is no history");
@@ -78,7 +57,6 @@ public class Main {
                 }
                 future.push(deepClone(state));
                 GameState prev = (GameState) history.pop();
-                System.out.println(x.printBoard((prev)));
                 state = prev;
                 continue;
             }
@@ -128,9 +106,10 @@ public class Main {
 
     }
 
+    //Method to save the input state to the txt file
+
     public static void saveGame(GameState state) throws FileNotFoundException {
         try {
-//            String demo = "demo";
             FileOutputStream f = new FileOutputStream("object.txt");
             ObjectOutputStream o = new ObjectOutputStream(f);
 
@@ -144,6 +123,8 @@ public class Main {
         }
     }
 
+    //Method to retrieve the latest state saved in the txt file
+
     public static GameState newGame() throws FileNotFoundException {
         try{
             ObjectInputStream is = new ObjectInputStream(new FileInputStream("object.txt"));
@@ -155,6 +136,8 @@ public class Main {
             return new LoadGame().loadGame();
         }
     }
+
+    //Method to generate a deep copy of the input state
 
     public static GameState deepClone(GameState state) {
         try {
@@ -192,10 +175,10 @@ public class Main {
         int rcFrom = moveFrom - 11;
         int rcTo = moveTo - 11;
 
-        System.out.println(Arrays.toString(new int[]{Math.floorDiv(rcFrom, 10), rcFrom % 10, Math.floorDiv(rcTo, 10), rcTo % 10}));
-
         return new int[]{Math.floorDiv(rcFrom, 10), rcFrom % 10, Math.floorDiv(rcTo, 10), rcTo % 10};
     }
+
+    //Method to let users know who is in check
 
     public static void getCheck(GameState state){
         if (state.getTurn() == 0){
