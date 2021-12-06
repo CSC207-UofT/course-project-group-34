@@ -192,14 +192,14 @@ public class Main {
     public static void getCheck(GameState state){
         if (state.getTurn() == 0){
             if(state.getCheck()){
-                System.out.println("Player White, Your king is in check."); ;
+                System.out.println("Player White, Your king is in check.");
             } else{
                 System.out.println("It is the White player's turn.");
             }
         }
         else {
             if(state.getCheck()){
-                System.out.println("Player Black, Your king is in check."); ;
+                System.out.println("Player Black, Your king is in check.");
             } else{
                 System.out.println("It is the Black player's turn.");
             }
