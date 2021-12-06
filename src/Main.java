@@ -2,16 +2,15 @@ package Other;
 
 import Controllers.GameState;
 import Controllers.LoadGame;
-import Controllers.SizedStack;
 import Entities.ChessPiece;
-import Gateways.PawnTransformer;
+import Presenters.PawnTransformer;
 import UI.CLIBoard;
+import Utils.SizedStack;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.lang.Math;
-import java.util.Stack;
 
 /**
  * This class is responsible for running our skeleton Chess Game implementation
@@ -19,6 +18,8 @@ import java.util.Stack;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+
+        System.out.println("Welcome to PPAARM Chess World!. To undo a move, enter 99 followed by 91. To Redo a move, enter 99 followed by 92 and to start a new game, enter 00 followed by 00 ");
         
         //Creates our IU object and the object that loads a fresh game board
         CLIBoard x = new CLIBoard();
@@ -67,10 +68,18 @@ public class Main {
                 }
                 history.push(deepClone(state));
                 GameState post = (GameState) future.pop();
-                System.out.println(x.printBoard((post)));
                 state = post;
                 continue;
             }
+            if (Arrays.toString(arr).equals(Arrays.toString(new int[]{-2, -1, -2, -1}))) {
+                state = new LoadGame().loadGame();
+                saveGame(state);
+                history = new SizedStack<GameState>(5);
+                future = new SizedStack<GameState>(5);
+                continue;
+            }
+
+
             GameState copy = deepClone(state);
             boolean cond = state.makeMove(arr);
             if (!cond) {

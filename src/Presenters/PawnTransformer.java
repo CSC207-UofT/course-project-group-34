@@ -1,4 +1,4 @@
-package Gateways;
+package Presenters;
 
 import Entities.ChessPiece;
 import UseCases.PawnFactory;
