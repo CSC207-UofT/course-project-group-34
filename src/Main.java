@@ -1,10 +1,14 @@
-import UI.CLIBoard;
-import Entities.ChessPiece;
+package Other;
+
 import Controllers.GameState;
 import Controllers.LoadGame;
-import Gateways.PawnTransformer;
+import Entities.ChessPiece;
+import Presenters.PawnTransformer;
+import UI.CLIBoard;
+import Utils.SizedStack;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.lang.Math;
 
@@ -14,16 +18,23 @@ import java.lang.Math;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+
+        System.out.println("Welcome to PPAARM Chess World!. To undo a move, enter 99 followed by 91. To Redo a move, enter 99 followed by 92 and to start a new game, enter 00 followed by 00 ");
         
         //Creates our IU object and the object that loads a fresh game board
         CLIBoard x = new CLIBoard();
-        LoadGame game = new LoadGame();
-        GameState state = game.loadGame();
+        GameState state = newGame();
         File output = new File("output.txt");
         FileWriter writer = new FileWriter(output);
-        int move_count = 0;
+        GameState deepCopy = deepClone(state);
+        SizedStack<GameState> history = new SizedStack<GameState>(5);
+        SizedStack<GameState> future = new SizedStack<GameState>(5);
+
+        
         // Printing out the UI
-        System.out.println(x.printBoard(state));
+        assert deepCopy != null;
+
+        int move_count = 0;
 
 
         boolean isOver = false;
@@ -32,12 +43,44 @@ public class Main {
         // While loop asking for user input, and will
         // continue to do so until the input in valid.
         while(!isOver) {
+
             System.out.println(x.printBoard(state));
             getCheck(state);
             if (state.getCheck()) {
                 System.out.println("Your king is in check!");
             }
             int[] arr = getPlayerMove(state);
+
+            if (Arrays.toString(arr).equals(Arrays.toString(new int[]{8, 8, 8, 0}))) {
+                if (history.size() == 0) {
+                    System.out.println("cannot undo, there is no history");
+                    continue;
+                }
+                future.push(deepClone(state));
+                GameState prev = (GameState) history.pop();
+                state = prev;
+                continue;
+            }
+            if (Arrays.toString(arr).equals(Arrays.toString(new int[]{8, 8, 8, 1}))) {
+                if (future.size() == 0) {
+                    System.out.println("cannot redo, there is no future");
+                    continue;
+                }
+                history.push(deepClone(state));
+                GameState post = (GameState) future.pop();
+                state = post;
+                continue;
+            }
+            if (Arrays.toString(arr).equals(Arrays.toString(new int[]{-2, -1, -2, -1}))) {
+                state = new LoadGame().loadGame();
+                saveGame(state);
+                history = new SizedStack<GameState>(5);
+                future = new SizedStack<GameState>(5);
+                continue;
+            }
+
+
+            GameState copy = deepClone(state);
             boolean cond = state.makeMove(arr);
             if (!cond) {
                 System.out.println("\nThat is not a valid move, please try again.");
@@ -51,6 +94,9 @@ public class Main {
                 state.setTransform(false);
             }
             move_count = move_count + 1;
+            saveGame((state));
+            history.push(copy);
+
 
             // Check if game is over
             boolean outcome = state.getOutcome();
@@ -65,9 +111,11 @@ public class Main {
             }
         }
         // Printing out our chess board after the new move
-        System.out.println(x.printBoard(state));
+
 
     }
+
+    //Method to save the input state to the txt file
 
     public static void saveGame(GameState state) throws FileNotFoundException {
         try {
@@ -84,13 +132,34 @@ public class Main {
         }
     }
 
-    public static void loadGame() throws FileNotFoundException {
+    //Method to retrieve the latest state saved in the txt file
+
+    public static GameState newGame() throws FileNotFoundException {
         try{
             ObjectInputStream is = new ObjectInputStream(new FileInputStream("object.txt"));
             GameState s = (GameState) is.readObject();
+            return s;
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            return new LoadGame().loadGame();
+        }
+    }
+
+    //Method to generate a deep copy of the input state
+
+    public static GameState deepClone(GameState state) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(state);
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return (GameState) ois.readObject();
+
+        } catch (IOException | ClassNotFoundException e) {
+            return null;
         }
     }
 
@@ -115,10 +184,10 @@ public class Main {
         int rcFrom = moveFrom - 11;
         int rcTo = moveTo - 11;
 
-        System.out.println();
-
         return new int[]{Math.floorDiv(rcFrom, 10), rcFrom % 10, Math.floorDiv(rcTo, 10), rcTo % 10};
     }
+
+    //Method to let users know who is in check
 
     public static void getCheck(GameState state){
         if (state.getTurn() == 0){
