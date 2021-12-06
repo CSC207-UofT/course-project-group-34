@@ -122,29 +122,6 @@ public class Main {
         }
         moveTo = sc.nextInt();
 
-//        do {
-//            try {
-//                System.out.println("\nPlayer "+ player + ", which piece will you move? (ex. row = 7, col = 1, => '71'): ");
-//                moveFrom = sc.nextInt();
-//                System.out.println("\nPlayer " + player + ", where will you move the piece to? (ex. row = 8, col = 1, => '81'):");
-//                moveTo = sc.nextInt();
-//                iError = false;
-//            }
-//            catch (Exception e){
-//                System.out.println("You have entered a non-integer value. Please try again.");
-//                sc.hasNextInt();
-//            }
-//            while (iError) {
-//
-//            }
-//        }
-
-//        System.out.println("\nPlayer "+ player + ", which piece will you move? (ex. row = 7, col = 1, => '71'): ");
-//        int moveFrom = sc.nextInt();
-//
-//        System.out.println("\nPlayer " + player + ", where will you move the piece to? (ex. row = 8, col = 1, => '81'):");
-//        int moveTo = sc.nextInt();
-        
         int rcFrom = moveFrom - 11;
         int rcTo = moveTo - 11;
 
