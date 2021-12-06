@@ -163,7 +163,7 @@ public class Main {
         }
         else {
             if(state.getCheck()){
-                System.out.println("Player Black, Your king is in check."); 
+                System.out.println("Player Black, Your king is in check.");
             } else{
                 System.out.println("It is the Black player's turn.");
             }
