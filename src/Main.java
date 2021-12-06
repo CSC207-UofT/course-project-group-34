@@ -30,7 +30,8 @@ public class Main {
         // Printing out the UI
         assert deepCopy != null;
 
-        int move_count = 0;
+        int white_move_count = 0;
+        int black_move_count = 0;
 
 
         boolean isOver = false;
@@ -42,9 +43,6 @@ public class Main {
 
             System.out.println(x.printBoard(state));
             getCheck(state);
-            if (state.getCheck()) {
-                System.out.println("Your king is in check!");
-            }
             int[] arr = getPlayerMove(state);
 
             if (Arrays.toString(arr).equals(Arrays.toString(new int[]{8, 8, 8, 0}))) {
@@ -92,7 +90,14 @@ public class Main {
                 state.setBoard(newBoard);
                 state.setTransform(false);
             }
-            move_count = move_count + 1;
+
+            if (state.getTurn() !=0){
+                white_move_count = white_move_count + 1;
+            } else {
+                black_move_count = black_move_count + 1;
+            }
+
+
             saveGame((state));
             history.push(copy);
 
@@ -102,10 +107,11 @@ public class Main {
             if (outcome) {
                 isOver = true;
                 System.out.println("The game is over!");
-                if (move_count % 2 == 1){
-                    System.out.println("The player using the white pieces won in " + ((move_count/2) + 1) + " moves." );
+
+                if (state.getTurn() == 1){
+                    System.out.println("The player using the white pieces won in " + white_move_count + " moves." );
                 } else {
-                    System.out.println("The player using the black pieces won in " + (move_count/2) + " moves.");
+                    System.out.println("The player using the black pieces won in " + black_move_count + " moves.");
                 }
             }
         }
