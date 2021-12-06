@@ -24,11 +24,9 @@ public class Main {
         //Creates our IU object and the object that loads a fresh game board
         CLIBoard x = new CLIBoard();
         GameState state = newGame();
-        File output = new File("output.txt");
-        FileWriter writer = new FileWriter(output);
         GameState deepCopy = deepClone(state);
-        SizedStack<GameState> history = new SizedStack<GameState>(5);
-        SizedStack<GameState> future = new SizedStack<GameState>(5);
+        SizedStack<GameState> history = new SizedStack<>(5);
+        SizedStack<GameState> future = new SizedStack<>(5);
 
         
         // Printing out the UI
@@ -57,8 +55,7 @@ public class Main {
                     continue;
                 }
                 future.push(deepClone(state));
-                GameState prev = (GameState) history.pop();
-                state = prev;
+                state = (GameState) history.pop();
                 continue;
             }
             if (Arrays.toString(arr).equals(Arrays.toString(new int[]{8, 8, 8, 1}))) {
@@ -67,15 +64,19 @@ public class Main {
                     continue;
                 }
                 history.push(deepClone(state));
-                GameState post = (GameState) future.pop();
-                state = post;
+                state = (GameState) future.pop();
                 continue;
             }
             if (Arrays.toString(arr).equals(Arrays.toString(new int[]{-2, -1, -2, -1}))) {
                 state = new LoadGame().loadGame();
                 saveGame(state);
-                history = new SizedStack<GameState>(5);
-                future = new SizedStack<GameState>(5);
+                history = new SizedStack<>(5);
+                future = new SizedStack<>(5);
+                continue;
+            }
+
+            if (arr[0] < 0 || arr[0] > 7 || arr[1] < 0 || arr[1] > 7 || arr[2] < 0 || arr[2] > 7 || arr[3] < 0 || arr[3] > 7) {
+                System.out.println("Out of index move, try again");
                 continue;
             }
 
@@ -117,7 +118,7 @@ public class Main {
 
     //Method to save the input state to the txt file
 
-    public static void saveGame(GameState state) throws FileNotFoundException {
+    public static void saveGame(GameState state) {
         try {
             FileOutputStream f = new FileOutputStream("object.txt");
             ObjectOutputStream o = new ObjectOutputStream(f);
@@ -134,11 +135,10 @@ public class Main {
 
     //Method to retrieve the latest state saved in the txt file
 
-    public static GameState newGame() throws FileNotFoundException {
+    public static GameState newGame() {
         try{
             ObjectInputStream is = new ObjectInputStream(new FileInputStream("object.txt"));
-            GameState s = (GameState) is.readObject();
-            return s;
+            return (GameState) is.readObject();
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
