@@ -115,6 +115,8 @@ public class Checkmate {
         int currRow = currPiece.getRow();
         int currCol = currPiece.getColumn();
         boolean cond = false;
+        boolean isCapturing = false;
+        ChessPiece capturedPiece = null;
 
         // Create a new factory instance, obtain a duplicate copy of our
         // chess piece that is being moved
@@ -123,6 +125,12 @@ public class Checkmate {
         tempPiece.setRow(row);
         tempPiece.setColumn(col);
 
+        // If our moving piece aims to capture another piece, here we keep track of the
+        // piece that will be captured
+        if(board[row][col] != null){
+            capturedPiece = factory.getCopy(board[row][col]);
+            isCapturing = true;
+        }
         // Switch our original piece with a duplicate one
         removeChessPiece(board, currRow, currCol);
         addChessPiece(board, tempPiece);
@@ -134,6 +142,9 @@ public class Checkmate {
         removeChessPiece(board, row, col);
         addChessPiece(board, currPiece);
 
+        if(isCapturing){
+            board[row][col] = capturedPiece;
+        }
         return cond;
     }
 
