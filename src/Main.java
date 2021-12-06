@@ -105,13 +105,26 @@ public class Main {
             player = "Black";
         }
         Scanner sc = new Scanner(System.in);
+        int moveFrom, moveTo;
 
         System.out.println("\nPlayer "+ player + ", which piece will you move? (ex. row = 7, col = 1, => '71'): ");
-        int moveFrom = sc.nextInt();
+
+        // Error checking for non-integer inputs
+        while (!sc.hasNextInt()) {
+            System.out.println("You have entered a non-integer value. Please try again.");
+            sc.next();
+        }
+        moveFrom = sc.nextInt();
 
         System.out.println("\nPlayer " + player + ", where will you move the piece to? (ex. row = 8, col = 1, => '81'):");
-        int moveTo = sc.nextInt();
-        
+
+        // Error checking for non-integer inputs
+        while (!sc.hasNextInt()) {
+            System.out.println("You have entered a non-integer value. Please try again.");
+            sc.next();
+        }
+        moveTo = sc.nextInt();
+
         int rcFrom = moveFrom - 11;
         int rcTo = moveTo - 11;
 
@@ -123,14 +136,14 @@ public class Main {
     public static void getCheck(GameState state){
         if (state.getTurn() == 0){
             if(state.getCheck()){
-                System.out.println("Player White, Your king is in check."); ;
+                System.out.println("Player White, Your king is in check.");
             } else{
                 System.out.println("It is the White player's turn.");
             }
         }
         else {
             if(state.getCheck()){
-                System.out.println("Player Black, Your king is in check."); ;
+                System.out.println("Player Black, Your king is in check.");
             } else{
                 System.out.println("It is the Black player's turn.");
             }
