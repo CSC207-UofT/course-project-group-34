@@ -21,6 +21,24 @@ public class RookMoveTest {
         state = init.loadGame();
     }
 
+    // Ensuring the leftmost Rook cannot move during the start of the game
+    @Test(timeout = 100)
+    public void testLeftInvalidMove() {
+        LoadGame init = new LoadGame();
+        state = init.loadGame();
+        int[] arr = {7, 0, 5, 0};
+        assertFalse(state.makeMove(arr));
+    }
+
+    // Ensuring the rightmost Rook cannot move during the start of the game
+    @Test(timeout = 100)
+    public void testRightInvalidMove() {
+        LoadGame init = new LoadGame();
+        state = init.loadGame();
+        int[] arr = {7, 7, 5, 7};
+        assertFalse(state.makeMove(arr));
+    }
+
 
     // Testing that the Rook piece can move up
     @Test(timeout = 100)
