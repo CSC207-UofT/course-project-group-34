@@ -8,3 +8,6 @@ To start playing our chess game:
 1. Navigate to the 'src' folder
 2. Run the class "Main"
 3. Enjoy the game!
+
+From, 
+The Well-Oiled Machine
