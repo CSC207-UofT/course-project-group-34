@@ -26,7 +26,7 @@ public class ChessPieceFactory {
      */
     public ChessPiece getChessPiece(String transformType, ChessPiece piece){
 
-        // Unpacking necessary attributes from the pawn piece
+        // Unpacking necessary attributes from the Chess piece
         int row = piece.getRow();
         int col = piece.getColumn();
         String color = piece.getColor();
