@@ -177,13 +177,34 @@ public class Main {
         else{
             player = "Black";
         }
+
         Scanner sc = new Scanner(System.in);
+        // boolean iError = true;
+        int moveFrom, moveTo;
 
         System.out.println("\nPlayer "+ player + ", which piece will you move? (ex. row = 7, col = 1, => '71'): ");
-        int moveFrom = sc.nextInt();
+        // int moveFrom = sc.nextInt();
+        while (!sc.hasNextInt()) {
+            System.out.println("You have entered a non-integer value. Please try again.");
+            sc.next();
+        }
+        moveFrom = sc.nextInt();
 
         System.out.println("\nPlayer " + player + ", where will you move the piece to? (ex. row = 8, col = 1, => '81'):");
-        int moveTo = sc.nextInt();
+        // int moveTo = sc.nextInt();
+        while (!sc.hasNextInt()) {
+            System.out.println("You have entered a non-integer value. Please try again.");
+            sc.next();
+        }
+        moveTo = sc.nextInt();
+
+//        Scanner sc = new Scanner(System.in);
+//
+//        System.out.println("\nPlayer "+ player + ", which piece will you move? (ex. row = 7, col = 1, => '71'): ");
+//        int moveFrom = sc.nextInt();
+//
+//        System.out.println("\nPlayer " + player + ", where will you move the piece to? (ex. row = 8, col = 1, => '81'):");
+//        int moveTo = sc.nextInt();
         
         int rcFrom = moveFrom - 11;
         int rcTo = moveTo - 11;
