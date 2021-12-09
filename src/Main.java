@@ -115,13 +115,11 @@ public class Main {
                 }
             }
         }
-        // Printing out our chess board after the new move
-
-
     }
 
-    //Method to save the input state to the txt file
-
+    /***
+     * Method to save the input state to the txt file
+     */
     public static void saveGame(GameState state) {
         try {
             FileOutputStream f = new FileOutputStream("object.txt");
@@ -137,8 +135,9 @@ public class Main {
         }
     }
 
-    //Method to retrieve the latest state saved in the txt file
-
+    /**
+     * Method to retrieve the latest state saved in the txt file, returns that loaded Game
+     */
     public static GameState newGame() {
         try{
             ObjectInputStream is = new ObjectInputStream(new FileInputStream("object.txt"));
@@ -150,8 +149,9 @@ public class Main {
         }
     }
 
-    //Method to generate a deep copy of the input state
-
+    /**
+     *  Method to generate a deep copy of the input state, and returns that copy.
+     */
     public static GameState deepClone(GameState state) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -167,8 +167,10 @@ public class Main {
         }
     }
 
-    // This method retrieves user input, it asks the player what pawn
-    // they would like to move and where.
+    /**
+     * This method retrieves user input, it asks the player what pawn
+     * they would like to move and where.
+     */
     public static int[] getPlayerMove(GameState state){
         String player;
         if(state.getTurn() == 0){
@@ -197,23 +199,15 @@ public class Main {
             sc.next();
         }
         moveTo = sc.nextInt();
-
-//        Scanner sc = new Scanner(System.in);
-//
-//        System.out.println("\nPlayer "+ player + ", which piece will you move? (ex. row = 7, col = 1, => '71'): ");
-//        int moveFrom = sc.nextInt();
-//
-//        System.out.println("\nPlayer " + player + ", where will you move the piece to? (ex. row = 8, col = 1, => '81'):");
-//        int moveTo = sc.nextInt();
-        
         int rcFrom = moveFrom - 11;
         int rcTo = moveTo - 11;
 
         return new int[]{Math.floorDiv(rcFrom, 10), rcFrom % 10, Math.floorDiv(rcTo, 10), rcTo % 10};
     }
 
-    //Method to let users know who is in check
-
+    /**
+     * Method to let users know who is in check
+     */
     public static void getCheck(GameState state){
         if (state.getTurn() == 0){
             if(state.getCheck()){
@@ -229,7 +223,5 @@ public class Main {
                 System.out.println("It is the Black player's turn.");
             }
         }
-
     }
-
 }
